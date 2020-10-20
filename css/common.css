@@ -1,8 +1,8 @@
 body {
-  background-color: #000000;
+  background-color: #001100;
   color: #FFFFFF;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 11pt;
+  font-size: 10pt;
   letter-spacing: normal;
   white-space: normal;
   word-wrap: normal;
@@ -22,18 +22,21 @@ p {
   padding: 0;
 }
 
-.dropMenu, .input_text {
-  background: #FFFFFF;
-  border: 1px solid #000000;
+input[type=text], input[type=number], input[type=date], select {
+  padding: 5px;
   border-radius: 5px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: #FFFFFF;
   position: relative;
   overflow: hidden;
   vertical-align: middle;
-  font-size: 11pt;
+  border: 1px solid #000000;
+  font-size: 10pt;
 }
 
 .input_button {
-  padding: 5px 10px;
   border: 1px solid #000000;
   border-radius: 5px;
   position: relative;
@@ -41,7 +44,7 @@ p {
   overflow: hidden;
   vertical-align: middle;
   font-weight: bold;
-  font-size: 11pt;
+  font-size: 10pt;
   cursor: pointer;
   background-color: #DDDDDD;
 }
@@ -165,7 +168,7 @@ div.product_list table.product_inner_table tr td.edit_button {
 }
 
 div.product_list table.product_inner_table tr td.price_diff {
-  font-size: 13pt;
+  font-size: 12pt;
   text-align: right;
 }
 
@@ -298,7 +301,7 @@ span.hidden_val {
 
 span.sort_button {
   cursor: pointer;
-  font-size: 13pt;
+  font-size: 12pt;
   color: #DDDDDD;
 }
 
@@ -316,6 +319,31 @@ div.admin_panel {
   background-color: #005533;
 }
 
+table.add_product {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.add_product tr th {
+  text-align: left;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+table.add_product tr td {
+  text-align: left;
+  padding-bottom: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+}
+
+table.add_product tr td input,
+table.add_product tr td select {
+  width: 100%;
+}
+
 p.price_plus {
   color: #00CC00;
 }
@@ -327,14 +355,14 @@ p.price_minus {
 div.header {
   width: 100%;
   min-height: 50px;
-  background-color: #1122AA;
+  background-color: #113311;
   margin: 0 0 30px 0;
 }
 
 div.footer {
   width: 100%;
   min-height: 50px;
-  background-color: #1122AA;
+  background-color: #113311;
   clear: both;
   float: none;
   position: relative;

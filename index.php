@@ -28,7 +28,7 @@
         
             Select Currency:
             <form action='./php/setCurrency.php' method='post'>
-                <select id='currency' class='dropMenu' name='currency' onchange="this.form.submit();">
+                <select id='currency' name='currency' onchange="this.form.submit();">
                     <?php 
                         foreach ($conversion_rates_sort as $currency) {
                             $currency_lbl = $currency['currency'];
@@ -49,16 +49,44 @@
 
                     <form action='./php/exec.php?action=add&type=product' method='post' enctype='multipart/form-data'>
                         Add Product:<br>
-                        Product Name: <input type='text' class='input_text' id='name' name='name' required>
-                        Brand: <select id='brand' class='dropMenu' name='brand' required><?php OutputBrandOptions($brands_sort); ?></select>
-                        Type: <select id='type' class='dropMenu' name='type' required><?php OutputTypeOptions($types_sort); ?></select><br>
-
-                        Price in HK (HKD): $<input type='number' class='input_text' id='price_hk' name='price_hk' required><br>
-                        Price in Japan (JPY): ￥<input type='number' class='input_text' id='price_jp' name='price_jp' required><br>
-                        Notes: <input type='text' class='input_text' id='notes' name='notes'><br>
-                        Release Date: <input type='date' id='release_date' name='release_date'><br>
-                        Image Thumbnail: <input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"><br>
-                        <input type='submit' class='input_button' value='Add Product'>
+                        
+                        <table class="add_product">
+                            <tr>
+                                <th>Product Name:</th>
+                                <td><input type='text' id='name' name='name' required></td>
+                            </tr>
+                            <tr>
+                                <th>Brand:</th>
+                                <td><select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort); ?></select></td>
+                            </tr>
+                            <tr>
+                                <th>Type:</th>
+                                <td><select id='type' name='type' required><?php OutputTypeOptions($types_sort); ?></select></td>
+                            </tr>
+                            <tr>
+                                <th>Price in HK (HKD):</th>
+                                <td><input type='number' id='price_hk' name='price_hk' placeholder="$" required></td>
+                            </tr>
+                            <tr>
+                                <th>Price in Japan (JPY):</th>
+                                <td><input type='number' id='price_jp' name='price_jp' placeholder="￥" required></td>
+                            </tr>
+                            <tr>
+                                <th>Notes:</th>
+                                <td><input type='text' id='notes' name='notes'></td>
+                            </tr>
+                            <tr>
+                                <th>Release Date:</th>
+                                <td><input type='date' id='release_date' name='release_date'></td>
+                            </tr>
+                            <tr>
+                                <th>Image Thumbnail:</th>
+                                <td><input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type='submit' class='input_button' value='Add Product'></td>
+                            </tr>
+                        </table>
                     </form>
                     <br><br>
 
@@ -85,8 +113,8 @@
             
             <div class="filter_panel">
                 Filter by: <br>
-                <select id='filter_brand' class='dropMenu' onchange='toggle_products_display()'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
-                <select id='filter_type' class='dropMenu' onchange='toggle_products_display()'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
+                <select id='filter_brand' onchange='toggle_products_display()'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
+                <select id='filter_type' onchange='toggle_products_display()'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
             </div>
 
             <div id='products' class="product_list">
@@ -214,8 +242,8 @@
                                         <form action='./php/exec.php?action=edit&type=product' method='post' enctype='multipart/form-data'>
                                             <input type='hidden' id='id' name='id' value='<?php echo $product['id']; ?>'>
                                             Product Name: <input type='text' id='name' name='name' value='<?php echo $product['name']; ?>' required><br>
-                                            Brand: <select id='brand' class='dropMenu' name='brand' required><?php OutputBrandOptions($brands_sort, $product['brand']); ?></select>
-                                            Product Type: <select id='type' class='dropMenu' name='type' required><?php OutputTypeOptions($types_sort, $product['type']); ?></select>
+                                            Brand: <select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort, $product['brand']); ?></select>
+                                            Product Type: <select id='type' name='type' required><?php OutputTypeOptions($types_sort, $product['type']); ?></select>
                                             <br>
                                             Price in JP (JPY): ￥<input type='number' id='price_jp' name='price_jp' value='<?php echo $product['price_jp']; ?>' required><br>
                                             Price in HK (HDK): $<input type='number' id='price_hk' name='price_hk' value='<?php echo $product['price_hk']; ?>' required><br>

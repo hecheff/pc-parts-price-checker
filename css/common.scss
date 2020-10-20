@@ -24,21 +24,26 @@ p {
     margin: 0; padding: 0;
 }
 
-.dropMenu, .input_text {
+input[type=text], input[type=number], input[type=date], select {
+    padding: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing: border-box;
+
     //padding: 5px;
     background: #FFFFFF;
-    border: 1px solid #000000;
-    border-radius: 5px;
     position: relative;
     //height: 30px;
     overflow: hidden;
     vertical-align: middle;
 
+    border: 1px solid #000000;
     font-size: $fontsize_default;
 }
 
 .input_button {
-    padding: 5px 10px;
+    //padding: 5px 10px;
     border: 1px solid #000000;
     border-radius: 5px;
     position: relative;
@@ -232,6 +237,30 @@ div.admin_panel {
     @include defaultDivFrame();
     background-color: $color_bg_admin_panel;
 }
+
+table.add_product {
+    width: 100%;
+    border-collapse: collapse;
+}
+table.add_product tr th {
+    text-align: left;
+    padding-right: $margin_default;
+    padding-bottom: $margin_small;
+
+    white-space: nowrap;
+}
+table.add_product tr td {
+    text-align: left;
+    padding-bottom: $margin_small;
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+table.add_product tr td input, 
+table.add_product tr td select {
+    width: 100%;
+}
+
 
 p.price_plus {
     color:$color_text_price_plus;
