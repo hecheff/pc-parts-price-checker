@@ -1,6 +1,6 @@
 <?php
     // Common
-    define('CSS_VERSION', '0.022-20201015'); 
+    define('CSS_VERSION', '0.025-20201021'); 
     define('TIMESTAMP_NOW', date("Y-m-d H:i:s"));
 
     // Database & Domain details
