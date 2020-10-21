@@ -28,6 +28,15 @@ p {
   padding: 0;
 }
 
+div.notice_panel {
+  width: auto;
+  min-height: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #101b3d;
+}
+
 div.container_header {
   width: auto;
   height: 20px;
@@ -108,13 +117,13 @@ input[type=submit].delete:active {
 
 div.wrapper_main {
   width: auto;
-  margin: 30px 150px;
+  margin: 10px 150px;
   min-height: 100%;
 }
 
 @media screen and (max-width: 980px) {
   div.wrapper_main {
-    margin: 30px 10px;
+    margin: 10px 10px;
   }
 }
 
@@ -389,7 +398,6 @@ div.header {
   width: 100%;
   min-height: 50px;
   background-color: #1e2844;
-  margin: 0 0 30px 0;
 }
 
 div.footer {

@@ -24,6 +24,16 @@ p {
     margin: 0; padding: 0;
 }
 
+div.notice_panel {
+    width: auto;
+    min-height: 20px;
+    padding: $margin_small;
+    margin-bottom: $margin_small;
+    border-radius: $border_radius_default;
+
+    background-color: $color_bg_product_list;
+}
+
 div.container_header {
     width: auto;
     height: 20px;
@@ -103,12 +113,12 @@ input[type=submit].delete:active { background-color: $color_delete_red/4; }
 div.wrapper_main {
     width:auto;
 
-    margin: 30px 150px;
+    margin: $margin_small 150px;
     min-height:100%;
 }
 @media screen and (max-width: $width_threshold) {
     div.wrapper_main {
-        margin: 30px $margin_small;
+        margin: $margin_small $margin_small;
     }
 }
 
@@ -304,8 +314,6 @@ div.header {
     width: 100%;
     min-height: 50px;
     background-color: $color_bg_header_footer_bg;
-
-    margin: 0 0 30px 0;
 }
 
 div.footer {
