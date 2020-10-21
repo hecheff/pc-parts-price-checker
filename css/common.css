@@ -1,5 +1,11 @@
+/*
+$color_background:          #001100;
+$color_bg_product_list:     #003300;
+$color_bg_product_highlight:#006600;
+$color_bg_header_footer_bg: #113311;
+*/
 body {
-  background-color: #001100;
+  background-color: #000411;
   color: #FFFFFF;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   font-size: 10pt;
@@ -28,10 +34,11 @@ div.container_header {
   margin-top: 20px;
   padding: 10px;
   border-radius: 5px 5px 0 0;
-  background-color: #006600;
+  background-color: #33498a;
   font-weight: bold;
-  font-size: 12pt;
+  font-size: 13pt;
   text-transform: uppercase;
+  border-bottom: 3px solid #e7be37;
 }
 
 div.container_content {
@@ -39,7 +46,15 @@ div.container_content {
   min-height: 20px;
   padding: 10px;
   border-radius: 0 0 5px 5px;
-  background-color: #003300;
+  background-color: #101b3d;
+}
+
+div.container_content div.sub_title {
+  width: auto;
+  font-size: 12pt;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
 }
 
 input[type=text], input[type=number], input[type=date], select {
@@ -77,6 +92,20 @@ input[type=text], input[type=number], input[type=date], select {
   background-color: #666666;
 }
 
+input[type=submit].delete {
+  color: #CC0000;
+  border-color: #CC0000;
+  background-color: #550000;
+}
+
+input[type=submit].delete:hover {
+  background-color: #660000;
+}
+
+input[type=submit].delete:active {
+  background-color: #330000;
+}
+
 div.wrapper_main {
   width: auto;
   margin: 30px 150px;
@@ -91,15 +120,14 @@ div.wrapper_main {
 
 div.filter_panel {
   width: auto;
-  border-radius: 5px;
-  padding: 20px;
+  margin: 20px auto;
 }
 
 div.product_list {
   width: auto;
   border-radius: 5px;
   padding: 20px;
-  background-color: #003300;
+  background-color: #101b3d;
   margin: 20px auto;
 }
 
@@ -116,7 +144,7 @@ div.product_list div.entry_item {
 }
 
 div.product_list div.entry_item:hover {
-  background-color: #006600;
+  background-color: #33498a;
 }
 
 div.product_list table.product_inner_table tr td div.inner_title {
@@ -188,7 +216,7 @@ div.product_list table.product_inner_table tr td.edit_button {
 }
 
 div.product_list table.product_inner_table tr td.price_diff {
-  font-size: 12pt;
+  font-size: 13pt;
   text-align: right;
 }
 
@@ -202,21 +230,12 @@ div.product_list div.entry_wrapper {
   display: inline-block;
 }
 
-div.product_list div.list_header {
-  width: auto;
-  font-size: 8pt;
-  font-weight: bold;
-  background-color: #005533;
-  border-radius: 5px;
-  padding: 10px 0;
-}
-
 div.product_list div.entry_item {
   border-radius: 5px;
 }
 
 div.product_list div.entry_item:hover {
-  background-color: #006600;
+  background-color: #33498a;
 }
 
 div.product_list div.entry_item div.edit_panel {
@@ -321,7 +340,7 @@ span.hidden_val {
 
 span.sort_button {
   cursor: pointer;
-  font-size: 12pt;
+  font-size: 13pt;
   color: #DDDDDD;
 }
 
@@ -333,25 +352,19 @@ span.sort_button:active {
   color: #666666;
 }
 
-div.admin_panel {
-  border-radius: 5px;
-  padding: 20px;
-  background-color: #005533;
-}
-
-table.add_product {
+table.admin_entry {
   width: 100%;
   border-collapse: collapse;
 }
 
-table.add_product tr th {
+table.admin_entry tr th {
   text-align: left;
   padding-right: 20px;
   padding-bottom: 10px;
   white-space: nowrap;
 }
 
-table.add_product tr td {
+table.admin_entry tr td {
   text-align: left;
   padding-bottom: 10px;
   -webkit-box-sizing: border-box;
@@ -359,8 +372,8 @@ table.add_product tr td {
   overflow: hidden;
 }
 
-table.add_product tr td input,
-table.add_product tr td select {
+table.admin_entry tr td input,
+table.admin_entry tr td select {
   width: 100%;
 }
 
@@ -375,14 +388,14 @@ p.price_minus {
 div.header {
   width: 100%;
   min-height: 50px;
-  background-color: #113311;
+  background-color: #1e2844;
   margin: 0 0 30px 0;
 }
 
 div.footer {
   width: 100%;
   min-height: 50px;
-  background-color: #113311;
+  background-color: #1e2844;
   clear: both;
   float: none;
   position: relative;

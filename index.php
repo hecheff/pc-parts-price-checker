@@ -46,38 +46,38 @@
                 <div class="container_header">ADMIN PANEL</div>
                 <div class="container_content">
                     <form action='./php/exec.php?action=add&type=product' method='post' enctype='multipart/form-data'>
-                        Add Product:<br>
-                        <table class="add_product">
+                        <div class="sub_title">Add Product</div>
+                        <table class="admin_entry">
                             <tr>
-                                <th>Product Name:</th>
+                                <th>Product Name</th>
                                 <td><input type='text' id='name' name='name' required></td>
                             </tr>
                             <tr>
-                                <th>Brand:</th>
+                                <th>Brand</th>
                                 <td><select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort); ?></select></td>
                             </tr>
                             <tr>
-                                <th>Type:</th>
+                                <th>Type</th>
                                 <td><select id='type' name='type' required><?php OutputTypeOptions($types_sort); ?></select></td>
                             </tr>
                             <tr>
-                                <th>Price in HK (HKD):</th>
+                                <th>Price in HK (HKD)</th>
                                 <td><input type='number' id='price_hk' name='price_hk' placeholder="$" required></td>
                             </tr>
                             <tr>
-                                <th>Price in Japan (JPY):</th>
+                                <th>Price in Japan (JPY)</th>
                                 <td><input type='number' id='price_jp' name='price_jp' placeholder="￥" required></td>
                             </tr>
                             <tr>
-                                <th>Notes:</th>
+                                <th>Notes</th>
                                 <td><input type='text' id='notes' name='notes'></td>
                             </tr>
                             <tr>
-                                <th>Release Date:</th>
+                                <th>Release Date</th>
                                 <td><input type='date' id='release_date' name='release_date'></td>
                             </tr>
                             <tr>
-                                <th>Image Thumbnail:</th>
+                                <th>Image Thumbnail</th>
                                 <td><input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"></td>
                             </tr>
                             <tr>
@@ -87,33 +87,69 @@
                     </form>
                     <br><br>
 
-                    Add Brand:<br>
-                    <form action='./php/exec.php?action=add&type=brand' method="post">
-                        Brand Name: <input type='text' id='name' name='name' required>
-                        <input type='submit' class='input_button' value='Add Brand'>
-                    </form>
-
-                    Add Type:<br>
-                    <form action='./php/exec.php?action=add&type=type' method="post">
-                        Type Name: <input type='text' id='name' name='name' required>
-                        <input type='submit' class='input_button' value='Add Product Type'>
-                    </form>
-
+                    <div class="sub_title">Manage Brands</div>
+                    <table class="admin_entry">
+                        <tr>
+                            <form action="./php/exec.php?action=add&type=brand" method="post">
+                                <th>Add Brand</th>
+                                <td><input type="text" id="name" name="name" placeholder="Brand name" required></td>
+                                <td><input type="submit" class="input_button" value="Add Brand"></td>
+                            </form>
+                        </tr>
+                        <tr>
+                            <form action="./php/exec.php?action=edit&type=brand" method="post">
+                                <th>Edit Name</th>
+                                <td>
+                                    <select id='id' name='id' required onchange="set_edit_brand_name(this);">
+                                        <option value="">- Select a Brand -</option>
+                                        <?php OutputBrandOptions($brands_sort); ?>
+                                    </select>
+                                    <div id="edit_brand_name" style="display:none;"><input type="text" id="name" name="name" required></div>
+                                </td>
+                                <td><input type="submit" class="input_button" value="Rename"></td>
+                            </form>
+                        </tr>
+                        <tr>
+                            <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this entry?');">
+                                <th>Delete</th>
+                                <td>
+                                    <select id='id' name='id' required>
+                                        <option value="">- Select a Brand -</option>
+                                        <?php OutputBrandOptions($brands_sort); ?>
+                                    </select>
+                                </td>
+                                <td><input type="submit" class="input_button delete" value="Delete"></td>
+                            </form>
+                        </tr>
+                    </table>
                     <br><br>
 
-                    Refresh exchange rates: 
-                    <form action='./php/exec.php?action=currency' method="post"><input type='submit' class='input_button' value='Refresh'></form>
+                    <div class="sub_title">Manage Product Types</div>
+                    <form action="./php/exec.php?action=add&type=type" method="post">
+                        Type Name: <input type='text' id='name' name='name' required>
+                        <input type='submit' class='input_button' value='Add Type'>
+                    </form>
+                    <br><br>
+
+                    <table class="admin_entry">
+                        <tr>
+                            <th>
+                                Refresh Exchange Rates: 
+                                <button onclick="window.location.href='./php/exec.php?action=currency';" class="input_button">Refresh</button>
+                            </th>
+                        </tr>
+                    </table>
+                    <form action='' method="post"></form>
                 </div>
             <?php } ?>
             
             <div class="container_header">PRODUCT LIST</div>
             <div class="container_content">
                 <div class="filter_panel">
-                    Filter by: <br>
+                    Filter by: 
                     <select id='filter_brand' onchange='toggle_products_display()'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
                     <select id='filter_type' onchange='toggle_products_display()'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
                 </div>
-
                 <div id='products' class="product_list">
                     <!-- Headings -->
                     Product Name: <?php echo SortTableButtons(0, false); ?><br>

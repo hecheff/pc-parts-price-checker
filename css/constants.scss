@@ -1,20 +1,28 @@
 // Basic properties
+$color_background:          #000411;
+$color_bg_product_list:     #101b3d;
+$color_bg_product_highlight:#33498a;
+$color_bg_product_goldtrim: #e7be37;
+$color_bg_header_footer_bg: #1e2844;
+
+/*
 $color_background:          #001100;
-$color_text:                #FFFFFF;
-
-$color_header_footer_bg:    #113311;
-$color_bg_admin_panel:      #005533;
-
 $color_bg_product_list:     #003300;
 $color_bg_product_highlight:#006600;
+$color_bg_header_footer_bg: #113311;
+*/
+
+$color_text:                #FFFFFF;
 
 $color_text_price_plus:     #00CC00;
 $color_text_price_minus:    #EE0000;
 
-
 $color_button_default:      #DDDDDD;
 $color_button_hover:        #999999;
 $color_button_active:       #666666;
+
+$color_delete_red:          #CC0000;
+$color_delete_bg:           #550000;
 
 $border_radius_default: 5px;
 $margin_default:    20px;
@@ -22,7 +30,8 @@ $margin_small:      10px;
 
 // Font size defaults
 $fontsize_default:          10pt;
-$fontsize_large:            12pt;
+$fontsize_medium:           12pt;
+$fontsize_large:            13pt;
 $fontsize_small:            8pt;
 
 $fontsize_product_title:    14pt;

@@ -11,14 +11,30 @@
 
     <script>
         function toggle_display(div_id) {
-            var x = document.getElementById(div_id);
-
+            var x = $('#'+div_id)[0];
             if (x.style.display === "none") {
                 x.style.display = "block";
             } else {
                 x.style.display = "none";
             }
         } 
+
+        // Set the brand name in the edit field 
+        function set_edit_brand_name(select) {
+            var selected = select.options[select.selectedIndex];
+            var target_div = $('#edit_brand_name')[0];
+            var target_input = $('#edit_brand_name').children('#name')[0];
+
+            //alert(target_input);
+
+            if (selected.value == "") {
+                target_div.style.display = "none";
+            } else {
+                target_div.style.display = "block";
+
+                target_input.value = selected.innerHTML;
+            }
+        }
 
         // Set display filters
         function toggle_products_display() {

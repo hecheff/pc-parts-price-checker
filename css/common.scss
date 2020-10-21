@@ -36,6 +36,8 @@ div.container_header {
     font-weight: bold;
     font-size: $fontsize_large;
     text-transform: uppercase;
+
+    border-bottom: 3px solid $color_bg_product_goldtrim;
 }
 div.container_content {
     width: auto;
@@ -45,7 +47,14 @@ div.container_content {
 
     background-color: $color_bg_product_list;
 }
+div.container_content div.sub_title {
+    width: auto;
+    font-size: $fontsize_medium;
+    font-weight: bold;
+    text-decoration: underline;
 
+    margin-bottom: $margin_small;
+}
 
 input[type=text], input[type=number], input[type=date], select {
     padding: 5px;
@@ -83,6 +92,14 @@ input[type=text], input[type=number], input[type=date], select {
 .input_button:hover     { background-color: $color_button_hover; }
 .input_button:active    { background-color: $color_button_active; }
 
+input[type=submit].delete {
+    color: $color_delete_red;
+    border-color: $color_delete_red;
+    background-color: $color_delete_bg;
+}
+input[type=submit].delete:hover { background-color: $color_delete_red/2; }
+input[type=submit].delete:active { background-color: $color_delete_red/4; }
+
 div.wrapper_main {
     width:auto;
 
@@ -97,8 +114,8 @@ div.wrapper_main {
 
 // V2
 div.filter_panel {
-    width:auto;
-    @include defaultDivFrame();
+    width: auto;
+    margin: $margin_default auto;
 }
 
 div.product_list {
@@ -191,15 +208,6 @@ div.product_list div.entry_wrapper {
 
     display: inline-block;
 }
-div.product_list div.list_header { 
-    width: auto; 
-    font-size: $fontsize_small; 
-    font-weight: bold; 
-    background-color: $color_bg_admin_panel; 
-    border-radius: $border_radius_default;
-
-    padding: 10px 0;
-}
 div.product_list div.entry_item { border-radius: $border_radius_default; }
 div.product_list div.entry_item:hover { background-color: $color_bg_product_highlight; } 
 div.product_list div.entry_item div.edit_panel {
@@ -256,31 +264,26 @@ span.sort_button { cursor: pointer; font-size:$fontsize_large; color: $color_but
 span.sort_button:hover  { color: $color_button_hover; }
 span.sort_button:active { color: $color_button_active; }
 
-div.admin_panel {
-    @include defaultDivFrame();
-    background-color: $color_bg_admin_panel;
-}
-
-table.add_product {
+table.admin_entry {
     width: 100%;
     border-collapse: collapse;
 }
-table.add_product tr th {
+table.admin_entry tr th {
     text-align: left;
     padding-right: $margin_default;
     padding-bottom: $margin_small;
 
     white-space: nowrap;
 }
-table.add_product tr td {
+table.admin_entry tr td {
     text-align: left;
     padding-bottom: $margin_small;
     box-sizing: border-box;
 
     overflow: hidden;
 }
-table.add_product tr td input, 
-table.add_product tr td select {
+table.admin_entry tr td input, 
+table.admin_entry tr td select {
     width: 100%;
 }
 
@@ -300,7 +303,7 @@ p.price_minus {
 div.header {
     width: 100%;
     min-height: 50px;
-    background-color: $color_header_footer_bg;
+    background-color: $color_bg_header_footer_bg;
 
     margin: 0 0 30px 0;
 }
@@ -308,7 +311,7 @@ div.header {
 div.footer {
     width: 100%;
     min-height: 50px;
-    background-color: $color_header_footer_bg;
+    background-color: $color_bg_header_footer_bg;
 
     clear: both;
     float: none;
