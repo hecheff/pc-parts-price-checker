@@ -24,6 +24,29 @@ p {
     margin: 0; padding: 0;
 }
 
+div.container_header {
+    width: auto;
+    height: 20px;
+    margin-top: $margin_default;
+    padding: $margin_small;
+    border-radius: $border_radius_default $border_radius_default 0 0;
+
+    background-color: $color_bg_product_highlight;
+
+    font-weight: bold;
+    font-size: $fontsize_large;
+    text-transform: uppercase;
+}
+div.container_content {
+    width: auto;
+    min-height: 20px;
+    padding: $margin_small;
+    border-radius: 0 0 $border_radius_default $border_radius_default;
+
+    background-color: $color_bg_product_list;
+}
+
+
 input[type=text], input[type=number], input[type=date], select {
     padding: 5px;
     border-radius: 5px;
