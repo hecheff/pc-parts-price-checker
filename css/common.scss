@@ -113,7 +113,7 @@ input[type=submit].delete:active { background-color: $color_delete_red/4; }
 div.wrapper_main {
     width:auto;
 
-    margin: $margin_small 150px;
+    margin: $margin_default 150px;
     min-height:100%;
 }
 @media screen and (max-width: $width_threshold) {
