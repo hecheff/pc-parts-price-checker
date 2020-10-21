@@ -100,7 +100,7 @@
                             <form action="./php/exec.php?action=edit&type=brand" method="post">
                                 <th>Edit Name</th>
                                 <td>
-                                    <select id='id' name='id' required onchange="set_edit_brand_name(this);">
+                                    <select id='id' name='id' required onchange="set_edit_brand_name(this, 'edit_brand_name');">
                                         <option value="">- Select a Brand -</option>
                                         <?php OutputBrandOptions($brands_sort); ?>
                                     </select>
@@ -110,7 +110,7 @@
                             </form>
                         </tr>
                         <tr>
-                            <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this entry?');">
+                            <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this brand?');">
                                 <th>Delete</th>
                                 <td>
                                     <select id='id' name='id' required>
@@ -125,10 +125,40 @@
                     <br><br>
 
                     <div class="sub_title">Manage Product Types</div>
-                    <form action="./php/exec.php?action=add&type=type" method="post">
-                        Type Name: <input type='text' id='name' name='name' required>
-                        <input type='submit' class='input_button' value='Add Type'>
-                    </form>
+                    <table class="admin_entry">
+                        <tr>
+                            <form action="./php/exec.php?action=add&type=type" method="post">
+                                <th>Add Type</th>
+                                <td><input type="text" id="name" name="name" placeholder="Type Name" required></td>
+                                <td><input type="submit" class="input_button" value="Add Type"></td>
+                            </form>
+                        </tr>
+                        <tr>
+                            <form action="./php/exec.php?action=edit&type=type" method="post">
+                                <th>Edit Name</th>
+                                <td>
+                                    <select id='id' name='id' required onchange="set_edit_brand_name(this, 'edit_type_name');">
+                                        <option value="">- Select Product Type -</option>
+                                        <?php OutputBrandOptions($types_sort); ?>
+                                    </select>
+                                    <div id="edit_type_name" style="display:none;"><input type="text" id="name" name="name" required></div>
+                                </td>
+                                <td><input type="submit" class="input_button" value="Rename"></td>
+                            </form>
+                        </tr>
+                        <tr>
+                            <form action="./php/exec.php?action=delete&type=type" method="post" onsubmit="return confirm('Delete this product type?');">
+                                <th>Delete</th>
+                                <td>
+                                    <select id='id' name='id' required>
+                                        <option value="">- Select Product Type -</option>
+                                        <?php OutputBrandOptions($types_sort); ?>
+                                    </select>
+                                </td>
+                                <td><input type="submit" class="input_button delete" value="Delete"></td>
+                            </form>
+                        </tr>
+                    </table>
                     <br><br>
 
                     <table class="admin_entry">

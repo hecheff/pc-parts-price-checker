@@ -20,10 +20,10 @@
         } 
 
         // Set the brand name in the edit field 
-        function set_edit_brand_name(select) {
+        function set_edit_brand_name(select, target_div_id) {
             var selected = select.options[select.selectedIndex];
-            var target_div = $('#edit_brand_name')[0];
-            var target_input = $('#edit_brand_name').children('#name')[0];
+            var target_div = $('#'+target_div_id)[0];
+            var target_input = $('#'+target_div_id).children('#name')[0];
 
             //alert(target_input);
 
