@@ -13,7 +13,7 @@
         function toggle_display(div_id) {
             var x = $('#'+div_id)[0];
             if (x.style.display === "none") {
-                x.style.display = "block";
+                x.style.display = "table-cell";
             } else {
                 x.style.display = "none";
             }
@@ -104,6 +104,33 @@
                     entry_items[i].parentNode.insertBefore(entry_items[i+1], entry_items[i]);
                     flag_sorting = true;
                 }
+            }
+        }
+
+        function ExecuteTableSort() {
+            var dropmenu_sort = $('#select_sort')[0].selectedIndex;
+            switch (dropmenu_sort) {
+                // Product Name
+                case 1:     sortTable_v2(0, false, true);   break;
+                case 2:     sortTable_v2(0, false, false);  break;
+                // Brand
+                case 3:     sortTable_v2(1, false, true);   break;
+                case 4:     sortTable_v2(1, false, false);  break;
+                // Type
+                case 5:     sortTable_v2(2, false, true);   break;
+                case 6:     sortTable_v2(2, false, false);  break;
+                // Release Date
+                case 7:     sortTable_v2(3, false, true);   break;
+                case 8:     sortTable_v2(3, false, false);  break;
+                // JP Price (JPY)
+                case 9:     sortTable_v2(4, true, true);    break;
+                case 10:    sortTable_v2(4, true, false);   break;
+                // HK Price (HKD)
+                case 11:    sortTable_v2(5, true, true);    break;
+                case 12:    sortTable_v2(5, true, false);   break;
+                // Price Diff. (JP - HK)
+                case 13:    sortTable_v2(6, true, true);    break;
+                case 14:    sortTable_v2(6, true, false);   break;
             }
         }
     </script>

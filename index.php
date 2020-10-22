@@ -63,12 +63,12 @@
                                 <td><select id='type' name='type' required><?php OutputTypeOptions($types_sort); ?></select></td>
                             </tr>
                             <tr>
-                                <th>Price in HK (HKD)</th>
-                                <td><input type='number' id='price_hk' name='price_hk' placeholder="$" required></td>
-                            </tr>
-                            <tr>
                                 <th>Price in Japan (JPY)</th>
                                 <td><input type='number' id='price_jp' name='price_jp' placeholder="￥" required></td>
+                            </tr>
+                            <tr>
+                                <th>Price in HK (HKD)</th>
+                                <td><input type='number' id='price_hk' name='price_hk' placeholder="$" required></td>
                             </tr>
                             <tr>
                                 <th>Notes</th>
@@ -179,20 +179,24 @@
             <div class="container_content">
                 <div class="filter_panel">
                     Filter by: 
-                    <select id='filter_brand' onchange='toggle_products_display()'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
-                    <select id='filter_type' onchange='toggle_products_display()'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
+                    <select id='filter_brand' onchange='toggle_products_display();'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
+                    <select id='filter_type' onchange='toggle_products_display();'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
+                    <br><br>
+                    <?php // (category_id, is_number, is_asc) 
+                        $categories = ["Brand", "Type", "Release Date", "JP Price (JPY)", "HK Price (HKD)", "Price Diff. (JP-HK)"];
+                    ?>
+                    <select id="select_sort" onchange="ExecuteTableSort();">
+                        <option>- Sort products by -</option>
+                        <?php 
+                            foreach ($categories as $category) {
+                                echo "<option>".$category." (▲ Ascending)"."</option>";
+                                echo "<option>".$category." (▼ Descending)"."</option>";
+                            }
+                        ?>
+                    </select>
+                    <br><br>
                 </div>
                 <div id='products' class="product_list">
-                    <!-- Headings -->
-                    Product Name: <?php echo SortTableButtons(0, false); ?><br>
-                    Brand: <?php echo SortTableButtons(1, false); ?><br>
-                    Type: <?php echo SortTableButtons(2, false); ?><br>
-                    Release Date: <?php echo SortTableButtons(3, false); ?><br>
-                    JP Price (JPY): <?php echo SortTableButtons(4, true); ?><br>
-                    HK Price (HKD): <?php echo SortTableButtons(5, true); ?><br>
-                    Price Diff. (JP - HK): <?php echo SortTableButtons(6, true); ?>
-                    <br><br>
-                    
                     <?php foreach ($products as $product) { ?>
                         <div class="entry_item" name="<?php echo $product['brand']."_".$product['type']; ?>">
                             <?php 
@@ -224,9 +228,10 @@
                                     $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
                                 }
                             ?>
+
                             <table class="product_inner_table">
                                 <tr>
-                                    <td class="select" rowspan="4">
+                                    <td class="title" colspan="5">
                                         <div class="value_container">
                                             <span class='product_title hidden_val'><?php echo $product['name']; ?></span>
                                             <span class='product_brand hidden_val'><?php echo OutputNameById($brands, $product['brand']); ?></span>
@@ -236,93 +241,110 @@
                                             <span class='price_hk hidden_val'><?php echo $raw_value_hk; ?></span>
                                             <span class='price_diff hidden_val'><?php echo $price_difference; ?></span>
                                         </div>
-                                        <input type='checkbox'>
-                                    </td>
-                                    <td class="thumbnail" rowspan="4">
-                                        <div class="image" <?php echo $img_style; ?>></div>
-                                    </td>
-                                    <td class="title" colspan="5">
                                         <?php echo $product['name']; ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="brand">
+                                    <td class="select" rowspan="2">
+                                        <input type='checkbox'>
+                                    </td>
+                                    <td class="thumbnail" rowspan="2">
+                                        <div class="image" <?php echo $img_style; ?>></div>
+                                    </td>
+                                    <td class="brand cell_upper">
                                         <div class="inner_title">Brand</div>
+                                        <?php echo OutputNameById($brands, $product['brand']); ?>
                                     </td>
-                                    <td class="type">
-                                        <div class="inner_title">Type</div>
-                                    </td>
-                                    <td class="price_jp">
+                                    <td class="price_jp" style="width: 40%" colspan="2">
                                         <div class="inner_title">Price (JP)</div>
-                                    </td>
-                                    <td class="price_hk">
-                                        <div class="inner_title">Price (HK)</div>
-                                    </td>
-                                    <td class="price_diff">
-                                        <div class="inner_title">Difference (JP - HK)</div>
+                                        <?php echo $session_currency_val_jp.$original_price_jp; ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="brand">
-                                        <?php echo OutputNameById($brands, $product['brand']); ?>
-                                    </td>
-                                    <td class="type">
+                                    <td class="type cell_upper">
+                                        <div class="inner_title">Type</div>
                                         <?php echo OutputNameById($types, $product['type']); ?>
                                     </td>
-                                    <td class="price_jp">
-                                        <?php echo $session_currency_val_jp.$original_price_jp; ?>
-                                    </td>
-                                    <td class="price_hk">
+                                    <td class="price_hk" colspan="2">
+                                        <div class="inner_title">Price (HK)</div>
                                         <?php echo $session_currency_val_hk.$original_price_hk; ?>
                                     </td>
-                                    <td class="price_diff">
+                                </tr>
+                                <tr>
+                                    <td class="release_date cell_upper" colspan="2">
+                                        <div class="inner_title">Release Date</div>
+                                        <?php echo $release_date; ?>
+                                    </td>
+                                    <td class="price_diff" colspan="3">
+                                        <div class="inner_title">Difference (JP - HK)</div>
                                         <?php echo "<p class='$price_class'>".$price_difference_text." (".number_format($price_percentage, 0, '.', ',')."%".")</p>"; ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="release_date">
-                                        <div class="inner_title">Release Date</div>
-                                        <?php echo $release_date; ?>
-                                    </td>
-
-                                    <td class="notes" colspan="3">
+                                    <td colspan="4">
                                         <div class="inner_title">Notes</div>
                                         <?php echo !empty($product['notes']) ? $product['notes'] : "--"; ?>
                                     </td>
-
-                                    <td class="edit_button">
+                                    <td colspan="2" style="text-align:right;">
                                         <?php if ($admin_mode) { ?>
                                             <div class="entry edit">
-                                                <input type='button' class='input_button' value='Edit' style="margin: 0 10px;" 
+                                                <input type='button' class='input_button' value='Edit'
                                                     onclick='toggle_display("editPanel_<?php echo $product['id']; ?>");'>
                                             </div>
                                         <?php } ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
-                                    <?php if ($admin_mode) { ?>
-                                        <div class="edit_panel" style="display:none;" id="editPanel_<?php echo $product['id']; ?>">
-                                            Edit Entry
+                                    <td colspan="6" class="edit_panel" style="display:none;" id="editPanel_<?php echo $product['id']; ?>">
+                                        <?php if ($admin_mode) { ?>
                                             <form action='./php/exec.php?action=edit&type=product' method='post' enctype='multipart/form-data'>
                                                 <input type='hidden' id='id' name='id' value='<?php echo $product['id']; ?>'>
-                                                Product Name: <input type='text' id='name' name='name' value='<?php echo $product['name']; ?>' required><br>
-                                                Brand: <select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort, $product['brand']); ?></select>
-                                                Product Type: <select id='type' name='type' required><?php OutputTypeOptions($types_sort, $product['type']); ?></select>
-                                                <br>
-                                                Price in JP (JPY): ￥<input type='number' id='price_jp' name='price_jp' value='<?php echo $product['price_jp']; ?>' required><br>
-                                                Price in HK (HDK): $<input type='number' id='price_hk' name='price_hk' value='<?php echo $product['price_hk']; ?>' required><br>
-                                                Notes: <input type='text' id='notes' name='notes' value='<?php echo $product['notes']; ?>'><br>
-                                                Release Date: <input type='date' id='release_date' name='release_date' value='<?php echo $product['release_date']; ?>'><br>
-                                                Image Thumbnail: <input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"><br>
-                                                <input type='submit' value='Save'>
-                                            </form>
-                                            <form action='./php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm("Delete this entry?");'>
-                                                <input type='hidden' id='id' name='id' value='<?php echo $product['id']; ?>'>
-                                                <input type='submit' value='Delete'>
-                                            </form>
-                                        </div>
-                                    <?php } ?>
+                                                <table class="admin_entry">
+                                                    <tr>
+                                                        <th>Product Name</th>
+                                                        <td><input type='text' id='name' name='name' value='<?php echo $product['name']; ?>' required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Brand</th>
+                                                        <td><select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort, $product['brand']); ?></select></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Type</th>
+                                                        <td><select id='type' name='type' required><?php OutputTypeOptions($types_sort, $product['type']); ?></select></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Price in Japan (JPY)</th>
+                                                        <td><input type='number' id='price_jp' name='price_jp' placeholder="￥" value='<?php echo $product['price_jp']; ?>' required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Price in HK (HKD)</th>
+                                                        <td><input type='number' id='price_hk' name='price_hk' placeholder="$" value='<?php echo $product['price_hk']; ?>' required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Notes</th>
+                                                        <td><input type='text' id='notes' name='notes' value='<?php echo $product['notes']; ?>'></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Release Date</th>
+                                                        <td><input type='date' id='release_date' name='release_date' value='<?php echo $product['release_date']; ?>'></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Image Thumbnail</th>
+                                                        <td><input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input type='submit' class='input_button' value='Update Product'></td>
+                                                    </tr>
+                                                </form>
+                                                <form action='./php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm("Delete this product?");'>
+                                                    <input type='hidden' id='id' name='id' value='<?php echo $product['id']; ?>'>
+                                                    <tr>
+                                                        <th>Delete Product</th>
+                                                        <td><input type="submit" class="input_button delete" value="Delete"></td>
+                                                    </tr>
+                                                </form>
+                                            </table>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             </table>

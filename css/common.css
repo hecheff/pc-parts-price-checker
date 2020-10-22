@@ -134,16 +134,11 @@ div.filter_panel {
 
 div.product_list {
   width: auto;
-  border-radius: 5px;
-  padding: 20px;
   background-color: #101b3d;
-  margin: 20px auto;
 }
 
 @media screen and (max-width: 980px) {
   div.product_list {
-    border-radius: 5px;
-    padding: 10px;
     margin: 10px auto;
   }
 }
@@ -156,17 +151,18 @@ div.product_list div.entry_item:hover {
   background-color: #33498a;
 }
 
-div.product_list table.product_inner_table tr td div.inner_title {
-  font-size: 8pt;
-  text-decoration: underline;
-}
-
 div.value_container {
   display: none;
 }
 
+div.product_list table.product_inner_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
 div.product_list table.product_inner_table tr td {
-  padding: 5px;
+  padding: 5px 0;
 }
 
 div.product_list table.product_inner_table tr td.select {
@@ -201,31 +197,45 @@ div.product_list table.product_inner_table tr td.thumbnail div.image {
   }
 }
 
+div.product_list table.product_inner_table tr td {
+  padding: 5px;
+}
+
+div.product_list table.product_inner_table tr td.cell_upper {
+  vertical-align: top;
+}
+
+div.product_list table.product_inner_table tr td div.inner_title {
+  font-size: 8pt;
+  text-decoration: underline;
+  color: #CCCCCC;
+}
+
 div.product_list table.product_inner_table tr td.title {
   font-size: 14pt;
   font-weight: bold;
 }
 
 div.product_list table.product_inner_table tr td.brand,
-div.product_list table.product_inner_table tr td.type,
+div.product_list table.product_inner_table tr td.type {
+  width: auto;
+  vertical-align: top;
+}
+
 div.product_list table.product_inner_table tr td.price_jp,
 div.product_list table.product_inner_table tr td.price_hk,
 div.product_list table.product_inner_table tr td.price_diff {
-  width: 18%;
-  vertical-align: top;
-}
-
-div.product_list table.product_inner_table tr td.price_diff {
-  width: 25%;
-  vertical-align: top;
-}
-
-div.product_list table.product_inner_table tr td.edit_button {
+  width: auto;
   text-align: right;
+  vertical-align: top;
+  white-space: normal;
 }
 
 div.product_list table.product_inner_table tr td.price_diff {
   font-size: 13pt;
+}
+
+div.product_list table.product_inner_table tr td.edit_button {
   text-align: right;
 }
 

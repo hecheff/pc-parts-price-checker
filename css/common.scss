@@ -131,14 +131,14 @@ div.filter_panel {
 div.product_list {
     width: auto;
 
-    @include defaultDivFrame();
+    //@include defaultDivFrame();
     background-color: $color_bg_product_list;
 
-    margin: $margin_default auto;
+    //margin: $margin_default auto;
 }
 @media screen and (max-width: $width_threshold) {
     div.product_list {
-        @include defaultDivFrame_small();
+        //@include defaultDivFrame_small();
         margin: $margin_small auto;
     }
 }
@@ -147,20 +147,19 @@ div.product_list {
 div.product_list div.entry_item { border-radius: $border_radius_default; }
 div.product_list div.entry_item:hover { background-color: $color_bg_product_highlight; } 
 
-div.product_list table.product_inner_table tr td div.inner_title {
-    font-size: $fontsize_small;
-    text-decoration: underline;
-}
 
 // Store values for sorting
 div.value_container { display: none; }
-div.product_list table.product_inner_table { }
+div.product_list table.product_inner_table { 
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: $margin_default;
+    
+    // border: 1px solid #FFFFFF;
+}
 div.product_list table.product_inner_table tr td { 
-    padding: 5px; 
-
-    // white-space: nowrap;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
+    padding: 5px 0;
+    // border: 1px solid #FFFFFF;
 }
 div.product_list table.product_inner_table tr td.select { width: 5%; }
 div.product_list table.product_inner_table tr td.thumbnail { width: 100px; height: 100px; }
@@ -169,7 +168,6 @@ div.product_list table.product_inner_table tr td.thumbnail div.image {
     background-position: center; background-size: contain; background-repeat: no-repeat;
 }
 
-
 @media screen and (max-width: $width_threshold) { 
     div.product_list table.product_inner_table tr td.thumbnail { width: 50px; height: 50px; }
     div.product_list table.product_inner_table tr td.thumbnail div.image {
@@ -177,33 +175,46 @@ div.product_list table.product_inner_table tr td.thumbnail div.image {
     }
 }
 
+div.product_list table.product_inner_table tr td { padding: 5px; }
+div.product_list table.product_inner_table tr td.cell_upper { vertical-align: top; }
+div.product_list table.product_inner_table tr td div.inner_title {
+    font-size: $fontsize_small;
+    text-decoration: underline;
+    color: $color_table_title_small;
+}
+
 div.product_list table.product_inner_table tr td.title {
     font-size: $fontsize_product_title;
     font-weight: bold;
 }
-
 div.product_list table.product_inner_table tr td.brand, 
-div.product_list table.product_inner_table tr td.type, 
+div.product_list table.product_inner_table tr td.type {
+    width: auto;
+    vertical-align: top;
+}
+
+
 div.product_list table.product_inner_table tr td.price_jp, 
 div.product_list table.product_inner_table tr td.price_hk, 
 div.product_list table.product_inner_table tr td.price_diff {
-    width: 18%;
+    width: auto;
+    text-align: right;
     vertical-align: top;
+    white-space: normal;
+}
+div.product_list table.product_inner_table tr td.price_diff {
+    font-size: $fontsize_large;
 }
 
-div.product_list table.product_inner_table tr td.price_diff {
-    width: 25%;
-    vertical-align: top;
-}
 
 div.product_list table.product_inner_table tr td.edit_button {
     text-align: right;
 }
 
-div.product_list table.product_inner_table tr td.price_diff {
-    font-size: $fontsize_large;
-    text-align: right;
-}
+
+
+
+
 
 
 
