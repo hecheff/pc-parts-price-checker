@@ -15,7 +15,7 @@
 
 
     // Shipping Rates (_Origin_Destination_Type_Weight_Currency)
-    define('SHIPPINGRATE_HK_JP_SPEEDPOST_5KG_HKD', 436);
+    define('SHIPPINGRATE_HK_JP_SPEEDPOST_5KG_HKD',  436);
     define('SHIPPINGRATE_HK_JP_SPEEDPOST_10KG_HKD', 605);
     define('SHIPPINGRATE_HK_JP_SPEEDPOST_20KG_HKD', 937);
     define('SHIPPINGRATE_HK_JP_SPEEDPOST_30KG_HKD', 1275);

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./css/common.css?ver=<?php echo CSS_VERSION; ?>">
     <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="./js/common.js"></script>
+    <?php include("fancybox.php"); ?>
 
     <script>
         function toggle_display(div_id) {

@@ -247,8 +247,9 @@
 
                                 // Set image thumbnail
                                 $thumbnail_url = "./images/products/".$product['id'].".jpg";
-                                $img_style = "";
+                                $img_style  = "";
                                 if (file_exists($thumbnail_url)) {
+                                    $img_url = "";
                                     $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
                                 }
                             ?>
@@ -272,7 +273,9 @@
                                         <input type='checkbox'>
                                     </td>
                                     <td class="thumbnail">
+                                        <?php echo !empty($img_style) ? "<a href='$thumbnail_url' class='fancybox' title='".$product['name']."'>" : ""; ?>
                                         <div class="image" <?php echo $img_style; ?>></div>
+                                        <?php echo !empty($img_style) ? "</a>" : ""; ?>
                                     </td>
                                     <td class="brand">
                                         <div class="inner_title">Brand</div>
@@ -320,7 +323,9 @@
                                         <input type='checkbox'>
                                     </td>
                                     <td class="thumbnail" rowspan="2">
-                                        <div class="image" <?php echo $img_style; ?>></div>
+                                        <?php echo !empty($img_style) ? "<a href='$thumbnail_url' class='fancybox' title='".$product['name']."'>" : ""; ?>
+                                            <div class="image" <?php echo $img_style; ?>></div>
+                                        <?php echo !empty($img_style) ? "</a>" : ""; ?>
                                     </td>
                                     <td class="brand cell_upper">
                                         <div class="inner_title">Brand</div>
