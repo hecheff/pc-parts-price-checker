@@ -26,6 +26,10 @@ p {
     margin: 0; padding: 0;
 }
 
+a           { color: $color_link_default; }
+a:hover     { color: $color_link_hover; }
+a:active    { color: $color_link_active; }
+
 div.notice_panel {
     width: auto;
     min-height: 20px;
@@ -268,7 +272,7 @@ div.header div.wrapper div.title {
     float: left;
 }
 div.header div.wrapper div.title div.sub_title {
-    height: auto;
+    height: 15px;
     font-size: $fontsize_small;
 }
 

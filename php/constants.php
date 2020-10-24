@@ -6,6 +6,9 @@
     // Database & Domain details
     include('_db_credentials.php');
 
+    // Active language codes
+    define('LANGUAGE_CODES_ACTIVE', ['en', 'jp']);
+
     // Admin Exec
     define('EXEC_ACTION_ALLOWED',   ['add', 'edit', 'delete']);
     define('EXEC_TYPE_ALLOWED',     ['product', 'brand', 'type', 'currency']);

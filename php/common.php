@@ -7,6 +7,13 @@
     include('settings.php');
     include('constants.php');
 
+    // Read language data (check for forced language set by query)
+    if (!isset($_SESSION['lang']) || !in_array($_SESSION['lang'], LANGUAGE_CODES_ACTIVE)) {
+        $_SESSION['lang'] = 'en';
+    }
+    include($_SERVER['DOCUMENT_ROOT'].'/lang/'.$_SESSION['lang'].'/common.php');
+    $lang_class = new Lang;
+    $GLOBALS['lang_data'] = $lang_class->GetLanguageData();
     // Establish connection to database
     $curr_env = $_SERVER['HTTP_HOST'];
     if (strpos($curr_env, DEFAULT_DOMAIN) == true) {
@@ -28,6 +35,7 @@
     if (isset($_SESSION['username']) && !empty($_SESSION['username']) && isset($_SESSION['password']) && !empty($_SESSION['password'])) {
         SetUserSession($_SESSION['username'], $_SESSION['password']);
     }
+
 
     // Output Brand Options
     function OutputBrandOptions($brands_list, $select = null) {

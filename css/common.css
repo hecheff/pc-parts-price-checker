@@ -29,6 +29,18 @@ p {
   padding: 0;
 }
 
+a {
+  color: #00AA99;
+}
+
+a:hover {
+  color: #00d3be;
+}
+
+a:active {
+  color: #7efff2;
+}
+
 div.notice_panel {
   width: auto;
   min-height: 20px;
@@ -360,7 +372,7 @@ div.header div.wrapper div.title {
 }
 
 div.header div.wrapper div.title div.sub_title {
-  height: auto;
+  height: 15px;
   font-size: 8pt;
 }
 
