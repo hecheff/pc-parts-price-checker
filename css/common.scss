@@ -251,7 +251,45 @@ table.admin_entry tr td select {
     width: 100%;
 }
 
+div.item_list_wrapper {
+    width: 100%;
+    margin: 0 auto;
 
+    position: fixed;
+    bottom: 0;
+
+    z-index: 2;
+}
+div.item_list_wrapper div.item_list_header {
+    font-weight: bold;
+    font-size: $fontsize_large;
+    text-transform: uppercase;
+
+    width: auto;
+
+    padding: $margin_small;
+
+    border-top: 1px solid $color_outline_item_list;
+    border-left: 1px solid $color_outline_item_list;
+    border-right: 1px solid $color_outline_item_list;
+    border-radius: $border_radius_default $border_radius_default 0 0;
+
+    background-color: $color_bg_item_list;
+    
+}
+div.item_list_wrapper div.item_list_content {
+    width: auto;
+    min-height: 200px;
+    
+    padding: $margin_small;
+
+    border-left: 1px solid $color_outline_item_list;
+    border-right: 1px solid $color_outline_item_list;
+    border-bottom: 1px solid $color_outline_item_list;
+    border-radius: 0;
+
+    background-color: $color_bg_item_list;
+}
 
 
 div.header {
@@ -291,10 +329,22 @@ div.header div.wrapper div.user_panel div.user_panel_heading {
     
     text-decoration: underline;
 }
+div.header div.wrapper div.user_panel input.login_username { width: 150px; }
+div.header div.wrapper div.user_panel input.login_password { width: 80px; }
 
-div.divider {
-    clear: both;
-    float: none;
+@media screen and (max-width: $width_threshold) { 
+    div.header div.wrapper div.title {
+        text-align: center;
+
+        clear: both; 
+        float: none; 
+    }
+    div.header div.wrapper div.user_panel { 
+        margin: $margin_small auto;
+
+        clear: both; 
+        float: none; 
+    }
 }
 
 div.footer {
@@ -306,4 +356,9 @@ div.footer {
     float: none;
     position: relative;
     bottom: 0;
+}
+
+div.divider {
+    clear: both;
+    float: none;
 }

@@ -269,9 +269,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="select">
-                                        <input type='checkbox'>
-                                    </td>
                                     <td class="thumbnail">
                                         <?php echo !empty($img_style) ? "<a href='$thumbnail_url' class='fancybox' title='".$product['name']."'>" : ""; ?>
                                         <div class="image" <?php echo $img_style; ?>></div>
@@ -303,7 +300,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="7">
                                         <div class="inner_title">Notes</div>
                                         <?php echo !empty($product['notes']) ? $product['notes'] : "--"; ?>
                                     </td>
@@ -319,9 +316,11 @@
                             </table>
                             <table class="product_inner_table product_table_mobile">
                                 <tr>
-                                    <td class="select" rowspan="2">
-                                        <input type='checkbox'>
+                                    <td class="title" colspan="5">
+                                        <?php echo $product['name']; ?>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td class="thumbnail" rowspan="2">
                                         <?php echo !empty($img_style) ? "<a href='$thumbnail_url' class='fancybox' title='".$product['name']."'>" : ""; ?>
                                             <div class="image" <?php echo $img_style; ?>></div>
@@ -331,7 +330,7 @@
                                         <div class="inner_title">Brand</div>
                                         <?php echo OutputNameById($brands, $product['brand']); ?>
                                     </td>
-                                    <td class="price_jp" style="width: 40%" colspan="2">
+                                    <td class="price_jp" style="width: 40%" colspan="3">
                                         <div class="inner_title">Price (JP)</div>
                                         <?php echo $session_currency_val_jp.$original_price_jp; ?>
                                     </td>
@@ -341,7 +340,7 @@
                                         <div class="inner_title">Type</div>
                                         <?php echo OutputNameById($types, $product['type']); ?>
                                     </td>
-                                    <td class="price_hk" colspan="2">
+                                    <td class="price_hk" colspan="3">
                                         <div class="inner_title">Price (HK)</div>
                                         <?php echo $session_currency_val_hk.$original_price_hk; ?>
                                     </td>
@@ -431,6 +430,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- <div class="item_list_wrapper">
+            <div class="item_list_header">ITEM LIST</div>
+            <div class="item_list_content"></div>
+        </div> -->
+
         <?php include('./php/footer.php'); ?>
     </body>
 </html>

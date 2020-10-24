@@ -27,8 +27,8 @@
             <div class="user_panel_heading"><?php echo OutputLang('user_panel_title'); ?></div>
             <?php if (!isset($_SESSION['username']) || empty($_SESSION['username']) || !isset($_SESSION['password']) || empty($_SESSION['password'])) : ?>
                 <form action="/php/login.php" method="post">
-                    <input type="text" id="username" name="username" placeholder="<?php echo OutputLang('user_panel_username'); ?>" maxlength="32" required>
-                    <input type="password" id="password" name="password" placeholder="<?php echo OutputLang('user_panel_password'); ?>" maxlength="32" required>
+                    <input type="text" id="username" name="username" class="login_username" placeholder="<?php echo OutputLang('user_panel_username'); ?>" maxlength="32" required>
+                    <input type="password" id="password" name="password" class="login_password" placeholder="<?php echo OutputLang('user_panel_password'); ?>" maxlength="32" required>
                     <input type="submit" class="input_button" value="<?php echo OutputLang('user_panel_button_login'); ?>">
                 </form>
             <?php else: ?>

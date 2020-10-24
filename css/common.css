@@ -351,6 +351,38 @@ table.admin_entry tr td select {
   width: 100%;
 }
 
+div.item_list_wrapper {
+  width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+}
+
+div.item_list_wrapper div.item_list_header {
+  font-weight: bold;
+  font-size: 13pt;
+  text-transform: uppercase;
+  width: auto;
+  padding: 10px;
+  border-top: 1px solid #FFFFFFEE;
+  border-left: 1px solid #FFFFFFEE;
+  border-right: 1px solid #FFFFFFEE;
+  border-radius: 5px 5px 0 0;
+  background-color: #000000EE;
+}
+
+div.item_list_wrapper div.item_list_content {
+  width: auto;
+  min-height: 200px;
+  padding: 10px;
+  border-left: 1px solid #FFFFFFEE;
+  border-right: 1px solid #FFFFFFEE;
+  border-bottom: 1px solid #FFFFFFEE;
+  border-radius: 0;
+  background-color: #000000EE;
+}
+
 div.header {
   width: 100%;
   height: auto;
@@ -390,9 +422,25 @@ div.header div.wrapper div.user_panel div.user_panel_heading {
   text-decoration: underline;
 }
 
-div.divider {
-  clear: both;
-  float: none;
+div.header div.wrapper div.user_panel input.login_username {
+  width: 150px;
+}
+
+div.header div.wrapper div.user_panel input.login_password {
+  width: 80px;
+}
+
+@media screen and (max-width: 800px) {
+  div.header div.wrapper div.title {
+    text-align: center;
+    clear: both;
+    float: none;
+  }
+  div.header div.wrapper div.user_panel {
+    margin: 10px auto;
+    clear: both;
+    float: none;
+  }
 }
 
 div.footer {
@@ -403,5 +451,10 @@ div.footer {
   float: none;
   position: relative;
   bottom: 0;
+}
+
+div.divider {
+  clear: both;
+  float: none;
 }
 /*# sourceMappingURL=common.css.map */

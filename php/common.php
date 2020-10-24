@@ -353,7 +353,7 @@
     }
     // Reset credentials & user's session details
     function ResetUserSessionDetails() {
-        $_SESSION['username']        = null;
+        $_SESSION['username']       = null;
         $_SESSION['password']       = null;
         $_SESSION['user_details']   = null;
     }
