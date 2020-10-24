@@ -366,3 +366,9 @@
         }
         $_SESSION['notices'] .= $notice;
     } 
+
+
+    // Output language
+    function OutputLang($tag) {
+        return $GLOBALS['lang_data'][$tag];
+    }

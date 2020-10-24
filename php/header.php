@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div class="title">
             PC Parts Price Checker Tool
-            <div class="sub_title"><?php echo $GLOBALS['lang_data']['general_wip']; ?></div>
+            <div class="sub_title"><?php echo OutputLang('general_wip'); ?></div>
             <br>
             <div class="sub_title">
                 Select Language (WIP): 
@@ -24,16 +24,16 @@
             </div>
         </div>
         <div class="user_panel">
-            <div class="user_panel_heading">User Login</div>
+            <div class="user_panel_heading"><?php echo OutputLang('user_panel_title'); ?></div>
             <?php if (!isset($_SESSION['username']) || empty($_SESSION['username']) || !isset($_SESSION['password']) || empty($_SESSION['password'])) : ?>
                 <form action="/php/login.php" method="post">
-                    <input type="text" id="username" name="username" placeholder="Username" maxlength="32" required>
-                    <input type="password" id="password" name="password" placeholder="Password" maxlength="32" required>
-                    <input type="submit" class="input_button" value="Login">
+                    <input type="text" id="username" name="username" placeholder="<?php echo OutputLang('user_panel_username'); ?>" maxlength="32" required>
+                    <input type="password" id="password" name="password" placeholder="<?php echo OutputLang('user_panel_password'); ?>" maxlength="32" required>
+                    <input type="submit" class="input_button" value="<?php echo OutputLang('user_panel_button_login'); ?>">
                 </form>
             <?php else: ?>
-                Welcome, <?php echo $_SESSION['user_details']['username']; ?>.
-                <button onclick="window.location.href='/php/logout.php';" class="input_button">Logout</button>
+                <?php echo OutputLang('user_panel_welcome'); ?><?php echo $_SESSION['user_details']['username']; ?>.
+                <button onclick="window.location.href='/php/logout.php';" class="input_button"><?php echo OutputLang('user_panel_button_logout'); ?></button>
             <?php endif; ?>
         </div>
         <div class="divider"></div>

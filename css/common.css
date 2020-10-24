@@ -384,6 +384,7 @@ div.header div.wrapper div.user_panel {
 }
 
 div.header div.wrapper div.user_panel div.user_panel_heading {
+  height: 20px;
   font-size: 10pt;
   font-weight: bold;
   text-decoration: underline;

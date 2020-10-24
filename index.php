@@ -52,7 +52,7 @@
             </div>
 
             <?php if ($admin_mode) { ?>
-                <div class="container_header">ADMIN PANEL</div>
+                <div class="container_header"><?php echo OutputLang('admin_panel_title'); ?></div>
                 <div class="container_content">
                     <form action='./php/exec.php?action=add&type=product' method='post' enctype='multipart/form-data'>
                         <div class="sub_title">Add Product</div>
@@ -182,7 +182,7 @@
                 </div>
             <?php } ?>
             
-            <div class="container_header">PRODUCT LIST</div>
+            <div class="container_header"><?php echo OutputLang('top_product_list_title'); ?></div>
             <div class="container_content">
                 <div class="filter_panel">
                     <table class="filter_sort_table">
