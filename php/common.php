@@ -24,12 +24,6 @@
         $_SESSION['currency'] = "JPY";
     }
 
-    function SortTableButtons($column_index, $is_number = false) {
-        $is_number = ($is_number) ? "true" : "false";
-        echo "<span class='sort_button' onclick='sortTable_v2($column_index, $is_number, true);'>▲</span><span class='sort_button' onclick='sortTable_v2($column_index, $is_number, false);'>▼</span>";
-    }
-
-
     // Output Brand Options
     function OutputBrandOptions($brands_list, $select = null) {
         foreach ($brands_list as $brand) {
@@ -298,8 +292,7 @@
             echo("Error description: " . $GLOBALS['conn'] -> error);
         }
     }
-
-
+    
     // DB Delete Functions
     function DeleteFromDB_Products($id) {
         $query = "DELETE FROM products WHERE id='$id';";

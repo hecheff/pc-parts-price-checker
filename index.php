@@ -178,72 +178,136 @@
             <div class="container_header">PRODUCT LIST</div>
             <div class="container_content">
                 <div class="filter_panel">
-                    Filter by: 
-                    <select id='filter_brand' onchange='toggle_products_display();'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
-                    <select id='filter_type' onchange='toggle_products_display();'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
-                    <br><br>
-                    <?php // (category_id, is_number, is_asc) 
-                        $categories = ["Brand", "Type", "Release Date", "JP Price (JPY)", "HK Price (HKD)", "Price Diff. (JP-HK)"];
-                    ?>
-                    <select id="select_sort" onchange="ExecuteTableSort();">
-                        <option>- Sort products by -</option>
-                        <?php 
-                            foreach ($categories as $category) {
-                                echo "<option>".$category." (▲ Ascending)"."</option>";
-                                echo "<option>".$category." (▼ Descending)"."</option>";
-                            }
-                        ?>
-                    </select>
-                    <br><br>
+                    <table class="filter_sort_table">
+                        <tr>
+                            <th>Filter by: </th>
+                            <td>
+                                <select id='filter_brand' onchange='toggle_products_display();'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
+                            </td>
+                            <td>
+                                <select id='filter_type' onchange='toggle_products_display();'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Sort by: </th>
+                            <td colspan="2">
+                                <select id="select_sort" onchange="ExecuteTableSort();">
+                                    <?php 
+                                        // Define categories for sorting
+                                        $sorting_categories = ["Release Date", "Product Name", "Brand", "Type", "JP Price (JPY)", "HK Price (HKD)", "Price Diff. (JP-HK)"];
+                                        // Generate sort options (each with ascending/descending entry)
+                                        foreach ($sorting_categories as $category) {
+                                            if ($category != "Release Date") {
+                                                echo "<option>".$category." (▲ Ascending)"."</option>";
+                                                echo "<option>".$category." (▼ Descending)"."</option>";
+                                            } else {
+                                                echo "<option>".$category." (Newest First)"."</option>";
+                                                echo "<option>".$category." (Oldest/Unlabeled First)"."</option>";
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div id='products' class="product_list">
                     <?php foreach ($products as $product) { ?>
                         <div class="entry_item" name="<?php echo $product['brand']."_".$product['type']; ?>">
                             <?php 
                                 // Calculate raw and converted values to show in current product row
+                                // JP Price values
                                 $raw_value_jp = ConvertCurrency($product['price_jp'], "JPY", $_SESSION['currency']);
                                 $session_currency_val_jp = number_format($raw_value_jp, 0, '.', ',')." ".$_SESSION['currency'];
                                 $original_price_jp = "";
                                 if ($_SESSION['currency'] != 'JPY') {
                                     $original_price_jp = "<br>(".number_format($product['price_jp'], 0, '.', ',')." JPY)";
                                 }
+                                // HK Price values
                                 $raw_value_hk = ConvertCurrency($product['price_hk'], "HKD", $_SESSION['currency']);
                                 $session_currency_val_hk = number_format($raw_value_hk, 0, '.', ',')." ".$_SESSION['currency'];
                                 $original_price_hk = "";
                                 if ($_SESSION['currency'] != 'HKD') {
                                     $original_price_hk = "<br>(".number_format($product['price_hk'], 0, '.', ',')." HKD)";
                                 }
-                                
+                                // Price Difference values
                                 $price_difference = ConvertCurrency($product['price_jp'] - ConvertCurrency($product['price_hk'], "HKD", "JPY"), "JPY", $_SESSION['currency']);
                                 $price_difference_text = number_format($price_difference, 0, '.', ',')." ".$_SESSION['currency'];
                                 $price_percentage = 100 - ((ConvertCurrency($product['price_hk'], "HKD", "JPY")/$product['price_jp']) * 100);
                                 $price_class = "price_".($price_percentage > 0 ? "plus" : "minus");
-
+                                
                                 $release_date = ($product['release_date'] != '0000-00-00') ? $product['release_date'] : "";
 
-                                // Set image
+                                // Set image thumbnail
                                 $thumbnail_url = "./images/products/".$product['id'].".jpg";
                                 $img_style = "";
                                 if (file_exists($thumbnail_url)) {
                                     $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
                                 }
                             ?>
-
-                            <table class="product_inner_table">
+                            <div class="value_container">
+                                <span class='product_title hidden_val'><?php echo $product['name']; ?></span>
+                                <span class='product_brand hidden_val'><?php echo OutputNameById($brands, $product['brand']); ?></span>
+                                <span class='product_type hidden_val'><?php echo OutputNameById($types, $product['type']); ?></span>
+                                <span class='release_date hidden_val'><?php echo $release_date; ?></span>
+                                <span class='price_jp hidden_val'><?php echo $raw_value_jp; ?></span>
+                                <span class='price_hk hidden_val'><?php echo $raw_value_hk; ?></span>
+                                <span class='price_diff hidden_val'><?php echo $price_difference; ?></span>
+                            </div>
+                            <table class="product_inner_table product_table_desktop">
                                 <tr>
                                     <td class="title" colspan="5">
-                                        <div class="value_container">
-                                            <span class='product_title hidden_val'><?php echo $product['name']; ?></span>
-                                            <span class='product_brand hidden_val'><?php echo OutputNameById($brands, $product['brand']); ?></span>
-                                            <span class='product_type hidden_val'><?php echo OutputNameById($types, $product['type']); ?></span>
-                                            <span class='release_date hidden_val'><?php echo $release_date; ?></span>
-                                            <span class='price_jp hidden_val'><?php echo $raw_value_jp; ?></span>
-                                            <span class='price_hk hidden_val'><?php echo $raw_value_hk; ?></span>
-                                            <span class='price_diff hidden_val'><?php echo $price_difference; ?></span>
-                                        </div>
                                         <?php echo $product['name']; ?>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="select">
+                                        <input type='checkbox'>
+                                    </td>
+                                    <td class="thumbnail">
+                                        <div class="image" <?php echo $img_style; ?>></div>
+                                    </td>
+                                    <td class="brand">
+                                        <div class="inner_title">Brand</div>
+                                        <?php echo OutputNameById($brands, $product['brand']); ?>
+                                    </td>
+                                    <td class="type">
+                                        <div class="inner_title">Type</div>
+                                        <?php echo OutputNameById($types, $product['type']); ?>
+                                    </td>
+                                    <td class="release_date">
+                                        <div class="inner_title">Release Date</div>
+                                        <?php echo $release_date; ?>
+                                    </td>
+                                    <td class="price_jp">
+                                        <div class="inner_title">Price (JP)</div>
+                                        <?php echo $session_currency_val_jp.$original_price_jp; ?>
+                                    </td>
+                                    <td class="price_hk">
+                                        <div class="inner_title">Price (HK)</div>
+                                        <?php echo $session_currency_val_hk.$original_price_hk; ?>
+                                    </td>
+                                    <td class="price_diff" colspan="2">
+                                        <div class="inner_title">Difference (JP - HK)</div>
+                                        <?php echo "<p class='$price_class'>".$price_difference_text." (".number_format($price_percentage, 0, '.', ',')."%".")</p>"; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="inner_title">Notes</div>
+                                        <?php echo !empty($product['notes']) ? $product['notes'] : "--"; ?>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <?php if ($admin_mode) { ?>
+                                            <div class="entry edit">
+                                                <input type='button' class='input_button' value='Edit'
+                                                    onclick='toggle_display("editPanel_<?php echo $product['id']; ?>");'>
+                                            </div>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="product_inner_table product_table_mobile">
                                 <tr>
                                     <td class="select" rowspan="2">
                                         <input type='checkbox'>
@@ -294,6 +358,8 @@
                                         <?php } ?>
                                     </td>
                                 </tr>
+                            </table>
+                            <table class="product_inner_table">
                                 <tr>
                                     <td colspan="6" class="edit_panel" style="display:none;" id="editPanel_<?php echo $product['id']; ?>">
                                         <?php if ($admin_mode) { ?>

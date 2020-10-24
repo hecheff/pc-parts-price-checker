@@ -37,8 +37,11 @@ $fontsize_small:            8pt;
 
 $fontsize_product_title:    14pt;
 
+$product_thumbnail_desktop: 50px;
+$product_thumbnail_mobile:  100px;
 
-$width_threshold:   980px;
+$width_threshold:       800px;
+//$width_threshold_small: 480px;
 
 @mixin defaultDivFrame() {
 	border-radius: $border_radius_default;

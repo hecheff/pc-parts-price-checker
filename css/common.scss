@@ -14,6 +14,8 @@ body {
     border: 0px;
     margin: 0px;
     padding: 0px;
+
+    width: 100%;
 }
 
 div {
@@ -113,7 +115,7 @@ input[type=submit].delete:active { background-color: $color_delete_red/4; }
 div.wrapper_main {
     width:auto;
 
-    margin: $margin_default 150px;
+    margin: $margin_default 100px;
     min-height:100%;
 }
 @media screen and (max-width: $width_threshold) {
@@ -124,8 +126,17 @@ div.wrapper_main {
 
 // V2
 div.filter_panel {
-    width: auto;
     margin: $margin_default auto;
+}
+div.filter_panel table.filter_sort_table {
+    width: auto;
+    border-collapse: collapse;
+}
+div.filter_panel table.filter_sort_table tr th {
+    padding-right: $margin_default;
+}
+div.filter_panel table.filter_sort_table tr td select {
+    width: 100%;
 }
 
 div.product_list {
@@ -154,25 +165,46 @@ div.product_list table.product_inner_table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: $margin_default;
-    
-    // border: 1px solid #FFFFFF;
 }
 div.product_list table.product_inner_table tr td { 
     padding: 5px 0;
-    // border: 1px solid #FFFFFF;
 }
 div.product_list table.product_inner_table tr td.select { width: 5%; }
-div.product_list table.product_inner_table tr td.thumbnail { width: 100px; height: 100px; }
+div.product_list table.product_inner_table tr td.thumbnail { width: $product_thumbnail_desktop; height: $product_thumbnail_desktop; }
 div.product_list table.product_inner_table tr td.thumbnail div.image {
-    width: 90px; height: 90px; margin: 10px 10px 10px 0; background-color: #FFFFFF; vertical-align:center; 
+    width: 100%; height: 100%; background-color: #FFFFFF; vertical-align:center; 
     background-position: center; background-size: contain; background-repeat: no-repeat;
 }
 
+table.product_table_desktop { display: table; }
+table.product_table_desktop tr td.title         { font-size: $fontsize_product_title; font-weight: bold; }
+table.product_table_desktop tr td.brand, 
+table.product_table_desktop tr td.type,  
+table.product_table_desktop tr td.release_date  { width: auto; vertical-align: top; }
+table.product_table_desktop tr td.brand         { width: 10%; }
+table.product_table_desktop tr td.type          { width: 15%; }
+table.product_table_desktop tr td.price_jp, 
+table.product_table_desktop tr td.price_hk, 
+table.product_table_desktop tr td.price_diff    { text-align: left; vertical-align: top; white-space: normal; }
+table.product_table_desktop tr td.price_diff    { text-align: right; font-size: $fontsize_large; }
+table.product_table_desktop tr td.edit_button   { text-align: right; }
+
+table.product_table_mobile  { display: none; }
+table.product_table_mobile tr td.title          { font-size: $fontsize_product_title; font-weight: bold; }
+table.product_table_mobile tr td.brand, 
+table.product_table_mobile tr td.type,  
+table.product_table_mobile tr td.release_date   { width: auto; vertical-align: top; }
+table.product_table_mobile tr td.price_jp, 
+table.product_table_mobile tr td.price_hk, 
+table.product_table_mobile tr td.price_diff     { width: auto; text-align: right; vertical-align: top; white-space: normal; }
+table.product_table_mobile tr td.price_diff     { font-size: $fontsize_large; }
+table.product_table_mobile tr td.edit_button    { text-align: right; }
+
 @media screen and (max-width: $width_threshold) { 
-    div.product_list table.product_inner_table tr td.thumbnail { width: 50px; height: 50px; }
-    div.product_list table.product_inner_table tr td.thumbnail div.image {
-        width: 50px; height: 50px; margin: 0px;
-    }
+    table.product_table_desktop { display: none;    }
+    table.product_table_mobile  { display: table;   }
+
+    div.product_list table.product_inner_table tr td.thumbnail { width: $product_thumbnail_mobile; height: $product_thumbnail_mobile; }
 }
 
 div.product_list table.product_inner_table tr td { padding: 5px; }
@@ -183,108 +215,16 @@ div.product_list table.product_inner_table tr td div.inner_title {
     color: $color_table_title_small;
 }
 
-div.product_list table.product_inner_table tr td.title {
-    font-size: $fontsize_product_title;
-    font-weight: bold;
-}
-div.product_list table.product_inner_table tr td.brand, 
-div.product_list table.product_inner_table tr td.type {
-    width: auto;
-    vertical-align: top;
-}
 
 
-div.product_list table.product_inner_table tr td.price_jp, 
-div.product_list table.product_inner_table tr td.price_hk, 
-div.product_list table.product_inner_table tr td.price_diff {
-    width: auto;
-    text-align: right;
-    vertical-align: top;
-    white-space: normal;
-}
-div.product_list table.product_inner_table tr td.price_diff {
-    font-size: $fontsize_large;
-}
-
-
-div.product_list table.product_inner_table tr td.edit_button {
-    text-align: right;
-}
-
-
-
-
-
-
-
-
-div.product_list div.entry_wrapper {
-    width: 100%;
-    height: 100px;
-    margin: 10px auto;
-    float: none;
-    clear: both; 
-    
-    border-radius: $border_radius_default;
-
-    display: inline-block;
-}
-div.product_list div.entry_item { border-radius: $border_radius_default; }
-div.product_list div.entry_item:hover { background-color: $color_bg_product_highlight; } 
-div.product_list div.entry_item div.edit_panel {
-    height: auto;
-    padding: 20px;
-}
-
-div.product_list div.entry_wrapper div.entry {
-    height: 100%;
-    margin: 10px;
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-}
-div.product_list div.entry_wrapper div.entry_header {
-    height: 100%;
-    margin: 10px;
-    display: table-cell;
-    text-align: center;
-    vertical-align: bottom;
-}
-
-div.product_list div.entry_wrapper div.entry_header div.title_brand_type_headings {
-    width: auto; text-align: center; display: table-cell; width:20%;
-}
-
-div.product_list div.entry_wrapper div.select                   { width: 3%; text-align:center; }
-div.product_list div.entry_wrapper div.thumbnail                { width: 5%; }
-
-div.product_list div.entry_wrapper div.entry div.image          { 
-    width: 90px; height: 90px; margin: 10px 10px 10px 0; background-color: #FFFFFF; vertical-align:center; 
-    background-position: center; background-size: contain; background-repeat: no-repeat;
-}
-
-div.product_list div.entry_wrapper div.entry_header div.image_filler   { width: 80px; margin: 10px 10px 10px 0; }
-div.product_list div.entry_wrapper div.title_brand_type         { width: 50%; text-align: left; }
-div.product_list div.entry_wrapper div.title_brand_type div.product_title { height:40px; font-size: $fontsize_product_title; font-weight:bold; }
-
-div.product_list div.entry_wrapper div.brand_type_wrapper { display: inline-block; height:40px; width: 100%; }
-div.product_list div.entry_wrapper div.brand_type_wrapper div.brand_wrapper, 
-div.product_list div.entry_wrapper div.brand_type_wrapper div.type_wrapper { width:50%; float:left; }
-div.product_list div.entry_wrapper div.brand_type_wrapper div.brand_type_header { font-size: $fontsize_small; text-decoration: underline; }
-
-div.product_list div.entry_wrapper div.release_date,
-div.product_list div.entry_wrapper div.price_hk, 
-div.product_list div.entry_wrapper div.price_jp     { width: 12%; }
-
-div.product_list div.entry_wrapper div.price_diff   { width: 15%; font-weight: bold; }
-
-div.product_list div.entry_wrapper div.edit         { width: 5%; }
-
+// Hidden value for product values used for sorting
 span.hidden_val { display: none; }
-span.sort_button { cursor: pointer; font-size:$fontsize_large; color: $color_button_default; }
-span.sort_button:hover  { color: $color_button_hover; }
-span.sort_button:active { color: $color_button_active; }
 
+// Price difference display
+p.price_plus    { color:$color_text_price_plus;     }
+p.price_minus   { color:$color_text_price_minus;    }
+
+// Admin panel
 table.admin_entry {
     width: 100%;
     border-collapse: collapse;
@@ -307,16 +247,6 @@ table.admin_entry tr td input,
 table.admin_entry tr td select {
     width: 100%;
 }
-
-
-p.price_plus {
-    color:$color_text_price_plus;
-}
-p.price_minus {
-    color:$color_text_price_minus;
-}
-
-
 
 
 
