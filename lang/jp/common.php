@@ -5,7 +5,8 @@
     class Lang {
         public function GetLanguageData() {
             // General Labels
-            $lang['general_wip']            = "仕掛中！";
+            // Top Page
+            $lang['top_product_list_title'] = "PRODUCT LIST";
 
             // Notices
             $lang['notice_login_success']   = "ログイン成功しました。";
