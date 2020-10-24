@@ -14,7 +14,7 @@
                 </form>
             <?php else: ?>
                 Welcome, <?php echo $_SESSION['user_details']['username']; ?>.
-                <button onclick="window.location.href='/php/logout.php';">Logout</button>
+                <button onclick="window.location.href='/php/logout.php';" class="input_button">Logout</button>
             <?php endif; ?>
         </div>
         <div class="divider"></div>
