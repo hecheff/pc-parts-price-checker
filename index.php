@@ -15,7 +15,14 @@
     $types_sort             = GetDB_Types('name', true);
     $conversion_rates_sort  = GetDB_CurrencyList('name', true);
 
-    $admin_mode = true;
+    // Check admin status depending on login details
+    $admin_mode = false;
+    if (!empty($_SESSION['user_details'])) {
+        if ($_SESSION['user_details']['is_admin']) {
+            $admin_mode = true;
+        }
+    }
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,10 +31,6 @@
     <body onLoad="">
         <?php include('./php/header.php'); ?>
         <div class="wrapper_main">
-            <div class="notice_panel">
-                <?php if ($time_updated == true) { echo "Currencies auto-updated successfully."; } ?>
-            </div>
-            
             Select Currency:
             <form action='./php/setCurrency.php' method='post'>
                 <select id='currency' name='currency' onchange="this.form.submit();">
@@ -43,6 +46,10 @@
                     ?>
                 </select>
             </form>
+
+            <div class="notice_panel">
+                <?php if ($time_updated == true) { echo "Currencies auto-updated successfully."; } ?>
+            </div>
 
             <?php if ($admin_mode) { ?>
                 <div class="container_header">ADMIN PANEL</div>
@@ -418,7 +425,6 @@
                     <?php } ?>
                 </div>
             </div>
-            
         </div>
         <?php include('./php/footer.php'); ?>
     </body>

@@ -43,6 +43,11 @@ $product_thumbnail_mobile:  100px;
 $width_threshold:       800px;
 //$width_threshold_small: 480px;
 
+@mixin wrapper_defaults {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
 @mixin defaultDivFrame() {
 	border-radius: $border_radius_default;
     padding: $margin_default;

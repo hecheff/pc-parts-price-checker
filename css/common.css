@@ -57,6 +57,7 @@ div.container_content {
   padding: 10px;
   border-radius: 0 0 5px 5px;
   background-color: #101b3d;
+  margin-bottom: 20px;
 }
 
 div.container_content div.sub_title {
@@ -67,7 +68,7 @@ div.container_content div.sub_title {
   margin-bottom: 10px;
 }
 
-input[type=text], input[type=number], input[type=date], select {
+input[type=text], input[type=number], input[type=date], input[type=password], select {
   padding: 5px;
   border-radius: 5px;
   box-sizing: border-box;
@@ -118,7 +119,8 @@ input[type=submit].delete:active {
 
 div.wrapper_main {
   width: auto;
-  margin: 20px 100px;
+  margin-left: 100px;
+  margin-right: 100px;
   min-height: 100%;
 }
 
@@ -130,6 +132,7 @@ div.wrapper_main {
 
 div.filter_panel {
   margin: 20px auto;
+  padding: 5px;
 }
 
 div.filter_panel table.filter_sort_table {
@@ -138,6 +141,7 @@ div.filter_panel table.filter_sort_table {
 }
 
 div.filter_panel table.filter_sort_table tr th {
+  text-align: left;
   padding-right: 20px;
 }
 
@@ -152,7 +156,7 @@ div.product_list {
 
 @media screen and (max-width: 800px) {
   div.product_list {
-    margin: 10px auto;
+    margin: 20px auto;
   }
 }
 
@@ -337,8 +341,45 @@ table.admin_entry tr td select {
 
 div.header {
   width: 100%;
-  min-height: 50px;
+  height: auto;
   background-color: #1e2844;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+div.header div.wrapper {
+  height: auto;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+div.header div.wrapper div.title {
+  font-size: 13pt;
+  font-weight: bold;
+  float: left;
+}
+
+div.header div.wrapper div.title div.sub_title {
+  height: auto;
+  font-size: 8pt;
+}
+
+div.header div.wrapper div.user_panel {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #33498a;
+  float: right;
+}
+
+div.header div.wrapper div.user_panel div.user_panel_heading {
+  font-size: 10pt;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+div.divider {
+  clear: both;
+  float: none;
 }
 
 div.footer {

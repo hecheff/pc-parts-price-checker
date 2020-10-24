@@ -1,5 +1,7 @@
 <?php
     session_start();
+    // Establish notices variable for handling status changes
+    $_SESSION['notices'] = "";
 
     // Call in default files
     include('settings.php');
@@ -18,10 +20,13 @@
     if ($GLOBALS['conn']->connect_error) {
         die("Connection failed: " . $GLOBALS['conn']->connect_error);
     }
-
     // Set currency (if not set)
     if (!isset($_SESSION['currency'])) {
         $_SESSION['currency'] = "JPY";
+    }
+    // Set user credentials (if present)
+    if (isset($_SESSION['username']) && !empty($_SESSION['username']) && isset($_SESSION['password']) && !empty($_SESSION['password'])) {
+        SetUserSession($_SESSION['username'], $_SESSION['password']);
     }
 
     // Output Brand Options
@@ -134,6 +139,7 @@
     function GetDB_Brands($order_by = 'name', $is_asc = true) {
         $query = "SELECT * FROM brands ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
         $result = $GLOBALS['conn']->query($query);
+        $rows = [];
         while($row = mysqli_fetch_array($result)) {
             $rows[] = $row;
         }
@@ -142,6 +148,7 @@
     function GetDB_Types($order_by = 'name', $is_asc = true) {
         $query = "SELECT * FROM types ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
         $result = $GLOBALS['conn']->query($query);
+        $rows = [];
         while($row = mysqli_fetch_array($result)) {
             $rows[] = $row;
         }
@@ -292,7 +299,7 @@
             echo("Error description: " . $GLOBALS['conn'] -> error);
         }
     }
-    
+
     // DB Delete Functions
     function DeleteFromDB_Products($id) {
         $query = "DELETE FROM products WHERE id='$id';";
@@ -313,4 +320,41 @@
         }
     }
 
+    // Login functions
+    function GetUser($username, $password) {
+        if (!empty($username) && !empty($username)) {
+            $query = "SELECT username, email, is_admin FROM users WHERE username='$username' AND password='".sha1($password)."'";
+            $result = $GLOBALS['conn']->query($query);
+            $rows = [];
+            while($row = mysqli_fetch_array($result)) {
+                $rows[] = $row;
+            }
+            return $rows[0];
+        }
+        return false;
+    }
 
+    // Set user session details if credentials match what's found in database
+    function SetUserSession($username, $password) {
+        $user_details = GetUser($username, $password);
+        if (GetUser($username, $password)) {
+            $_SESSION['username']        = $username;
+            $_SESSION['password']       = $password;
+            $_SESSION['user_details']   = $user_details;
+        }
+    }
+    // Reset credentials & user's session details
+    function ResetUserSessionDetails() {
+        $_SESSION['username']        = null;
+        $_SESSION['password']       = null;
+        $_SESSION['user_details']   = null;
+    }
+    
+
+    // Set Notices
+    function AddNotice($notice) {
+        if (!empty($_SESSION['notices'])) {
+            $_SESSION['notices'] .= "\n";
+        }
+        $_SESSION['notices'] .= $notice;
+    } 
