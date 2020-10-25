@@ -304,15 +304,23 @@
                                         <div class="inner_title">Notes</div>
                                         <?php echo !empty($product['notes']) ? $product['notes'] : "--"; ?>
                                     </td>
-                                    <td style="text-align:right;">
-                                        <?php if ($admin_mode) { ?>
+                                    <td colspan="2" style="text-align:right;">
+                                        Add to purchase list: 
+                                        <input type="checkbox" id="desktop_<?php echo $product['id']; ?>" name="desktop_<?php echo $product['id']; ?>" 
+                                            value="<?php echo $product['id']; ?>"
+                                            onchange="SyncCheckboxes(<?php echo $product['id']; ?>, true);">
+                                    </td>
+                                </tr>
+                                <?php if ($admin_mode) { ?>
+                                    <tr>
+                                        <td colspan="9" style="text-align:right;">
                                             <div class="entry edit">
                                                 <input type='button' class='input_button' value='Edit'
                                                     onclick='toggle_display("editPanel_<?php echo $product['id']; ?>");'>
                                             </div>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </table>
                             <table class="product_inner_table product_table_mobile">
                                 <tr>
@@ -361,14 +369,22 @@
                                         <?php echo !empty($product['notes']) ? $product['notes'] : "--"; ?>
                                     </td>
                                     <td colspan="2" style="text-align:right;">
-                                        <?php if ($admin_mode) { ?>
+                                        Add to purchase list: 
+                                        <input type="checkbox" id="mobile_<?php echo $product['id']; ?>" name="mobile_<?php echo $product['id']; ?>" 
+                                            value="<?php echo $product['id']; ?>"
+                                            onchange="SyncCheckboxes(<?php echo $product['id']; ?>, false);">
+                                    </td>
+                                </tr>
+                                <?php if ($admin_mode) { ?>
+                                    <tr>
+                                        <td colspan="9" style="text-align:right;">
                                             <div class="entry edit">
                                                 <input type='button' class='input_button' value='Edit'
                                                     onclick='toggle_display("editPanel_<?php echo $product['id']; ?>");'>
                                             </div>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </table>
                             <table class="product_inner_table">
                                 <tr>

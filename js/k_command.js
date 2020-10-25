@@ -10,9 +10,7 @@ if (window.addEventListener) {
             // Get all classes with default class
             var target_classes_header  = $('.container_header');
             var target_classes_content = $('.container_content');
-
-            // alert(target_classes_header[1].innerHTML);
-
+            
             for (i = 0; i < target_classes_header.length; i++) {
                 target_classes_header[i].classList.add('container_header_kde');
                 target_classes_header[i].classList.remove('container_header');
@@ -22,7 +20,7 @@ if (window.addEventListener) {
                 target_classes_content[i].classList.add('container_content_kde');
                 target_classes_content[i].classList.remove('container_content');
             }
-            
+
             keys = [];    // Reset input keys
         };
     }, true);
