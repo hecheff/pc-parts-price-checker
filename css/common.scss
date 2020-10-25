@@ -74,6 +74,40 @@ div.container_content div.sub_title {
     margin-bottom: $margin_small;
 }
 
+div.container_header_kde {
+    width: auto;
+    height: 20px;
+    margin-top: $margin_default;
+    padding: $margin_small;
+    border-radius: $border_radius_default $border_radius_default 0 0;
+
+    background-color: $color_kde_bg_product_highlight;
+
+    font-weight: bold;
+    font-size: $fontsize_large;
+    text-transform: uppercase;
+
+    border-bottom: 3px solid $color_bg_product_goldtrim;
+}
+div.container_content_kde {
+    width: auto;
+    min-height: 20px;
+    padding: $margin_small;
+    border-radius: 0 0 $border_radius_default $border_radius_default;
+
+    background-color: $color_kde_header_footer_bg;
+
+    margin-bottom: $margin_default;
+}
+div.container_content_kde div.sub_title {
+    width: auto;
+    font-size: $fontsize_medium;
+    font-weight: bold;
+    text-decoration: underline;
+
+    margin-bottom: $margin_small;
+}
+
 input[type=text], input[type=number], input[type=date], input[type=password], select {
     padding: 5px;
     border-radius: 5px;

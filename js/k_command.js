@@ -7,22 +7,22 @@ if (window.addEventListener) {
 
         // Run once key inputs fully match the kCommand array entries
         if (keys.toString().indexOf(kCommand) >= 0) {
-            alert("WHAT ARE YOU DOING HERE");
+            // Get all classes with default class
+            var target_classes_header  = $('.container_header');
+            var target_classes_content = $('.container_content');
 
-            //document.getElementById("kCom").innerHTML = "<embed src='" + "/audio/kCommand.mp3" + "' hidden=true autostart=true loop=false ></embed>";
-            /*
-            $("html, body").animate({ scrollTop: 0 }, "slow");  // Animate "back to top" scrolling
-            document.getElementById("kCom").innerHTML = 
-                "<div class='dropdown'>" +
-                    "<button class='dropbtn menu_default' title='DEV WORK'>" + 
-                        "DEV WORK <i class='fa fa-caret-down'></i>" + 
-                    "</button>" + 
-                    "<div class='dropdown-content'><a href='/dev/'>DEV STUFF</a></div>" + 
-                "</div>";
+            // alert(target_classes_header[1].innerHTML);
 
-            $('#kCom:hidden').fadeIn(3000);
-            */
+            for (i = 0; i < target_classes_header.length; i++) {
+                target_classes_header[i].classList.add('container_header_kde');
+                target_classes_header[i].classList.remove('container_header');
+            }
 
+            for (i = 0; i < target_classes_content.length; i++) {
+                target_classes_content[i].classList.add('container_content_kde');
+                target_classes_content[i].classList.remove('container_content');
+            }
+            
             keys = [];    // Reset input keys
         };
     }, true);

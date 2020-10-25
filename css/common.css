@@ -80,6 +80,36 @@ div.container_content div.sub_title {
   margin-bottom: 10px;
 }
 
+div.container_header_kde {
+  width: auto;
+  height: 20px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  background-color: #990014;
+  font-weight: bold;
+  font-size: 13pt;
+  text-transform: uppercase;
+  border-bottom: 3px solid #e7be37;
+}
+
+div.container_content_kde {
+  width: auto;
+  min-height: 20px;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  background-color: #4d000a;
+  margin-bottom: 20px;
+}
+
+div.container_content_kde div.sub_title {
+  width: auto;
+  font-size: 12pt;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
 input[type=text], input[type=number], input[type=date], input[type=password], select {
   padding: 5px;
   border-radius: 5px;
