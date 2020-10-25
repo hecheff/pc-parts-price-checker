@@ -1,5 +1,5 @@
 <?php 
-    include('./php/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/common.php'); 
 
     // Update conversion rates after 1 hour passed
     $time_updated = AutoUpdateConversionRate(3600);
@@ -26,10 +26,10 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <?php include('./php/head.php'); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/head.php'); ?>
 
     <body onLoad="">
-        <?php include('./php/header.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/header.php'); ?>
         <div class="wrapper_main">
             Select Currency:
             <form action='./php/setCurrency.php' method='post'>
@@ -222,6 +222,14 @@
                     <?php foreach ($products as $product) { ?>
                         <div class="entry_item" name="<?php echo $product['brand']."_".$product['type']; ?>">
                             <?php 
+                                // Set image thumbnail
+                                $thumbnail_url = "/images/products/".$product['id'].".jpg";
+                                $img_style  = "";
+                                if (file_exists($_SERVER['DOCUMENT_ROOT'].$thumbnail_url)) {
+                                    $img_url = "";
+                                    $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
+                                }
+                                
                                 // Calculate raw and converted values to show in current product row
                                 // JP Price values
                                 $raw_value_jp = ConvertCurrency($product['price_jp'], "JPY", $_SESSION['currency']);
@@ -244,14 +252,6 @@
                                 $price_class = "price_".($price_percentage > 0 ? "plus" : "minus");
                                 
                                 $release_date = ($product['release_date'] != '0000-00-00') ? $product['release_date'] : "";
-
-                                // Set image thumbnail
-                                $thumbnail_url = "./images/products/".$product['id'].".jpg";
-                                $img_style  = "";
-                                if (file_exists($thumbnail_url)) {
-                                    $img_url = "";
-                                    $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
-                                }
                             ?>
                             <div class="value_container">
                                 <span class='product_title hidden_val'><?php echo $product['name']; ?></span>
@@ -296,7 +296,7 @@
                                     </td>
                                     <td class="price_diff" colspan="2">
                                         <div class="inner_title">Difference (JP - HK)</div>
-                                        <?php echo "<p class='$price_class'>".$price_difference_text." (".number_format($price_percentage, 0, '.', ',')."%".")</p>"; ?>
+                                        <?php echo "<p class='$price_class'>".$price_difference_text."<br>(".number_format($price_percentage, 0, '.', ',')."%".")</p>"; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -447,11 +447,17 @@
             </div>
         </div>
 
-        <!-- <div class="item_list_wrapper">
-            <div class="item_list_header">ITEM LIST</div>
+        <div class="item_list_wrapper" style="display: none;">
+            <div class="item_list_header">
+                ITEM LIST
+                <form action="/calculate/" target="_blank" method="post" style="display: inline;">
+                    <div id="item_list_container"></div>
+                    <input type="submit" class="input_button" value="Calculate">
+                </form>
+            </div>
             <div class="item_list_content"></div>
-        </div> -->
+        </div>
 
-        <?php include('./php/footer.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
     </body>
 </html>

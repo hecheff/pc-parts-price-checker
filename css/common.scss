@@ -203,6 +203,7 @@ div.product_list table.product_inner_table {
     border-collapse: collapse;
     margin-bottom: $margin_default;
 }
+div.product_list table.product_inner_table tr th { text-align: left; }
 div.product_list table.product_inner_table tr td { 
     padding: 5px 0;
 }
@@ -213,6 +214,7 @@ div.product_list table.product_inner_table tr td.thumbnail div.image {
     width: 100%; height: 100%; background-color: #FFFFFF; vertical-align:center; 
     background-position: center; background-size: contain; background-repeat: no-repeat;
 }
+div.product_list table.product_inner_table tr td.table_divider { border-bottom: 1px solid #FFFFFF; }
 
 table.product_table_desktop { display: table; }
 table.product_table_desktop tr td.title         { font-size: $fontsize_product_title; font-weight: bold; }
@@ -287,11 +289,12 @@ table.admin_entry tr td select {
 }
 
 div.item_list_wrapper {
-    width: 100%;
+    width: 20%;
     margin: 0 auto;
 
     position: fixed;
-    bottom: 0;
+    top: 10%;
+    right: 0;
 
     z-index: 2;
 }
@@ -306,25 +309,22 @@ div.item_list_wrapper div.item_list_header {
 
     border-top: 1px solid $color_outline_item_list;
     border-left: 1px solid $color_outline_item_list;
-    border-right: 1px solid $color_outline_item_list;
-    border-radius: $border_radius_default $border_radius_default 0 0;
+    border-radius: $border_radius_default 0 0 0;
 
     background-color: $color_bg_item_list;
     
 }
 div.item_list_wrapper div.item_list_content {
     width: auto;
-    min-height: 200px;
-    
     padding: $margin_small;
 
     border-left: 1px solid $color_outline_item_list;
-    border-right: 1px solid $color_outline_item_list;
     border-bottom: 1px solid $color_outline_item_list;
-    border-radius: 0;
+    border-radius: 0 0 0 $border_radius_default;
 
     background-color: $color_bg_item_list;
 }
+div.item_list_wrapper div#item_list_container { display: none; }
 
 
 div.header {

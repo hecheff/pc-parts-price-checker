@@ -10,6 +10,41 @@ function SyncCheckboxes(product_id, is_from_desktop = true) {
     } else {
         checkbox_desktop.checked = checkbox_mobile.checked;
     }
+
+    if (checkbox_mobile.checked) {
+        AddToItemList(product_id);
+    } else {
+        RemoveFromItemList(product_id);
+    }
+    ToggleItemList();
+}
+
+// Add/Remove items from item list
+function AddToItemList(product_id) {
+    var itemList_container = $('#item_list_container');
+
+    $('<input>').attr({
+        id: "item_"+product_id,
+        name: "item[]",
+        type: "hidden", 
+        value: product_id
+    }).appendTo(itemList_container);
+}
+function RemoveFromItemList(product_id) {
+    var itemList_container = $('#item_list_container');
+    
+    itemList_container.children('#item_'+product_id)[0].remove();
+}
+
+function ToggleItemList() {
+    var itemList_container  = $('#item_list_container');
+    var item_list_wrapper   = $('.item_list_wrapper')[0];
+
+    if (itemList_container.children("input").length == 0) {
+        item_list_wrapper.style.display = "none";
+    } else {
+        item_list_wrapper.style.display = "block";
+    }
 }
 
 // Toggle display of table contents

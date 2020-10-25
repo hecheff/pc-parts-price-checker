@@ -1,11 +1,12 @@
 <head>
     <title>PC Parts Price Checker | HARO PLANET</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="shortcut icon" href="./favicon.ico">   
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">	<!-- Disable compatibility mode for IE browsing -->
 
-    <link rel="stylesheet" type="text/css" href="./css/common.css?ver=<?php echo CSS_VERSION; ?>">
+    <link rel="shortcut icon" href="/favicon.ico">   
+    <link rel="stylesheet" type="text/css" href="/css/common.css?ver=<?php echo CSS_VERSION; ?>">
+    
     <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/k_command.js"></script>

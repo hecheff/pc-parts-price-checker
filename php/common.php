@@ -262,7 +262,27 @@
             $rows[] = $row;
         }
         return $rows[0];
+    }
+    // Get multiple specific products by array of IDs
+    function GetProductsByIDs($id_list) {
+        // Create list part of query
+        $query_list_entry = "";
+        foreach ($id_list as $curr_id) {
+            if (!empty($query_list_entry)) {
+                $query_list_entry .= ", ";
+            } else {
+                $query_list_entry .= "(";
+            }
+            $query_list_entry .= $curr_id;
+        }
+        $query_list_entry .= ")";
 
+        $query = "SELECT * FROM products WHERE id IN ".$query_list_entry." ORDER BY ID ASC;";
+        $result = $GLOBALS['conn']->query($query);
+        while ($row = mysqli_fetch_array($result)) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
 
     /**

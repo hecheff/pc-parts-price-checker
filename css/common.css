@@ -220,6 +220,10 @@ div.product_list table.product_inner_table {
   margin-bottom: 20px;
 }
 
+div.product_list table.product_inner_table tr th {
+  text-align: left;
+}
+
 div.product_list table.product_inner_table tr td {
   padding: 5px 0;
 }
@@ -241,6 +245,10 @@ div.product_list table.product_inner_table tr td.thumbnail div.image {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+div.product_list table.product_inner_table tr td.table_divider {
+  border-bottom: 1px solid #FFFFFF;
 }
 
 table.product_table_desktop {
@@ -382,10 +390,11 @@ table.admin_entry tr td select {
 }
 
 div.item_list_wrapper {
-  width: 100%;
+  width: 20%;
   margin: 0 auto;
   position: fixed;
-  bottom: 0;
+  top: 10%;
+  right: 0;
   z-index: 2;
 }
 
@@ -397,20 +406,21 @@ div.item_list_wrapper div.item_list_header {
   padding: 10px;
   border-top: 1px solid #FFFFFFEE;
   border-left: 1px solid #FFFFFFEE;
-  border-right: 1px solid #FFFFFFEE;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px 0 0 0;
   background-color: #000000EE;
 }
 
 div.item_list_wrapper div.item_list_content {
   width: auto;
-  min-height: 200px;
   padding: 10px;
   border-left: 1px solid #FFFFFFEE;
-  border-right: 1px solid #FFFFFFEE;
   border-bottom: 1px solid #FFFFFFEE;
-  border-radius: 0;
+  border-radius: 0 0 0 5px;
   background-color: #000000EE;
+}
+
+div.item_list_wrapper div#item_list_container {
+  display: none;
 }
 
 div.header {
