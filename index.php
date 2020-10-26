@@ -59,7 +59,7 @@
                         <table class="admin_entry">
                             <tr>
                                 <th>Product Name</th>
-                                <td><input type='text' id='name' name='name' required></td>
+                                <td><input type='text' id='name' name='name' placeholder="Including model name, variant, etc." required></td>
                             </tr>
                             <tr>
                                 <th>Brand</th>
@@ -79,7 +79,7 @@
                             </tr>
                             <tr>
                                 <th>Notes</th>
-                                <td><input type='text' id='notes' name='notes'></td>
+                                <td><input type='text' id='notes' name='notes' placeholder="Add any additional information here such as specs or extra details of prices."></td>
                             </tr>
                             <tr>
                                 <th>Release Date</th>
