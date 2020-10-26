@@ -31,7 +31,7 @@
     <body onLoad="">
         <?php include($_SERVER['DOCUMENT_ROOT'].'/php/header.php'); ?>
         <div class="wrapper_main">
-            <!-- Select Currency:
+            Select Currency:
             <form action='/php/setCurrency.php' method='post'>
                 <select id='currency' name='currency' onchange="this.form.submit();">
                     <?php 
@@ -45,7 +45,7 @@
                         }
                     ?>
                 </select>
-            </form> -->
+            </form>
 
             <div class="notice_panel">
                 <?php if ($time_updated == true) { echo "Currencies auto-updated successfully."; } ?>
