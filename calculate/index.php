@@ -4,11 +4,15 @@
     // Get listed products
     $product_list_ids = [];
     $product_index = 0;
-    if (isset($_POST['item'])) {
+    if (isset($_POST['item']) || !empty($_POST['item'])) {
         foreach($_POST['item'] as $post_item) {
             $product_list_ids[$product_index] = $post_item;
             $product_index++;
         }
+    } else {
+        // Return to top page if product list is empty (may change this later to support saved list functions)
+        header('location: /');
+        exit();
     }
     // Get list-specific product info
     $product_details = GetProductsByIDs($product_list_ids);
