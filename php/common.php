@@ -195,14 +195,14 @@
 
         $old_product_details = null;
 
-        // Create new entry if ID is null. Otherwise overwrite existing product with this ID
+        // Create new entry if ID is null. Otherwise update existing product with given ID
         if ($id == null) {
             $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, notes, release_date, created_at, updated_at) 
                                     VALUES ('$name', $brand, $type, $price_hk, $price_jp, 
                                     '$notes', '$release_date', '$time_now', '$time_now');";
         } else {
             $old_product_details = GetProductByID($id);
-            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', updated_at='$time_now' 
+            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', release_date='$release_date', updated_at='$time_now' 
                                     WHERE id=$id;";
         }
 
