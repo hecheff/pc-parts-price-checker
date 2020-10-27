@@ -288,6 +288,20 @@ table.admin_entry tr td select {
     width: 100%;
 }
 
+table.admin_stats {
+    margin-top: $margin_default;
+    border-collapse: collapse;
+}
+table.admin_stats tr th {
+    text-align: left;
+    padding-right: $margin_default;
+    padding-bottom: $margin_small;
+} 
+table.admin_stats tr td  {
+    text-align: left;
+    padding-bottom: $margin_small;
+}
+
 div.item_list_wrapper {
     width: 20%;
     margin: 0 auto;

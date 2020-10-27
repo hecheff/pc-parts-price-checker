@@ -389,6 +389,22 @@ table.admin_entry tr td select {
   width: 100%;
 }
 
+table.admin_stats {
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+table.admin_stats tr th {
+  text-align: left;
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+table.admin_stats tr td {
+  text-align: left;
+  padding-bottom: 10px;
+}
+
 div.item_list_wrapper {
   width: 20%;
   margin: 0 auto;

@@ -20,6 +20,20 @@
     if (!empty($_SESSION['user_details'])) {
         if ($_SESSION['user_details']['is_admin']) {
             $admin_mode = true;
+
+            // Calculations for admin stats
+            // Count unique brands & types in products
+            $brands_useArray    = [];
+            $types_useArray     = [];
+
+            foreach ($products as $product) {
+                if(!in_array($product['brand'], $brands_useArray)) {
+                    array_push($brands_useArray, $product['brand']);
+                }
+                if(!in_array($product['type'], $types_useArray)) {
+                    array_push($types_useArray, $product['type']);
+                }
+            }
         }
     }
     
@@ -178,7 +192,23 @@
                             </th>
                         </tr>
                     </table>
-                    <form action='' method="post"></form>
+                    <br><br>
+
+                    <div class="sub_title">DB Stats</div>
+                    <table class="admin_stats">
+                        <tr>
+                            <th>Total Products:</th>
+                            <td><?php echo count($products); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Total Brands (# used):</th>
+                            <td><?php echo count($brands); ?> (<?php echo count($brands_useArray); ?>)</td>
+                        </tr>
+                        <tr>
+                            <th>Total Product Types (# used):</th>
+                            <td><?php echo count($types); ?> (<?php echo count($types_useArray); ?>)</td>
+                        </tr>
+                    </table>
                 </div>
             <?php } ?>
             
