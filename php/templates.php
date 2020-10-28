@@ -20,6 +20,9 @@
         $input_id           = "";
         $is_public_check    = "checked";
 
+        $select_a_brand     = "<option value=''>- Select a brand -</option>";
+        $select_a_type      = "<option value=''>- Select a type -</option>";
+
         if ($product) {
             $product_name   = $product['name'];
             $brand_id       = $product['brand'];
@@ -35,6 +38,9 @@
             $action         = "edit";
             $submit_text    = "Update Product";
             $input_id       = "<input type='hidden' id='id' name='id' value='".$product['id']."'>";
+
+            $select_a_brand     = "";
+            $select_a_type      = "";
         }
 
         echo "
@@ -47,11 +53,17 @@
                 </tr>
                 <tr>
                     <th>Brand</th>
-                    <td><select id='brand' name='brand' required>".OutputBrandOptions($brands_sort, $brand_id)."</select></td>
+                    <td><select id='brand' name='brand' required>".
+                        $select_a_brand.
+                        OutputBrandOptions($brands_sort, $brand_id).
+                    "</select></td>
                 </tr>
                 <tr>
                     <th>Type</th>
-                    <td><select id='type' name='type' required>".OutputTypeOptions($types_sort, $type_id)."</select></td>
+                    <td><select id='type' name='type' required>".
+                        $select_a_type.
+                        OutputTypeOptions($types_sort, $type_id).
+                    "</select></td>
                 </tr>
                 <tr>
                     <th>Price in Japan (JPY)</th>
