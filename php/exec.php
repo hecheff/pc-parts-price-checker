@@ -43,7 +43,9 @@
         } elseif ($type == 'type') {
             DeleteFromDB_Types($_POST['id']);
         }
-
+    } elseif ($action == 'copy_product') {
+        // Create a duplicate product entry using another as template
+        DuplicateProduct($_POST['id']);
     } elseif ($action == 'currency') {
         // Update currency manually
         UpdateExchangeRatesDB();

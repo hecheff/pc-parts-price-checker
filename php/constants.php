@@ -10,7 +10,7 @@
     define('LANGUAGE_CODES_ACTIVE', ['en', 'jp']);
 
     // Admin Exec
-    define('EXEC_ACTION_ALLOWED',   ['add', 'edit', 'delete']);
+    define('EXEC_ACTION_ALLOWED',   ['add', 'edit', 'delete', 'copy_product']);
     define('EXEC_TYPE_ALLOWED',     ['product', 'brand', 'type', 'currency']);
 
     // Exchange Rate API

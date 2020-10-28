@@ -80,15 +80,32 @@
                 <tr>
                     <td colspan='2'><input type='submit' class='input_button' value='$submit_text'></td>
                 </tr>
+            </form>
         ";
 
         if ($product) {
+            echo "<tr><td colspan='2'></td></tr>";
             echo "
-                <form action='./php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm(\"Delete this product?\");'>
+                <form action='/php/exec.php?action=copy_product&type=product' method='post' onsubmit='return confirm(\"Create a copy of this product?\");'>
+                    $input_id
+                    <tr>
+                        <th>Copy Product Entry</th>
+                        <td>
+                            <input type='submit' class='input_button' value='Make Copy'>
+                            All details except for thumbnail will be used to create a duplicate product entry.
+                        </td>
+                    </tr>
+                </form>
+            ";
+            echo "
+                <form action='/php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm(\"Delete this product?\");'>
                     $input_id
                     <tr>
                         <th>Delete Product</th>
-                        <td><input type='submit' class='input_button delete' value='Delete'></td>
+                        <td>
+                            <input type='submit' class='input_button delete' value='Delete'>
+                            WARNING: Deleted products cannot be recovered.
+                        </td>
                     </tr>
                 </form>
             ";

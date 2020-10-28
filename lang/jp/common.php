@@ -20,6 +20,7 @@
 
             // Top Page
             $lang['top_product_list_title'] = "商品一覧";
+            $lang['top_product_hidden']     = "[非公開]";
 
             // Notices
             $lang['notice_login_success']   = "ログイン成功しました。";

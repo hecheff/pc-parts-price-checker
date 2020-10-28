@@ -20,6 +20,7 @@
             
             // Top Page
             $lang['top_product_list_title'] = "PRODUCT LIST";
+            $lang['top_product_hidden']     = "[HIDDEN]";
 
             // Notices
             $lang['notice_login_success']   = "Login success.";

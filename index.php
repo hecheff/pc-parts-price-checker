@@ -259,7 +259,7 @@
                                 <tr>
                                     <td class="title" colspan="5">
                                         <?php 
-                                            echo !$product['is_public'] ? "[NON-PUBLIC] " : "";
+                                            echo !$product['is_public'] ? OutputLang('top_product_hidden')." " : "";
                                             echo $product['name']; 
                                         ?>
                                     </td>

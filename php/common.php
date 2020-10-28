@@ -256,6 +256,11 @@
             }
         }
     }
+    // Create copy of product entry (all settings except ID and image is copied)
+    function DuplicateProduct($product_id) {
+        $product = GetProductByID($product_id);
+        WriteDB_Products("(COPY) ".$product['name'], $product['brand'], $product['type'], $product['price_hk'], $product['price_jp'], $product['notes'], FALSE, $product['release_date']);
+    }
 
     // Get latest Product ID
     function GetLatestProductID() {
