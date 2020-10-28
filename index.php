@@ -4,8 +4,16 @@
     // Update conversion rates after 1 hour passed
     $time_updated = AutoUpdateConversionRate(3600);
 
+    // Check admin status depending on login details
+    $admin_mode = false;
+    if (!empty($_SESSION['user_details'])) {
+        if ($_SESSION['user_details']['is_admin']) {
+            $admin_mode = true;    
+        }
+    }
+
     // Used for product list (can apply filters to these)
-    $products           = GetDB_Products('release_date', false);
+    $products           = GetDB_Products('release_date', false, $admin_mode);
     $brands             = GetDB_Brands();
     $types              = GetDB_Types();
     $conversion_rates   = GetDB_CurrencyList();
@@ -15,24 +23,17 @@
     $types_sort             = GetDB_Types('name', true);
     $conversion_rates_sort  = GetDB_CurrencyList('name', true);
 
-    // Check admin status depending on login details
-    $admin_mode = false;
-    if (!empty($_SESSION['user_details'])) {
-        if ($_SESSION['user_details']['is_admin']) {
-            $admin_mode = true;
-
-            // Calculations for admin stats
-            // Count unique brands & types in products
-            $brands_useArray    = [];
-            $types_useArray     = [];
-
-            foreach ($products as $product) {
-                if(!in_array($product['brand'], $brands_useArray)) {
-                    array_push($brands_useArray, $product['brand']);
-                }
-                if(!in_array($product['type'], $types_useArray)) {
-                    array_push($types_useArray, $product['type']);
-                }
+    if ($admin_mode) {
+        // Calculations for admin stats
+        // Count unique brands & types in products
+        $brands_useArray    = [];
+        $types_useArray     = [];
+        foreach ($products as $product) {
+            if(!in_array($product['brand'], $brands_useArray)) {
+                array_push($brands_useArray, $product['brand']);
+            }
+            if(!in_array($product['type'], $types_useArray)) {
+                array_push($types_useArray, $product['type']);
             }
         }
     }
@@ -68,46 +69,8 @@
             <?php if ($admin_mode) { ?>
                 <div class="container_header"><?php echo OutputLang('admin_panel_title'); ?></div>
                 <div class="container_content">
-                    <form action='./php/exec.php?action=add&type=product' method='post' enctype='multipart/form-data'>
-                        <div class="sub_title">Add Product</div>
-                        <table class="admin_entry">
-                            <tr>
-                                <th>Product Name</th>
-                                <td><input type='text' id='name' name='name' placeholder="Including model name, variant, etc." required></td>
-                            </tr>
-                            <tr>
-                                <th>Brand</th>
-                                <td><select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort); ?></select></td>
-                            </tr>
-                            <tr>
-                                <th>Type</th>
-                                <td><select id='type' name='type' required><?php OutputTypeOptions($types_sort); ?></select></td>
-                            </tr>
-                            <tr>
-                                <th>Price in Japan (JPY)</th>
-                                <td><input type='number' id='price_jp' name='price_jp' placeholder="￥" required></td>
-                            </tr>
-                            <tr>
-                                <th>Price in HK (HKD)</th>
-                                <td><input type='number' id='price_hk' name='price_hk' placeholder="$" required></td>
-                            </tr>
-                            <tr>
-                                <th>Notes</th>
-                                <td><input type='text' id='notes' name='notes' placeholder="Add any additional information here such as specs or extra details of prices."></td>
-                            </tr>
-                            <tr>
-                                <th>Release Date</th>
-                                <td><input type='date' id='release_date' name='release_date'></td>
-                            </tr>
-                            <tr>
-                                <th>Image Thumbnail</th>
-                                <td><input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><input type='submit' class='input_button' value='Add Product'></td>
-                            </tr>
-                        </table>
-                    </form>
+                    <div class="sub_title">Add Product</div>
+                    <?php RenderTemplate_Admin_Product($brands_sort, $types_sort); ?>
                     <br><br>
 
                     <div class="sub_title">Manage Brands</div>
@@ -125,7 +88,7 @@
                                 <td>
                                     <select id='id' name='id' required onchange="set_edit_brand_name(this, 'edit_brand_name');">
                                         <option value="">- Select a Brand -</option>
-                                        <?php OutputBrandOptions($brands_sort); ?>
+                                        <?php echo OutputBrandOptions($brands_sort); ?>
                                     </select>
                                     <div id="edit_brand_name" style="display:none;"><input type="text" id="name" name="name" required></div>
                                 </td>
@@ -138,7 +101,7 @@
                                 <td>
                                     <select id='id' name='id' required>
                                         <option value="">- Select a Brand -</option>
-                                        <?php OutputBrandOptions($brands_sort); ?>
+                                        <?php echo OutputBrandOptions($brands_sort); ?>
                                     </select>
                                 </td>
                                 <td><input type="submit" class="input_button delete" value="Delete"></td>
@@ -162,7 +125,7 @@
                                 <td>
                                     <select id='id' name='id' required onchange="set_edit_brand_name(this, 'edit_type_name');">
                                         <option value="">- Select Product Type -</option>
-                                        <?php OutputBrandOptions($types_sort); ?>
+                                        <?php echo OutputBrandOptions($types_sort); ?>
                                     </select>
                                     <div id="edit_type_name" style="display:none;"><input type="text" id="name" name="name" required></div>
                                 </td>
@@ -175,7 +138,7 @@
                                 <td>
                                     <select id='id' name='id' required>
                                         <option value="">- Select Product Type -</option>
-                                        <?php OutputBrandOptions($types_sort); ?>
+                                        <?php echo OutputBrandOptions($types_sort); ?>
                                     </select>
                                 </td>
                                 <td><input type="submit" class="input_button delete" value="Delete"></td>
@@ -219,10 +182,10 @@
                         <tr>
                             <th>Filter by: </th>
                             <td>
-                                <select id='filter_brand' onchange='toggle_products_display();'><option value=''>- Brand -</option><?php OutputBrandOptions($brands_sort); ?></select> 
+                                <select id='filter_brand' onchange='toggle_products_display();'><option value=''>- Brand -</option><?php echo OutputBrandOptions($brands_sort); ?></select> 
                             </td>
                             <td>
-                                <select id='filter_type' onchange='toggle_products_display();'><option value=''>- Type -</option><?php OutputTypeOptions($types_sort); ?></select> 
+                                <select id='filter_type' onchange='toggle_products_display();'><option value=''>- Type -</option><?php echo OutputTypeOptions($types_sort); ?></select> 
                             </td>
                         </tr>
                         <tr>
@@ -250,7 +213,7 @@
                 </div>
                 <div id='products' class="product_list">
                     <?php foreach ($products as $product) { ?>
-                        <div class="entry_item" name="<?php echo $product['brand']."_".$product['type']; ?>">
+                        <div class="entry_item<?php echo !$product['is_public'] ? "_private" : ""; ?>" name="<?php echo $product['brand']."_".$product['type']; ?>">
                             <?php 
                                 // Set image thumbnail
                                 $thumbnail_url = "/images/products/".$product['id'].".jpg";
@@ -295,7 +258,10 @@
                             <table class="product_inner_table product_table_desktop">
                                 <tr>
                                     <td class="title" colspan="5">
-                                        <?php echo $product['name']; ?>
+                                        <?php 
+                                            echo !$product['is_public'] ? "[NON-PUBLIC] " : "";
+                                            echo $product['name']; 
+                                        ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -419,55 +385,11 @@
                             <table class="product_inner_table">
                                 <tr>
                                     <td colspan="6" class="edit_panel" style="display:none;" id="editPanel_<?php echo $product['id']; ?>">
-                                        <?php if ($admin_mode) { ?>
-                                            <form action='./php/exec.php?action=edit&type=product' method='post' enctype='multipart/form-data'>
-                                                <input type='hidden' id='id' name='id' value='<?php echo $product['id']; ?>'>
-                                                <table class="admin_entry">
-                                                    <tr>
-                                                        <th>Product Name</th>
-                                                        <td><input type='text' id='name' name='name' value='<?php echo $product['name']; ?>' required></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Brand</th>
-                                                        <td><select id='brand' name='brand' required><?php OutputBrandOptions($brands_sort, $product['brand']); ?></select></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Type</th>
-                                                        <td><select id='type' name='type' required><?php OutputTypeOptions($types_sort, $product['type']); ?></select></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Price in Japan (JPY)</th>
-                                                        <td><input type='number' id='price_jp' name='price_jp' placeholder="￥" value='<?php echo $product['price_jp']; ?>' required></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Price in HK (HKD)</th>
-                                                        <td><input type='number' id='price_hk' name='price_hk' placeholder="$" value='<?php echo $product['price_hk']; ?>' required></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Notes</th>
-                                                        <td><input type='text' id='notes' name='notes' value='<?php echo $product['notes']; ?>'></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Release Date</th>
-                                                        <td><input type='date' id='release_date' name='release_date' value='<?php echo $product['release_date']; ?>'></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Image Thumbnail</th>
-                                                        <td><input type="file" name="image_thumbnail" id="image_thumbnail" accept="image/jpeg"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2"><input type='submit' class='input_button' value='Update Product'></td>
-                                                    </tr>
-                                                </form>
-                                                <form action='./php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm("Delete this product?");'>
-                                                    <input type='hidden' id='id' name='id' value='<?php echo $product['id']; ?>'>
-                                                    <tr>
-                                                        <th>Delete Product</th>
-                                                        <td><input type="submit" class="input_button delete" value="Delete"></td>
-                                                    </tr>
-                                                </form>
-                                            </table>
-                                        <?php } ?>
+                                        <?php 
+                                            if ($admin_mode) {
+                                                RenderTemplate_Admin_Product($brands_sort, $types_sort, $product);
+                                            } 
+                                        ?>
                                     </td>
                                 </tr>
                             </table>

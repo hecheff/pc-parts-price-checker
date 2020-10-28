@@ -210,6 +210,15 @@ div.product_list div.entry_item:hover {
   background-color: #33498a;
 }
 
+div.product_list div.entry_item_private {
+  background-color: #26272b;
+  border-radius: 5px;
+}
+
+div.product_list div.entry_item_private:hover {
+  background-color: #5f6169;
+}
+
 div.value_container {
   display: none;
 }

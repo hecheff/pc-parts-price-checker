@@ -192,9 +192,11 @@ div.product_list {
 }
 
 
-div.product_list div.entry_item { border-radius: $border_radius_default; }
-div.product_list div.entry_item:hover { background-color: $color_bg_product_highlight; } 
+div.product_list div.entry_item         { border-radius: $border_radius_default; }
+div.product_list div.entry_item:hover   { background-color: $color_bg_product_highlight; } 
 
+div.product_list div.entry_item_private         { background-color: $color_bg_product_private_default; border-radius: $border_radius_default; }
+div.product_list div.entry_item_private:hover   { background-color: $color_bg_product_private_highlight; } 
 
 // Store values for sorting
 div.value_container { display: none; }

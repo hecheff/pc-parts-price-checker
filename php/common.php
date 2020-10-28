@@ -6,6 +6,7 @@
     // Call in default files
     include('settings.php');
     include('constants.php');
+    include('templates.php');
 
     // Read language data (check for forced language set by query)
     if (!isset($_SESSION['lang']) || !in_array($_SESSION['lang'], LANGUAGE_CODES_ACTIVE)) {
@@ -37,27 +38,31 @@
     }
 
 
-    // Output Brand Options
+    // Output Brands as Options
     function OutputBrandOptions($brands_list, $select = null) {
+        $output = "";
         foreach ($brands_list as $brand) {
             $selected = "";
             if ($select == $brand['id']) {
                 $selected = "selected";
             }
             $brand_id = $brand['id'];
-            echo "<option value='$brand_id' $selected>".$brand['name']."</option>";
-        }
+            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
+        } 
+        return $output;
     }
-    // Output Type Options
+    // Output Types as Options
     function OutputTypeOptions($types_list, $select = null) {
+        $output = "";
         foreach ($types_list as $brand) {
             $selected = "";
             if ($select == $brand['id']) {
                 $selected = "selected";
             }
             $brand_id = $brand['id'];
-            echo "<option value='$brand_id' $selected>".$brand['name']."</option>";
+            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
         }
+        return $output;
     }
 
 
@@ -135,8 +140,14 @@
     }
 
     // DB GET Functions
-    function GetDB_Products($order_by = 'name', $is_asc = true) {
-        $query = "SELECT * FROM products ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
+    function GetDB_Products($order_by = 'name', $is_asc = true, $admin_mode = false) {
+        // Only display product entries which are public (ignored if admin)
+        $filter_public = "WHERE is_public IS true";
+        if ($admin_mode) {
+            $filter_public = "";
+        }
+
+        $query = "SELECT * FROM products $filter_public ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
         $result = $GLOBALS['conn']->query($query);
         $rows = [];
         while($row = mysqli_fetch_array($result)) {
@@ -188,21 +199,23 @@
      * @return boolean  Returns database write success/failure as boolean
      * 
     */
-    function WriteDB_Products($name, $brand, $type, $price_hk, $price_jp, $notes, $release_date, $image_thumbnail = null, $id = null) {
+    function WriteDB_Products($name, $brand, $type, $price_hk, $price_jp, $notes, $is_public, $release_date, $image_thumbnail = null, $id = null) {
         $time_now = TIMESTAMP_NOW;
         $name = addslashes(strip_tags($name));
         $notes = addslashes(strip_tags($notes));
 
         $old_product_details = null;
 
+        $is_public = $is_public ? "TRUE" : "FALSE";
+
         // Create new entry if ID is null. Otherwise update existing product with given ID
         if ($id == null) {
-            $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, notes, release_date, created_at, updated_at) 
+            $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, notes, is_public, release_date, created_at, updated_at) 
                                     VALUES ('$name', $brand, $type, $price_hk, $price_jp, 
-                                    '$notes', '$release_date', '$time_now', '$time_now');";
+                                    '$notes', $is_public, '$release_date', '$time_now', '$time_now');";
         } else {
             $old_product_details = GetProductByID($id);
-            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', release_date='$release_date', updated_at='$time_now' 
+            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', is_public=$is_public, release_date='$release_date', updated_at='$time_now' 
                                     WHERE id=$id;";
         }
 
