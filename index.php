@@ -311,7 +311,7 @@
                                     <tr>
                                         <td colspan="9" style="text-align:right;">
                                             <div class="entry edit">
-                                                <input type='button' class='input_button' value='Edit'
+                                                <input type='button' class='input_button' value='<?php echo OutputLang('top_product_admin_button_manage'); ?>'
                                                     onclick='toggle_display("editPanel_<?php echo $product['id']; ?>");'>
                                             </div>
                                         </td>
@@ -375,7 +375,7 @@
                                     <tr>
                                         <td colspan="9" style="text-align:right;">
                                             <div class="entry edit">
-                                                <input type='button' class='input_button' value='Edit'
+                                                <input type='button' class='input_button' value='<?php echo OutputLang('top_product_admin_button_manage'); ?>'
                                                     onclick='toggle_display("editPanel_<?php echo $product['id']; ?>");'>
                                             </div>
                                         </td>

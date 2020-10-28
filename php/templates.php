@@ -103,7 +103,7 @@
                     <tr>
                         <th>Copy Product Entry</th>
                         <td>
-                            <input type='submit' class='input_button' value='Make Copy'>
+                            <input type='submit' class='input_button' value='".OutputLang('top_product_admin_button_make_copy')."'>
                             All details except for thumbnail will be used to create a duplicate product entry.
                         </td>
                     </tr>
@@ -115,7 +115,7 @@
                     <tr>
                         <th>Delete Product</th>
                         <td>
-                            <input type='submit' class='input_button delete' value='Delete'>
+                            <input type='submit' class='input_button delete' value='".OutputLang('top_product_admin_button_delete')."'>
                             WARNING: Deleted products cannot be recovered.
                         </td>
                     </tr>

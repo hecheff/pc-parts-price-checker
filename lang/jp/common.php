@@ -19,8 +19,11 @@
             $lang['admin_panel_title']      = "管理者パネル";
 
             // Top Page
-            $lang['top_product_list_title'] = "商品一覧";
-            $lang['top_product_hidden']     = "[非公開]";
+            $lang['top_product_list_title']             = "商品一覧";
+            $lang['top_product_hidden']                 = "[非公開]";
+            $lang['top_product_admin_button_manage']    = "管理";
+            $lang['top_product_admin_button_make_copy'] = "複写する";
+            $lang['top_product_admin_button_delete']    = "削除する";
 
             // Notices
             $lang['notice_login_success']   = "ログイン成功しました。";

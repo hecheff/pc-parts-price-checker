@@ -19,8 +19,11 @@
             $lang['admin_panel_title']      = "ADMIN PANEL";
             
             // Top Page
-            $lang['top_product_list_title'] = "PRODUCT LIST";
-            $lang['top_product_hidden']     = "[HIDDEN]";
+            $lang['top_product_list_title']             = "PRODUCT LIST";
+            $lang['top_product_hidden']                 = "[HIDDEN]";
+            $lang['top_product_admin_button_manage']    = "Manage";
+            $lang['top_product_admin_button_make_copy'] = "Make Copy";
+            $lang['top_product_admin_button_delete']    = "Delete";
 
             // Notices
             $lang['notice_login_success']   = "Login success.";
