@@ -38,17 +38,6 @@
             }
         }
     }
-    
-    //Grab the contents of the Product page from Amazon
-    // $source = file_get_contents("https://www.amazon.co.jp/Kioxia-500GB-EXCERIA-Warranty-SSD-CK500N3/dp/B08B38SQ4M/ref=sr_1_1_sspa?dchild=1&keywords=rtx%2B3080&qid=1604102669&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFRTlRJODNSVEdHVzMmZW5jcnlwdGVkSWQ9QTAxMjY5MzQzU0E2NThFWjMwMzFGJmVuY3J5cHRlZEFkSWQ9QTFQRjc5SlVLOElORTImd2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl&th=1");
-    // //Find the Price (Searches using Regex)
-    // preg_match("'<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price priceBlockBuyingPriceString\">(.*?)</span>'si", $source, $match);
-    // //Check if it was actually found.
-    // if ($match){
-    //     //Echo Price if it was indeed found.
-    //     echo "TEST: ".$match[1]; 
-    // }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,6 +95,7 @@
                                 <td><input type="submit" class="input_button" value="Rename"></td>
                             </form>
                         </tr>
+                        <?php /*
                         <tr>
                             <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this brand?');">
                                 <th>Delete</th>
@@ -118,6 +108,7 @@
                                 <td><input type="submit" class="input_button delete" value="Delete"></td>
                             </form>
                         </tr>
+                        */ ?>
                     </table>
                     <br><br>
 
@@ -143,6 +134,7 @@
                                 <td><input type="submit" class="input_button" value="Rename"></td>
                             </form>
                         </tr>
+                        <?php /*
                         <tr>
                             <form action="./php/exec.php?action=delete&type=type" method="post" onsubmit="return confirm('Delete this product type?');">
                                 <th>Delete</th>
@@ -155,6 +147,7 @@
                                 <td><input type="submit" class="input_button delete" value="Delete"></td>
                             </form>
                         </tr>
+                        */ ?>
                     </table>
                     <br><br>
 
