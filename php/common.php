@@ -1,10 +1,20 @@
 <?php
     session_start();
+    // Establish notices variable for handling status changes
+    $_SESSION['notices'] = "";
 
     // Call in default files
     include('settings.php');
     include('constants.php');
+    include('templates.php');
 
+    // Read language data (check for forced language set by query)
+    if (!isset($_SESSION['lang']) || !in_array($_SESSION['lang'], LANGUAGE_CODES_ACTIVE)) {
+        $_SESSION['lang'] = 'en';
+    }
+    include($_SERVER['DOCUMENT_ROOT'].'/lang/'.$_SESSION['lang'].'/common.php');
+    $lang_class = new Lang;
+    $GLOBALS['lang_data'] = $lang_class->GetLanguageData();
     // Establish connection to database
     $curr_env = $_SERVER['HTTP_HOST'];
     if (strpos($curr_env, DEFAULT_DOMAIN) == true) {
@@ -18,39 +28,41 @@
     if ($GLOBALS['conn']->connect_error) {
         die("Connection failed: " . $GLOBALS['conn']->connect_error);
     }
-
     // Set currency (if not set)
     if (!isset($_SESSION['currency'])) {
         $_SESSION['currency'] = "JPY";
     }
-
-    function SortTableButtons($column_index, $is_number = false) {
-        $is_number = ($is_number) ? "true" : "false";
-        echo "<span class='sort_button' onclick='sortTable_v2($column_index, $is_number, true);'>▲</span><span class='sort_button' onclick='sortTable_v2($column_index, $is_number, false);'>▼</span>";
+    // Set user credentials (if present)
+    if (isset($_SESSION['username']) && !empty($_SESSION['username']) && isset($_SESSION['password']) && !empty($_SESSION['password'])) {
+        SetUserSession($_SESSION['username'], $_SESSION['password']);
     }
 
 
-    // Output Brand Options
+    // Output Brands as Options
     function OutputBrandOptions($brands_list, $select = null) {
+        $output = "";
         foreach ($brands_list as $brand) {
             $selected = "";
             if ($select == $brand['id']) {
                 $selected = "selected";
             }
             $brand_id = $brand['id'];
-            echo "<option value='$brand_id' $selected>".$brand['name']."</option>";
-        }
+            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
+        } 
+        return $output;
     }
-    // Output Type Options
+    // Output Types as Options
     function OutputTypeOptions($types_list, $select = null) {
+        $output = "";
         foreach ($types_list as $brand) {
             $selected = "";
             if ($select == $brand['id']) {
                 $selected = "selected";
             }
             $brand_id = $brand['id'];
-            echo "<option value='$brand_id' $selected>".$brand['name']."</option>";
+            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
         }
+        return $output;
     }
 
 
@@ -128,8 +140,14 @@
     }
 
     // DB GET Functions
-    function GetDB_Products($order_by = 'name', $is_asc = true) {
-        $query = "SELECT * FROM products ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
+    function GetDB_Products($order_by = 'name', $is_asc = true, $admin_mode = false) {
+        // Only display product entries which are public (ignored if admin)
+        $filter_public = "WHERE is_public IS true";
+        if ($admin_mode) {
+            $filter_public = "";
+        }
+
+        $query = "SELECT * FROM products $filter_public ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
         $result = $GLOBALS['conn']->query($query);
         $rows = [];
         while($row = mysqli_fetch_array($result)) {
@@ -140,6 +158,7 @@
     function GetDB_Brands($order_by = 'name', $is_asc = true) {
         $query = "SELECT * FROM brands ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
         $result = $GLOBALS['conn']->query($query);
+        $rows = [];
         while($row = mysqli_fetch_array($result)) {
             $rows[] = $row;
         }
@@ -148,6 +167,7 @@
     function GetDB_Types($order_by = 'name', $is_asc = true) {
         $query = "SELECT * FROM types ORDER BY $order_by ".($is_asc ? "ASC" : "DESC").";";
         $result = $GLOBALS['conn']->query($query);
+        $rows = [];
         while($row = mysqli_fetch_array($result)) {
             $rows[] = $row;
         }
@@ -179,21 +199,23 @@
      * @return boolean  Returns database write success/failure as boolean
      * 
     */
-    function WriteDB_Products($name, $brand, $type, $price_hk, $price_jp, $notes, $release_date, $image_thumbnail = null, $id = null) {
+    function WriteDB_Products($name, $brand, $type, $price_hk, $price_jp, $notes, $is_public, $release_date, $image_thumbnail = null, $id = null) {
         $time_now = TIMESTAMP_NOW;
         $name = addslashes(strip_tags($name));
         $notes = addslashes(strip_tags($notes));
 
         $old_product_details = null;
 
-        // Create new entry if ID is null. Otherwise overwrite existing product with this ID
+        $is_public = $is_public ? "TRUE" : "FALSE";
+
+        // Create new entry if ID is null. Otherwise update existing product with given ID
         if ($id == null) {
-            $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, notes, release_date, created_at, updated_at) 
+            $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, notes, is_public, release_date, created_at, updated_at) 
                                     VALUES ('$name', $brand, $type, $price_hk, $price_jp, 
-                                    '$notes', '$release_date', '$time_now', '$time_now');";
+                                    '$notes', $is_public, '$release_date', '$time_now', '$time_now');";
         } else {
             $old_product_details = GetProductByID($id);
-            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', updated_at='$time_now' 
+            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', is_public=$is_public, release_date='$release_date', updated_at='$time_now' 
                                     WHERE id=$id;";
         }
 
@@ -234,6 +256,11 @@
             }
         }
     }
+    // Create copy of product entry (all settings except ID and image is copied)
+    function DuplicateProduct($product_id) {
+        $product = GetProductByID($product_id);
+        WriteDB_Products("(COPY) ".$product['name'], $product['brand'], $product['type'], $product['price_hk'], $product['price_jp'], $product['notes'], FALSE, $product['release_date']);
+    }
 
     // Get latest Product ID
     function GetLatestProductID() {
@@ -253,7 +280,27 @@
             $rows[] = $row;
         }
         return $rows[0];
+    }
+    // Get multiple specific products by array of IDs
+    function GetProductsByIDs($id_list) {
+        // Create list part of query
+        $query_list_entry = "";
+        foreach ($id_list as $curr_id) {
+            if (!empty($query_list_entry)) {
+                $query_list_entry .= ", ";
+            } else {
+                $query_list_entry .= "(";
+            }
+            $query_list_entry .= $curr_id;
+        }
+        $query_list_entry .= ")";
 
+        $query = "SELECT * FROM products WHERE id IN ".$query_list_entry." ORDER BY ID ASC;";
+        $result = $GLOBALS['conn']->query($query);
+        while ($row = mysqli_fetch_array($result)) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
 
     /**
@@ -299,7 +346,6 @@
         }
     }
 
-
     // DB Delete Functions
     function DeleteFromDB_Products($id) {
         $query = "DELETE FROM products WHERE id='$id';";
@@ -320,4 +366,47 @@
         }
     }
 
+    // Login functions
+    function GetUser($username, $password) {
+        if (!empty($username) && !empty($username)) {
+            $query = "SELECT username, email, is_admin FROM users WHERE username='$username' AND password='".sha1($password)."'";
+            $result = $GLOBALS['conn']->query($query);
+            $rows = [];
+            while($row = mysqli_fetch_array($result)) {
+                $rows[] = $row;
+            }
+            return $rows[0];
+        }
+        return false;
+    }
 
+    // Set user session details if credentials match what's found in database
+    function SetUserSession($username, $password) {
+        $user_details = GetUser($username, $password);
+        if (GetUser($username, $password)) {
+            $_SESSION['username']        = $username;
+            $_SESSION['password']       = $password;
+            $_SESSION['user_details']   = $user_details;
+        }
+    }
+    // Reset credentials & user's session details
+    function ResetUserSessionDetails() {
+        $_SESSION['username']       = null;
+        $_SESSION['password']       = null;
+        $_SESSION['user_details']   = null;
+    }
+    
+
+    // Set Notices
+    function AddNotice($notice) {
+        if (!empty($_SESSION['notices'])) {
+            $_SESSION['notices'] .= "\n";
+        }
+        $_SESSION['notices'] .= $notice;
+    } 
+
+
+    // Output language
+    function OutputLang($tag) {
+        return $GLOBALS['lang_data'][$tag];
+    }

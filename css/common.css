@@ -1,8 +1,14 @@
+/*
+$color_background:          #001100;
+$color_bg_product_list:     #003300;
+$color_bg_product_highlight:#006600;
+$color_bg_header_footer_bg: #113311;
+*/
 body {
-  background-color: #000000;
+  background-color: #000411;
   color: #FFFFFF;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 11pt;
+  font-size: 10pt;
   letter-spacing: normal;
   white-space: normal;
   word-wrap: normal;
@@ -10,6 +16,7 @@ body {
   border: 0px;
   margin: 0px;
   padding: 0px;
+  width: 100%;
 }
 
 div {
@@ -22,18 +29,102 @@ p {
   padding: 0;
 }
 
-.dropMenu, .input_text {
-  background: #FFFFFF;
-  border: 1px solid #000000;
+a {
+  color: #00AA99;
+}
+
+a:hover {
+  color: #00d3be;
+}
+
+a:active {
+  color: #7efff2;
+}
+
+div.notice_panel {
+  width: auto;
+  min-height: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
+  background-color: #101b3d;
+}
+
+div.container_header {
+  width: auto;
+  height: 20px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  background-color: #33498a;
+  font-weight: bold;
+  font-size: 13pt;
+  text-transform: uppercase;
+  border-bottom: 3px solid #e7be37;
+}
+
+div.container_content {
+  width: auto;
+  min-height: 20px;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  background-color: #101b3d;
+  margin-bottom: 20px;
+}
+
+div.container_content div.sub_title {
+  width: auto;
+  font-size: 12pt;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+div.container_header_kde {
+  width: auto;
+  height: 20px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  background-color: #990014;
+  font-weight: bold;
+  font-size: 13pt;
+  text-transform: uppercase;
+  border-bottom: 3px solid #e7be37;
+}
+
+div.container_content_kde {
+  width: auto;
+  min-height: 20px;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  background-color: #4d000a;
+  margin-bottom: 20px;
+}
+
+div.container_content_kde div.sub_title {
+  width: auto;
+  font-size: 12pt;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+input[type=text], input[type=number], input[type=date], input[type=password], select {
+  padding: 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: #FFFFFF;
   position: relative;
   overflow: hidden;
   vertical-align: middle;
-  font-size: 11pt;
+  border: 1px solid #000000;
+  font-size: 10pt;
 }
 
 .input_button {
-  padding: 5px 10px;
   border: 1px solid #000000;
   border-radius: 5px;
   position: relative;
@@ -41,7 +132,7 @@ p {
   overflow: hidden;
   vertical-align: middle;
   font-weight: bold;
-  font-size: 11pt;
+  font-size: 10pt;
   cursor: pointer;
   background-color: #DDDDDD;
 }
@@ -54,37 +145,60 @@ p {
   background-color: #666666;
 }
 
+input[type=submit].delete {
+  color: #CC0000;
+  border-color: #CC0000;
+  background-color: #550000;
+}
+
+input[type=submit].delete:hover {
+  background-color: #660000;
+}
+
+input[type=submit].delete:active {
+  background-color: #330000;
+}
+
 div.wrapper_main {
   width: auto;
-  margin: 30px 150px;
+  margin-left: 100px;
+  margin-right: 100px;
   min-height: 100%;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 800px) {
   div.wrapper_main {
-    margin: 30px 10px;
+    margin: 10px 10px;
   }
 }
 
 div.filter_panel {
+  margin: 20px auto;
+  padding: 5px;
+}
+
+div.filter_panel table.filter_sort_table {
   width: auto;
-  border-radius: 5px;
-  padding: 20px;
+  border-collapse: collapse;
+}
+
+div.filter_panel table.filter_sort_table tr th {
+  text-align: left;
+  padding-right: 20px;
+}
+
+div.filter_panel table.filter_sort_table tr td select {
+  width: 100%;
 }
 
 div.product_list {
   width: auto;
-  border-radius: 5px;
-  padding: 20px;
-  background-color: #003300;
-  margin: 20px auto;
+  background-color: #101b3d;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 800px) {
   div.product_list {
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px auto;
+    margin: 20px auto;
   }
 }
 
@@ -93,20 +207,34 @@ div.product_list div.entry_item {
 }
 
 div.product_list div.entry_item:hover {
-  background-color: #006600;
+  background-color: #33498a;
 }
 
-div.product_list table.product_inner_table tr td div.inner_title {
-  font-size: 8pt;
-  text-decoration: underline;
+div.product_list div.entry_item_private {
+  background-color: #26272b;
+  border-radius: 5px;
+}
+
+div.product_list div.entry_item_private:hover {
+  background-color: #5f6169;
 }
 
 div.value_container {
   display: none;
 }
 
+div.product_list table.product_inner_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+div.product_list table.product_inner_table tr th {
+  text-align: left;
+}
+
 div.product_list table.product_inner_table tr td {
-  padding: 5px;
+  padding: 5px 0;
 }
 
 div.product_list table.product_inner_table tr td.select {
@@ -114,14 +242,13 @@ div.product_list table.product_inner_table tr td.select {
 }
 
 div.product_list table.product_inner_table tr td.thumbnail {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
 }
 
 div.product_list table.product_inner_table tr td.thumbnail div.image {
-  width: 90px;
-  height: 90px;
-  margin: 10px 10px 10px 0;
+  width: 100%;
+  height: 100%;
   background-color: #FFFFFF;
   vertical-align: center;
   background-position: center;
@@ -129,191 +256,113 @@ div.product_list table.product_inner_table tr td.thumbnail div.image {
   background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 980px) {
-  div.product_list table.product_inner_table tr td.thumbnail {
-    width: 50px;
-    height: 50px;
-  }
-  div.product_list table.product_inner_table tr td.thumbnail div.image {
-    width: 50px;
-    height: 50px;
-    margin: 0px;
-  }
+div.product_list table.product_inner_table tr td.table_divider {
+  border-bottom: 1px solid #FFFFFF;
 }
 
-div.product_list table.product_inner_table tr td.title {
+table.product_table_desktop {
+  display: table;
+}
+
+table.product_table_desktop tr td.title {
   font-size: 14pt;
   font-weight: bold;
 }
 
-div.product_list table.product_inner_table tr td.brand,
-div.product_list table.product_inner_table tr td.type,
-div.product_list table.product_inner_table tr td.price_jp,
-div.product_list table.product_inner_table tr td.price_hk,
-div.product_list table.product_inner_table tr td.price_diff {
-  width: 18%;
+table.product_table_desktop tr td.brand,
+table.product_table_desktop tr td.type,
+table.product_table_desktop tr td.release_date {
+  width: auto;
   vertical-align: top;
 }
 
-div.product_list table.product_inner_table tr td.price_diff {
-  width: 25%;
-  vertical-align: top;
+table.product_table_desktop tr td.brand {
+  width: 10%;
 }
 
-div.product_list table.product_inner_table tr td.edit_button {
-  text-align: right;
+table.product_table_desktop tr td.type {
+  width: 15%;
 }
 
-div.product_list table.product_inner_table tr td.price_diff {
-  font-size: 13pt;
-  text-align: right;
-}
-
-div.product_list div.entry_wrapper {
-  width: 100%;
-  height: 100px;
-  margin: 10px auto;
-  float: none;
-  clear: both;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-div.product_list div.list_header {
-  width: auto;
-  font-size: 8pt;
-  font-weight: bold;
-  background-color: #005533;
-  border-radius: 5px;
-  padding: 10px 0;
-}
-
-div.product_list div.entry_item {
-  border-radius: 5px;
-}
-
-div.product_list div.entry_item:hover {
-  background-color: #006600;
-}
-
-div.product_list div.entry_item div.edit_panel {
-  height: auto;
-  padding: 20px;
-}
-
-div.product_list div.entry_wrapper div.entry {
-  height: 100%;
-  margin: 10px;
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-}
-
-div.product_list div.entry_wrapper div.entry_header {
-  height: 100%;
-  margin: 10px;
-  display: table-cell;
-  text-align: center;
-  vertical-align: bottom;
-}
-
-div.product_list div.entry_wrapper div.entry_header div.title_brand_type_headings {
-  width: auto;
-  text-align: center;
-  display: table-cell;
-  width: 20%;
-}
-
-div.product_list div.entry_wrapper div.select {
-  width: 3%;
-  text-align: center;
-}
-
-div.product_list div.entry_wrapper div.thumbnail {
-  width: 5%;
-}
-
-div.product_list div.entry_wrapper div.entry div.image {
-  width: 90px;
-  height: 90px;
-  margin: 10px 10px 10px 0;
-  background-color: #FFFFFF;
-  vertical-align: center;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-div.product_list div.entry_wrapper div.entry_header div.image_filler {
-  width: 80px;
-  margin: 10px 10px 10px 0;
-}
-
-div.product_list div.entry_wrapper div.title_brand_type {
-  width: 50%;
+table.product_table_desktop tr td.price_jp,
+table.product_table_desktop tr td.price_hk,
+table.product_table_desktop tr td.price_diff {
   text-align: left;
+  vertical-align: top;
+  white-space: normal;
 }
 
-div.product_list div.entry_wrapper div.title_brand_type div.product_title {
-  height: 40px;
+table.product_table_desktop tr td.price_diff {
+  text-align: right;
+  font-size: 13pt;
+}
+
+table.product_table_desktop tr td.edit_button {
+  text-align: right;
+}
+
+table.product_table_mobile {
+  display: none;
+}
+
+table.product_table_mobile tr td.title {
   font-size: 14pt;
   font-weight: bold;
 }
 
-div.product_list div.entry_wrapper div.brand_type_wrapper {
-  display: inline-block;
-  height: 40px;
-  width: 100%;
+table.product_table_mobile tr td.brand,
+table.product_table_mobile tr td.type,
+table.product_table_mobile tr td.release_date {
+  width: auto;
+  vertical-align: top;
 }
 
-div.product_list div.entry_wrapper div.brand_type_wrapper div.brand_wrapper,
-div.product_list div.entry_wrapper div.brand_type_wrapper div.type_wrapper {
-  width: 50%;
-  float: left;
+table.product_table_mobile tr td.price_jp,
+table.product_table_mobile tr td.price_hk,
+table.product_table_mobile tr td.price_diff {
+  width: auto;
+  text-align: right;
+  vertical-align: top;
+  white-space: normal;
 }
 
-div.product_list div.entry_wrapper div.brand_type_wrapper div.brand_type_header {
+table.product_table_mobile tr td.price_diff {
+  font-size: 13pt;
+}
+
+table.product_table_mobile tr td.edit_button {
+  text-align: right;
+}
+
+@media screen and (max-width: 800px) {
+  table.product_table_desktop {
+    display: none;
+  }
+  table.product_table_mobile {
+    display: table;
+  }
+  div.product_list table.product_inner_table tr td.thumbnail {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+div.product_list table.product_inner_table tr td {
+  padding: 5px;
+}
+
+div.product_list table.product_inner_table tr td.cell_upper {
+  vertical-align: top;
+}
+
+div.product_list table.product_inner_table tr td div.inner_title {
   font-size: 8pt;
   text-decoration: underline;
-}
-
-div.product_list div.entry_wrapper div.release_date,
-div.product_list div.entry_wrapper div.price_hk,
-div.product_list div.entry_wrapper div.price_jp {
-  width: 12%;
-}
-
-div.product_list div.entry_wrapper div.price_diff {
-  width: 15%;
-  font-weight: bold;
-}
-
-div.product_list div.entry_wrapper div.edit {
-  width: 5%;
+  color: #CCCCCC;
 }
 
 span.hidden_val {
   display: none;
-}
-
-span.sort_button {
-  cursor: pointer;
-  font-size: 13pt;
-  color: #DDDDDD;
-}
-
-span.sort_button:hover {
-  color: #999999;
-}
-
-span.sort_button:active {
-  color: #666666;
-}
-
-div.admin_panel {
-  border-radius: 5px;
-  padding: 20px;
-  background-color: #005533;
 }
 
 p.price_plus {
@@ -324,20 +373,153 @@ p.price_minus {
   color: #EE0000;
 }
 
+table.admin_entry {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.admin_entry tr th {
+  text-align: left;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+table.admin_entry tr td {
+  text-align: left;
+  padding-bottom: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+}
+
+table.admin_entry tr td input,
+table.admin_entry tr td select {
+  width: 100%;
+}
+
+table.admin_stats {
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+table.admin_stats tr th {
+  text-align: left;
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+table.admin_stats tr td {
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+div.item_list_wrapper {
+  width: 20%;
+  margin: 0 auto;
+  position: fixed;
+  top: 10%;
+  right: 0;
+  z-index: 2;
+}
+
+div.item_list_wrapper div.item_list_header {
+  font-weight: bold;
+  font-size: 13pt;
+  text-transform: uppercase;
+  width: auto;
+  padding: 10px;
+  border-top: 1px solid #FFFFFFEE;
+  border-left: 1px solid #FFFFFFEE;
+  border-radius: 5px 0 0 0;
+  background-color: #000000EE;
+}
+
+div.item_list_wrapper div.item_list_content {
+  width: auto;
+  padding: 10px;
+  border-left: 1px solid #FFFFFFEE;
+  border-bottom: 1px solid #FFFFFFEE;
+  border-radius: 0 0 0 5px;
+  background-color: #000000EE;
+}
+
+div.item_list_wrapper div#item_list_container {
+  display: none;
+}
+
 div.header {
   width: 100%;
-  min-height: 50px;
-  background-color: #1122AA;
-  margin: 0 0 30px 0;
+  height: auto;
+  background-color: #1e2844;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+div.header div.wrapper {
+  height: auto;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+div.header div.wrapper div.title {
+  font-size: 13pt;
+  font-weight: bold;
+  float: left;
+}
+
+div.header div.wrapper div.title div.sub_title {
+  height: 15px;
+  font-size: 8pt;
+}
+
+div.header div.wrapper div.user_panel {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #33498a;
+  float: right;
+}
+
+div.header div.wrapper div.user_panel div.user_panel_heading {
+  height: 20px;
+  font-size: 10pt;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+div.header div.wrapper div.user_panel input.login_username {
+  width: 150px;
+}
+
+div.header div.wrapper div.user_panel input.login_password {
+  width: 80px;
+}
+
+@media screen and (max-width: 800px) {
+  div.header div.wrapper div.title {
+    text-align: center;
+    clear: both;
+    float: none;
+  }
+  div.header div.wrapper div.user_panel {
+    margin: 10px auto;
+    clear: both;
+    float: none;
+  }
 }
 
 div.footer {
   width: 100%;
   min-height: 50px;
-  background-color: #1122AA;
+  background-color: #1e2844;
   clear: both;
   float: none;
   position: relative;
   bottom: 0;
+}
+
+div.divider {
+  clear: both;
+  float: none;
 }
 /*# sourceMappingURL=common.css.map */

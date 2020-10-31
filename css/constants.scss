@@ -1,34 +1,68 @@
 // Basic properties
-$color_background:          #000000;
-$color_text:                #FFFFFF;
+$color_background:          #000411;
+$color_bg_product_list:     #101b3d;
+$color_bg_product_highlight:#33498a;
+$color_bg_product_goldtrim: #e7be37;
+$color_bg_header_footer_bg: #1e2844;
 
-$color_header_footer_bg:    #1122AA;
-$color_bg_admin_panel:      #005533;
+$color_bg_product_private_default:  #26272b;
+$color_bg_product_private_highlight:#5f6169;
 
+// KDE
+$color_kde_bg_product_highlight:#990014;
+$color_kde_bg_product_blacktrim:#000000;
+$color_kde_header_footer_bg: $color_kde_bg_product_highlight/2;
+
+// Item List
+$color_outline_item_list:   #FFFFFFEE;
+$color_bg_item_list:        #000000EE;
+
+/*
+$color_background:          #001100;
 $color_bg_product_list:     #003300;
 $color_bg_product_highlight:#006600;
+$color_bg_header_footer_bg: #113311;
+*/
+
+$color_text:                #FFFFFF;
+$color_table_title_small:   #CCCCCC;
+
+$color_link_default:        #00AA99;
+$color_link_hover:          #00d3be;
+$color_link_active:         #7efff2;
 
 $color_text_price_plus:     #00CC00;
 $color_text_price_minus:    #EE0000;
 
-
 $color_button_default:      #DDDDDD;
 $color_button_hover:        #999999;
 $color_button_active:       #666666;
+
+$color_delete_red:          #CC0000;
+$color_delete_bg:           #550000;
 
 $border_radius_default: 5px;
 $margin_default:    20px;
 $margin_small:      10px;
 
 // Font size defaults
-$fontsize_default:          11pt;
+$fontsize_default:          10pt;
+$fontsize_medium:           12pt;
 $fontsize_large:            13pt;
 $fontsize_small:            8pt;
 
 $fontsize_product_title:    14pt;
 
+$product_thumbnail_desktop: 50px;
+$product_thumbnail_mobile:  100px;
 
-$width_threshold:   980px;
+$width_threshold:       800px;
+//$width_threshold_small: 480px;
+
+@mixin wrapper_defaults {
+    margin-left: 100px;
+    margin-right: 100px;
+}
 
 @mixin defaultDivFrame() {
 	border-radius: $border_radius_default;

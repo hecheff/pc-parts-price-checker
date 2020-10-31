@@ -14,10 +14,10 @@
     }
     
 
-    // Add actions
     if ($action == 'add') {
+        // Write new entries to database
         if ($type == 'product') {
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['release_date'], $_FILES['image_thumbnail']);
+            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'], $_POST['release_date'], $_FILES['image_thumbnail']);
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name']);
         } elseif ($type == 'type') {
@@ -25,8 +25,9 @@
         }
 
     } elseif ($action == 'edit') {
+        // Update existing entries on database
         if ($type == 'product') {
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
+            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'], $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name'], $_POST['id']);
         } elseif ($type == 'type') {
@@ -34,6 +35,7 @@
         }
 
     } elseif ($action == 'delete') {
+        // Delete entries from database
         if ($type == 'product') {
             DeleteFromDB_Products($_POST['id']);
         } elseif ($type == 'brand') {
@@ -41,7 +43,9 @@
         } elseif ($type == 'type') {
             DeleteFromDB_Types($_POST['id']);
         }
-
+    } elseif ($action == 'copy_product') {
+        // Create a duplicate product entry using another as template
+        DuplicateProduct($_POST['id']);
     } elseif ($action == 'currency') {
         // Update currency manually
         UpdateExchangeRatesDB();
