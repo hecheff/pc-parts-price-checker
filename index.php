@@ -1,5 +1,5 @@
 <?php 
-    include($_SERVER['DOCUMENT_ROOT'].'/php/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php'); 
 
     // Update conversion rates after 1 hour passed
     $time_updated = AutoUpdateConversionRate(3600);
@@ -38,13 +38,23 @@
         }
     }
     
+    //Grab the contents of the Product page from Amazon
+    // $source = file_get_contents("https://www.amazon.co.jp/Kioxia-500GB-EXCERIA-Warranty-SSD-CK500N3/dp/B08B38SQ4M/ref=sr_1_1_sspa?dchild=1&keywords=rtx%2B3080&qid=1604102669&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFRTlRJODNSVEdHVzMmZW5jcnlwdGVkSWQ9QTAxMjY5MzQzU0E2NThFWjMwMzFGJmVuY3J5cHRlZEFkSWQ9QTFQRjc5SlVLOElORTImd2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl&th=1");
+    // //Find the Price (Searches using Regex)
+    // preg_match("'<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price priceBlockBuyingPriceString\">(.*?)</span>'si", $source, $match);
+    // //Check if it was actually found.
+    // if ($match){
+    //     //Echo Price if it was indeed found.
+    //     echo "TEST: ".$match[1]; 
+    // }
+
 ?>
 <!DOCTYPE html>
 <html>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/head.php'); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/head.php'); ?>
 
     <body onLoad="">
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/header.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/header.php'); ?>
         <div class="wrapper_main">
             Select Currency:
             <form action='/php/setCurrency.php' method='post'>
@@ -399,6 +409,8 @@
             </div>
         </div>
 
+        
+
         <div class="item_list_wrapper" style="display: none;">
             <div class="item_list_header">
                 ITEM LIST
@@ -410,6 +422,6 @@
             <div class="item_list_content"></div>
         </div>
 
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/footer.php'); ?>
     </body>
 </html>

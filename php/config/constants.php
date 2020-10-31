@@ -4,7 +4,7 @@
     define('TIMESTAMP_NOW', date("Y-m-d H:i:s"));
 
     // Database & Domain details
-    include('_db_credentials.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/config/_db_credentials.php');
 
     // Active language codes
     define('LANGUAGE_CODES_ACTIVE', ['en', 'jp']);

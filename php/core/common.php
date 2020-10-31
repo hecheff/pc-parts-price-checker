@@ -4,15 +4,15 @@
     $_SESSION['notices'] = "";
 
     // Call in default files
-    include('settings.php');
-    include('constants.php');
-    include('templates.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/config/settings.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/config/constants.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/templates.php');
 
     // Read language data (check for forced language set by query)
     if (!isset($_SESSION['lang']) || !in_array($_SESSION['lang'], LANGUAGE_CODES_ACTIVE)) {
         $_SESSION['lang'] = 'en';
     }
-    include($_SERVER['DOCUMENT_ROOT'].'/lang/'.$_SESSION['lang'].'/common.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/lang/'.$_SESSION['lang'].'/common.php');
     $lang_class = new Lang;
     $GLOBALS['lang_data'] = $lang_class->GetLanguageData();
     // Establish connection to database

@@ -1,6 +1,6 @@
 <?php
     // Set session currency
-    include('common.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php');
     
     $currency_list = [];
     $currency_array = GetDB_CurrencyList();

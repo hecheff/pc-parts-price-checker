@@ -1,5 +1,5 @@
 <?php 
-    include('common.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php');
 
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);

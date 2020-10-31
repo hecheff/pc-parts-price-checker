@@ -1,7 +1,7 @@
 <?php
     // Execute admin-level actions
     
-    include('common.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php');
     
     $action = $_GET['action'] ?? "";
     $type   = $_GET['type'] ?? "";
