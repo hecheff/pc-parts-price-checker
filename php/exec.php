@@ -1,19 +1,29 @@
 <?php
     // Execute admin-level actions
-    
     include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php');
     
-    $action = $_GET['action'] ?? "";
-    $type   = $_GET['type'] ?? "";
     // Redirect to top if type is not in type_allowed (e.g. malicious activity)
     // Exception given if action is currency (refresh DB-stored values)
+    $action = $_GET['action'] ?? "";
+    $type   = $_GET['type'] ?? "";
     if (empty($action) || $action != 'currency') {
         if ((empty($action) || empty($type) || !in_array($action, EXEC_ACTION_ALLOWED) || !in_array($type, EXEC_TYPE_ALLOWED))) {
             header('location: /');
         }
     }
     
+    // Call library depending on type
+    if ($type == 'product' || $action == 'copy_product') {
+        include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/products.php');
+    } elseif ($type == 'brand') {
+        include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/brands.php');
+    } elseif ($type == 'type') {
+        include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/types.php');
+    } elseif ($action == 'currency') {
+        include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/exchange_rate.php');
+    }
 
+    // Set DB action to exedute based on action and type
     if ($action == 'add') {
         // Write new entries to database
         if ($type == 'product') {
@@ -43,12 +53,15 @@
         } elseif ($type == 'type') {
             DeleteFromDB_Types($_POST['id']);
         }
+
     } elseif ($action == 'copy_product') {
         // Create a duplicate product entry using another as template
         DuplicateProduct($_POST['id']);
+
     } elseif ($action == 'currency') {
         // Update currency manually
         UpdateExchangeRatesDB();
+
     }
 
     header('Location: '.$_SERVER['HTTP_REFERER']);  // Redirect to previous page

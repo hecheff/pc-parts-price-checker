@@ -1,5 +1,5 @@
 <?php
-    // Section for reused components such as product details (Admin View: Add/Edit)
+    // Section for recurring components such as product details (Admin View: Add/Edit) and rendered HTML
 
     /**
      * @param array $brands_sort    List of brands          (sorted) 
@@ -123,4 +123,31 @@
             ";
         }
         echo "</table>";
+    }
+
+    // Output Brands as Options
+    function OutputBrandOptions($brands_list, $select = null) {
+        $output = "";
+        foreach ($brands_list as $brand) {
+            $selected = "";
+            if ($select == $brand['id']) {
+                $selected = "selected";
+            }
+            $brand_id = $brand['id'];
+            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
+        } 
+        return $output;
+    }
+    // Output Types as Options
+    function OutputTypeOptions($types_list, $select = null) {
+        $output = "";
+        foreach ($types_list as $brand) {
+            $selected = "";
+            if ($select == $brand['id']) {
+                $selected = "selected";
+            }
+            $brand_id = $brand['id'];
+            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
+        }
+        return $output;
     }

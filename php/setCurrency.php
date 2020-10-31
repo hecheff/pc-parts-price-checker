@@ -1,6 +1,7 @@
 <?php
     // Set session currency
     include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/exchange_rate.php');
     
     $currency_list = [];
     $currency_array = GetDB_CurrencyList();

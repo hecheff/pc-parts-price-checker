@@ -1,5 +1,6 @@
 <?php 
     include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/exchange_rate.php'); 
 
     // Get listed products
     $product_list_ids = [];
@@ -21,7 +22,6 @@
     $time_updated = AutoUpdateConversionRate(3600);
     $conversion_rates   = GetDB_CurrencyList();
 
-    
     // Sorted Lists (DO NOT FILTER)
     $conversion_rates_sort  = GetDB_CurrencyList('name', true);
     

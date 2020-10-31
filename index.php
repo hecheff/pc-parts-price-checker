@@ -1,5 +1,6 @@
 <?php 
     include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/exchange_rate.php'); 
 
     // Update conversion rates after 1 hour passed
     $time_updated = AutoUpdateConversionRate(3600);
