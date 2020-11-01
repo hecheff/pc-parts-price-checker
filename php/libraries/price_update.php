@@ -10,7 +10,6 @@
         $query          = "";
         if (isset($product_url) && !empty($product_url)) {
             $final_price = GetPriceFromURL($product_url);
-
             $query = "INSERT INTO products_price_records (product_id, product_url, price, currency, region_code, notes, date_created) 
                         VALUES ($product_id, '$product_url', $final_price, '$currency', '$region_code', '$notes', '$time_now');";
         } elseif (isset($input_price) && !empty($input_price)) {
@@ -29,12 +28,22 @@
     function GetPriceFromURL($url) {
         // Grab the contents of the Product page from Amazon
         $url_source = file_get_contents_curl($url);
-        
+
         // Find price value based on page ID and classes tags (check using regular expression)
         $match          = null;
         $store_domain   = GetDomain($url);
         if ($store_domain == 'amazon.co.jp') {
-            preg_match("'<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price priceBlockBuyingPriceString\">(.*?)</span>'si", $url_source, $match);
+            preg_match("'<span id=\"priceblock_ourprice\" class=\"(.*?)\">(.*?)</span>'si", $url_source, $match);
+
+            // If default fetch fails, try alternate patterns
+            if (empty($match)) {
+                // Amazon's product page buybox
+                preg_match("'<span id=\"price_inside_buybox\" class=\"(.*?)\">(.*?)</span>'si", $url_source, $match);
+            }
+            if (empty($match)) {
+                // Seller list
+                preg_match("'<span class=\"a-size-base a-color-price\">(.*?)</span>'si", $url_source, $match);
+            }
         } elseif ($store_domain == 'price.com.hk') {
             preg_match("'<span class=\"text-price-number\" data-price=\"(.*?)\">(.*?)</span>'si", $url_source, $match);
         }
