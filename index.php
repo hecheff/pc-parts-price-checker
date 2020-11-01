@@ -299,7 +299,7 @@
                                         <?php echo $session_currency_val_hk.$original_price_hk; ?>
                                     </td>
                                     <td class="price_diff" colspan="2">
-                                        <div class="inner_title">Difference (JP - HK)</div>
+                                        <div class="inner_title">Difference (JP Price - HK Price)</div>
                                         <?php echo "<p class='$price_class'>".$price_difference_text."<br>(".number_format($price_percentage, 0, '.', ',')."%".")</p>"; ?>
                                     </td>
                                 </tr>
