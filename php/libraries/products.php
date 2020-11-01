@@ -34,7 +34,7 @@
             $old_product_details = GetProductByID($id);
             $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, 
                         notes='$notes', is_public=$is_public, release_date='$release_date', 
-                        updated_by_user_id=".$_SESSION['user_details']['id']." updated_at='$time_now' 
+                        updated_by_user_id=".$_SESSION['user_details']['id'].", updated_at='$time_now' 
                                     WHERE id=$id;";
         }
 

@@ -2,6 +2,12 @@
     // Execute admin-level actions
     include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php');
     
+    // If admin session not active, return to top page
+    if (!isset($_SESSION['user_details']) || !$_SESSION['user_details']['is_admin']) {
+        AddNotice("Session expired or unauthorized access. Database update not executed. Please login and try again.");
+        header('location: /');
+    }    
+
     // Redirect to top if type is not in type_allowed (e.g. malicious activity)
     // Exception given if action is currency (refresh DB-stored values)
     $action = $_GET['action'] ?? "";
@@ -27,7 +33,7 @@
     if ($action == 'add') {
         // Write new entries to database
         if ($type == 'product') {
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'], $_POST['release_date'], $_FILES['image_thumbnail']);
+            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail']);
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name']);
         } elseif ($type == 'type') {
@@ -37,7 +43,7 @@
     } elseif ($action == 'edit') {
         // Update existing entries on database
         if ($type == 'product') {
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'], $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
+            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name'], $_POST['id']);
         } elseif ($type == 'type') {
