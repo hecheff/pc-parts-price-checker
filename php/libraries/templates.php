@@ -18,6 +18,7 @@
         $action             = "add";
         $submit_text        = "Add Product";
         $input_id           = "";
+        $edit_table_data    = "";
         $is_public_check    = "checked";
 
         $select_a_brand     = "<option value=''>- Select a brand -</option>";
@@ -37,7 +38,21 @@
             }
             $action         = "edit";
             $submit_text    = "Update Product";
+
             $input_id       = "<input type='hidden' id='id' name='id' value='".$product['id']."'>";
+            $edit_table_data = "<tr>
+                                    <th>Product ID</th>
+                                    <td>".$product['id'].$input_id."</td>
+                                </tr>
+                                <tr>
+                                    <th>Created By (date)</th>
+                                    <td>".GetUsernameByID($product['created_by_user_id'])." (".$product['created_at'].")</td>
+                                </tr>
+                                <tr>
+                                    <th>Last Update By (date)</th>
+                                    <td>".GetUsernameByID($product['updated_by_user_id'])." (".$product['updated_at'].")</td>
+                                </tr>
+                                ";
 
             $select_a_brand     = "";
             $select_a_type      = "";
@@ -46,7 +61,7 @@
         echo "
             <table class='admin_entry'>
                 <form action='./php/exec.php?action=$action&type=product' method='post' enctype='multipart/form-data'>
-                $input_id
+                $edit_table_data
                 <tr>
                     <th>Product Name</th>
                     <td><input type='text' id='name' name='name' placeholder='Including model name, variant, etc.' value='$product_name' required></td>
@@ -109,18 +124,20 @@
                     </tr>
                 </form>
             ";
-            echo "
-                <form action='/php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm(\"Delete this product?\");'>
-                    $input_id
-                    <tr>
-                        <th>Delete Product</th>
-                        <td>
-                            <input type='submit' class='input_button delete' value='".OutputLang('top_product_admin_button_delete')."'>
-                            WARNING: Deleted products cannot be recovered.
-                        </td>
-                    </tr>
-                </form>
-            ";
+            if ($_SESSION['user_details']['id'] == 1) {
+                echo "
+                    <form action='/php/exec.php?action=delete&type=product' method='post' onsubmit='return confirm(\"Delete this product?\");'>
+                        $input_id
+                        <tr>
+                            <th>Delete Product</th>
+                            <td>
+                                <input type='submit' class='input_button delete' value='".OutputLang('top_product_admin_button_delete')."'>
+                                WARNING: Deleted products cannot be recovered.
+                            </td>
+                        </tr>
+                    </form>
+                ";
+            }
         }
         echo "</table>";
     }

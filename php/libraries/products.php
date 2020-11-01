@@ -26,12 +26,15 @@
 
         // Create new entry if ID is null. Otherwise update existing product with given ID
         if ($id == null) {
-            $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, notes, is_public, release_date, created_at, updated_at) 
-                                    VALUES ('$name', $brand, $type, $price_hk, $price_jp, 
-                                    '$notes', $is_public, '$release_date', '$time_now', '$time_now');";
+            $query = "INSERT INTO products (name, brand, type, price_hk, price_jp, 
+                        notes, is_public, release_date, created_by_user_id, updated_by_user_id, created_at, updated_at) 
+                        VALUES ('$name', $brand, $type, $price_hk, $price_jp, 
+                        '$notes', $is_public, '$release_date', ".$_SESSION['user_details']['id'].", ".$_SESSION['user_details']['id'].", '$time_now', '$time_now');";
         } else {
             $old_product_details = GetProductByID($id);
-            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, notes='$notes', is_public=$is_public, release_date='$release_date', updated_at='$time_now' 
+            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, price_hk=$price_hk, price_jp=$price_jp, 
+                        notes='$notes', is_public=$is_public, release_date='$release_date', 
+                        updated_by_user_id=".$_SESSION['user_details']['id']." updated_at='$time_now' 
                                     WHERE id=$id;";
         }
 

@@ -95,20 +95,20 @@
                                 <td><input type="submit" class="input_button" value="Rename"></td>
                             </form>
                         </tr>
-                        <?php /*
-                        <tr>
-                            <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this brand?');">
-                                <th>Delete</th>
-                                <td>
-                                    <select id='id' name='id' required>
-                                        <option value="">- Select a Brand -</option>
-                                        <?php echo OutputBrandOptions($brands_sort); ?>
-                                    </select>
-                                </td>
-                                <td><input type="submit" class="input_button delete" value="Delete"></td>
-                            </form>
-                        </tr>
-                        */ ?>
+                        <?php if ($admin_mode && $_SESSION['user_details']['id'] == 1) : ?>
+                            <tr>
+                                <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this brand?');">
+                                    <th>Delete</th>
+                                    <td>
+                                        <select id='id' name='id' required>
+                                            <option value="">- Select a Brand -</option>
+                                            <?php echo OutputBrandOptions($brands_sort); ?>
+                                        </select>
+                                    </td>
+                                    <td><input type="submit" class="input_button delete" value="Delete"></td>
+                                </form>
+                            </tr>
+                        <?php endif; ?>
                     </table>
                     <br><br>
 
@@ -134,20 +134,20 @@
                                 <td><input type="submit" class="input_button" value="Rename"></td>
                             </form>
                         </tr>
-                        <?php /*
-                        <tr>
-                            <form action="./php/exec.php?action=delete&type=type" method="post" onsubmit="return confirm('Delete this product type?');">
-                                <th>Delete</th>
-                                <td>
-                                    <select id='id' name='id' required>
-                                        <option value="">- Select Product Type -</option>
-                                        <?php echo OutputBrandOptions($types_sort); ?>
-                                    </select>
-                                </td>
-                                <td><input type="submit" class="input_button delete" value="Delete"></td>
-                            </form>
-                        </tr>
-                        */ ?>
+                        <?php if ($admin_mode && $_SESSION['user_details']['id'] == 1) : ?>
+                            <tr>
+                                <form action="./php/exec.php?action=delete&type=type" method="post" onsubmit="return confirm('Delete this product type?');">
+                                    <th>Delete</th>
+                                    <td>
+                                        <select id='id' name='id' required>
+                                            <option value="">- Select Product Type -</option>
+                                            <?php echo OutputBrandOptions($types_sort); ?>
+                                        </select>
+                                    </td>
+                                    <td><input type="submit" class="input_button delete" value="Delete"></td>
+                                </form>
+                            </tr>
+                        <?php endif; ?>
                     </table>
                     <br><br>
 

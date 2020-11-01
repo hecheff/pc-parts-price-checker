@@ -129,7 +129,7 @@
     // Login functions
     function GetUser($username, $password) {
         if (!empty($username) && !empty($username)) {
-            $query = "SELECT username, email, is_admin FROM users WHERE username='$username' AND password='".sha1($password)."'";
+            $query = "SELECT id, username, email, is_admin FROM users WHERE username='$username' AND password='".sha1($password)."'";
             $result = $GLOBALS['conn']->query($query);
             $rows = [];
             while($row = mysqli_fetch_array($result)) {
@@ -138,6 +138,16 @@
             return $rows[0];
         }
         return false;
+    }
+
+    function GetUsernameByID($id) {
+        $query = "SELECT username FROM users WHERE id=$id;";
+        $result = $GLOBALS['conn']->query($query);
+        $rows = [];
+        while($row = mysqli_fetch_array($result)) {
+            $rows[] = $row;
+        }
+        return $rows[0]['username'];
     }
 
     // Set user session details if credentials match what's found in database

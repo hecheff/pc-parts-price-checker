@@ -179,7 +179,8 @@ div.filter_panel {
 
 div.filter_panel table.filter_sort_table {
   width: auto;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 5px;
 }
 
 div.filter_panel table.filter_sort_table tr th {
@@ -225,7 +226,7 @@ div.value_container {
 
 div.product_list table.product_inner_table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
   margin-bottom: 20px;
 }
 
@@ -375,19 +376,18 @@ p.price_minus {
 
 table.admin_entry {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 5px;
 }
 
 table.admin_entry tr th {
   text-align: left;
   padding-right: 20px;
-  padding-bottom: 10px;
   white-space: nowrap;
 }
 
 table.admin_entry tr td {
   text-align: left;
-  padding-bottom: 10px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
@@ -400,7 +400,7 @@ table.admin_entry tr td select {
 
 table.admin_stats {
   margin-top: 20px;
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 
 table.admin_stats tr th {
