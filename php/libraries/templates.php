@@ -24,12 +24,14 @@
         $select_a_brand     = "<option value=''>- Select a brand -</option>";
         $select_a_type      = "<option value=''>- Select a type -</option>";
 
+        $radio_select_price = "add";
+
         if ($product) {
             $product_name   = $product['name'];
             $brand_id       = $product['brand'];
             $type_id        = $product['type'];
-            $price_jp       = $product['price_jp'];
-            $price_hk       = $product['price_hk'];
+            $price_jp       = GetLatestPriceByID($product['id'], 'JP');
+            $price_hk       = GetLatestPriceByID($product['id'], 'HK');
             $notes          = $product['notes'];
             $release_date   = $product['release_date'];
 
@@ -40,6 +42,8 @@
             $submit_text    = "Update Product";
 
             $input_id       = "<input type='hidden' id='id' name='id' value='".$product['id']."'>";
+
+            // Output admin stats
             $edit_table_data = "<tr>
                                     <th>Product ID</th>
                                     <td>".$product['id'].$input_id."</td>
@@ -56,6 +60,8 @@
 
             $select_a_brand     = "";
             $select_a_type      = "";
+
+            $radio_select_price = $product['id'];
         }
 
         echo "
@@ -81,14 +87,6 @@
                     "</select></td>
                 </tr>
                 <tr>
-                    <th>Price in Japan (JPY)</th>
-                    <td><input type='number' id='price_jp' name='price_jp' placeholder='￥JPY' value='$price_jp' required></td>
-                </tr>
-                <tr>
-                    <th>Price in HK (HKD)</th>
-                    <td><input type='number' id='price_hk' name='price_hk' placeholder='\$HKD' value='$price_hk' required></td>
-                </tr>
-                <tr>
                     <th>Notes</th>
                     <td><input type='text' id='notes' name='notes' placeholder='Add any additional information here such as specs or extra details of prices.' value='$notes'></td>
                 </tr>
@@ -104,6 +102,69 @@
                     <th>Visible to Public?</th>
                     <td><input type='checkbox' name='is_public' id='is_public' style='width: auto;' $is_public_check> Select this to make entry visible to all users.</td>
                 </tr>
+
+                <tr><td colspan='2'>&nbsp;</td></tr>
+
+                <tr><th colspan='2' class='sub_title'>Add Japan Price</th></tr>
+                <tr>
+                    <td>
+                        <input type='radio' id='select_price_jp_url' name='select_price_jp_$radio_select_price' value='0' style='width: auto;' checked 
+                            onchange='TogglePriceInputView(\"$radio_select_price\", true);'>Input via URL
+                    </td>
+                    <td>
+                        <input type='radio' id='select_price_jp_manual' name='select_price_jp_$radio_select_price' value='1' style='width: auto;'
+                            onchange='TogglePriceInputView(\"$radio_select_price\", true);'>Input manually
+                    </td>
+                </tr>
+                <tr class='fields_price_url_jp_$radio_select_price'>
+                    <th>Product URL</th>
+                    <td>
+                        <input type='text' id='price_url_jp' name='price_url_jp' placeholder='URL of product found on web page.' value='' required>
+                        IMPORTANT: Only supports Amazon.jp links.
+                    </td>
+                </tr>
+                <tr class='fields_price_manual_jp_$radio_select_price' style='display: none;'>
+                    <th>Price (JPY)</th>
+                    <td><input type='number' id='price_price_jp' name='price_price_jp' placeholder='￥JPY' value=''></td>
+                </tr>
+                <tr>
+                    <th>Notes</th>
+                    <td>
+                        <input type='text' id='price_notes_jp' name='price_notes_jp' placeholder='Add any extra information here.' value=''>
+                    </td>
+                </tr>
+                <tr><td colspan='2'>&nbsp;</td></tr>
+                <tr><th colspan='2' class='sub_title'>Add Hong Kong Price</th></tr>
+                <tr>
+                    <td>
+                        <input type='radio' id='select_price_hk_url' name='select_price_hk_$radio_select_price' value='0' style='width: auto;' checked  
+                            onchange='TogglePriceInputView(\"$radio_select_price\", false);'>Input via URL
+                    </td>
+                    <td>
+                        <input type='radio' id='select_price_hk_manual' name='select_price_hk_$radio_select_price' value='1' style='width: auto;'
+                            onchange='TogglePriceInputView(\"$radio_select_price\", false);'>Input manually
+                    </td>
+                </tr>
+                <tr class='fields_price_url_hk_$radio_select_price'>
+                    <th>Product URL</th>
+                    <td>
+                        <input type='text' id='price_url_hk' name='price_url_hk' placeholder='URL of product found on web page.' value='' required>
+                        IMPORTANT: Only supports Price.com.hk links.
+                    </td>
+                </tr>
+                <tr class='fields_price_manual_hk_$radio_select_price' style='display: none;'>
+                    <th>Price (HKD)</th>
+                    <td><input type='number' id='price_price_hk' name='price_price_hk' placeholder='\$HKD' value=''></td>
+                </tr>
+                <tr>
+                    <th>Notes</th>
+                    <td>
+                        <input type='text' id='price_notes_hk' name='price_notes_hk' placeholder='Add any extra information here.' value=''>
+                    </td>
+                </tr>
+                <tr><td colspan='2'>&nbsp;</td></tr>
+
+
                 <tr>
                     <td colspan='2'><input type='submit' class='input_button' value='$submit_text'></td>
                 </tr>
@@ -158,13 +219,13 @@
     // Output Types as Options
     function OutputTypeOptions($types_list, $select = null) {
         $output = "";
-        foreach ($types_list as $brand) {
+        foreach ($types_list as $type) {
             $selected = "";
-            if ($select == $brand['id']) {
+            if ($select == $type['id']) {
                 $selected = "selected";
             }
-            $brand_id = $brand['id'];
-            $output .= "<option value='$brand_id' $selected>".$brand['name']."</option>";
+            $type_id = $type['id'];
+            $output .= "<option value='$type_id' $selected>".$type['name']."</option>";
         }
         return $output;
     }

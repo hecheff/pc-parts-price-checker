@@ -386,6 +386,13 @@ table.admin_entry tr th {
   white-space: nowrap;
 }
 
+table.admin_entry tr th.sub_title {
+  font-size: 10pt;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: left;
+}
+
 table.admin_entry tr td {
   text-align: left;
   -webkit-box-sizing: border-box;

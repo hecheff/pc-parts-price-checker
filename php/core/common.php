@@ -126,6 +126,16 @@
         return $rows;
     }
 
+    // Get product's most recent price from price records by ID and region (HK or JP)
+    function GetLatestPriceByID($product_id, $region_code) {
+        $query = "SELECT price FROM products_price_records WHERE product_id=$product_id AND region_code='$region_code' ORDER BY date_created DESC LIMIT 1;";
+        $result = $GLOBALS['conn']->query($query);
+        while ($row = mysqli_fetch_array($result)) {
+            $rows[] = $row;
+        }
+        return $rows[0]['price'];
+    }
+
     // Login functions
     function GetUser($username, $password) {
         if (!empty($username) && !empty($username)) {

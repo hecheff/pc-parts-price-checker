@@ -226,26 +226,30 @@
                                     $img_url = "";
                                     $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
                                 }
+
+                                // Price values from records table
+                                $price_jp = GetLatestPriceByID($product['id'], 'JP');
+                                $price_hk = GetLatestPriceByID($product['id'], 'HK');
                                 
                                 // Calculate raw and converted values to show in current product row
                                 // JP Price values
-                                $raw_value_jp = ConvertCurrency($product['price_jp'], "JPY", $_SESSION['currency']);
+                                $raw_value_jp = ConvertCurrency($price_jp, "JPY", $_SESSION['currency']);
                                 $session_currency_val_jp = number_format($raw_value_jp, 0, '.', ',')." ".$_SESSION['currency'];
                                 $original_price_jp = "";
                                 if ($_SESSION['currency'] != 'JPY') {
-                                    $original_price_jp = "<br>(".number_format($product['price_jp'], 0, '.', ',')." JPY)";
+                                    $original_price_jp = "<br>(".number_format($price_jp, 0, '.', ',')." JPY)";
                                 }
                                 // HK Price values
-                                $raw_value_hk = ConvertCurrency($product['price_hk'], "HKD", $_SESSION['currency']);
+                                $raw_value_hk = ConvertCurrency($price_hk, "HKD", $_SESSION['currency']);
                                 $session_currency_val_hk = number_format($raw_value_hk, 0, '.', ',')." ".$_SESSION['currency'];
                                 $original_price_hk = "";
                                 if ($_SESSION['currency'] != 'HKD') {
-                                    $original_price_hk = "<br>(".number_format($product['price_hk'], 0, '.', ',')." HKD)";
+                                    $original_price_hk = "<br>(".number_format($price_hk, 0, '.', ',')." HKD)";
                                 }
                                 // Price Difference values
-                                $price_difference = ConvertCurrency($product['price_jp'] - ConvertCurrency($product['price_hk'], "HKD", "JPY"), "JPY", $_SESSION['currency']);
+                                $price_difference = ConvertCurrency($price_jp - ConvertCurrency($price_hk, "HKD", "JPY"), "JPY", $_SESSION['currency']);
                                 $price_difference_text = number_format($price_difference, 0, '.', ',')." ".$_SESSION['currency'];
-                                $price_percentage = 100 - ((ConvertCurrency($product['price_hk'], "HKD", "JPY")/$product['price_jp']) * 100);
+                                $price_percentage = 100 - ((ConvertCurrency($price_hk, "HKD", "JPY")/$price_jp) * 100);
                                 $price_class = "price_".($price_percentage > 0 ? "plus" : "minus");
                                 
                                 $release_date = ($product['release_date'] != '0000-00-00') ? $product['release_date'] : "";

@@ -1,22 +1,59 @@
 <?php
     // Functions for updating product prices
 
-    function GetPriceFromURL($store_url, $url) {
+    // Add product price record to database
+    function AddProductPriceRecord($product_id, $product_url, $input_price, $currency, $region_code, $notes = "") {
+        $time_now = TIMESTAMP_NOW;
+
+        // Get price value to set
+        $final_price    = 0;
+        $query          = "";
+        if (isset($product_url) && !empty($product_url)) {
+            $final_price = GetPriceFromURL($product_url);
+
+            $query = "INSERT INTO products_price_records (product_id, product_url, price, currency, region_code, notes, date_created) 
+                        VALUES ($product_id, '$product_url', $final_price, '$currency', '$region_code', '$notes', '$time_now');";
+        } elseif (isset($input_price) && !empty($input_price)) {
+            $final_price = $input_price;
+            $query = "INSERT INTO products_price_records (product_id, product_url, price, currency, region_code, notes, date_created) 
+                        VALUES ($product_id, NULL, $final_price, '$currency', '$region_code', '$notes', '$time_now');";
+        }
+
+        if (!$GLOBALS['conn']->query($query)) {
+            echo "Price entry error.<br>";
+            echo("Error description: " . $GLOBALS['conn'] -> error);
+            exit();
+        }
+    }
+
+    function GetPriceFromURL($url) {
         // Grab the contents of the Product page from Amazon
         $url_source = file_get_contents_curl($url);
         
         // Find price value based on page ID and classes tags (check using regular expression)
-        if ($store_url == 'amazon.jp') {
+        $match          = null;
+        $store_domain   = GetDomain($url);
+        if ($store_domain == 'amazon.co.jp') {
             preg_match("'<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price priceBlockBuyingPriceString\">(.*?)</span>'si", $url_source, $match);
-        } elseif ($store_url == 'price.hk') {
-            preg_match("'<span class=\"text-price-number\" data-price=\"8000.0\">(.*?)</span>'si", $url_source, $match);
+        } elseif ($store_domain == 'price.com.hk') {
+            preg_match("'<span class=\"text-price-number\" data-price=\"(.*?)\">(.*?)</span>'si", $url_source, $match);
         }
 
         // Return match value if found
         if ($match) {
             // Convert string to numbers only before returning
-            $output = str_replace(PRICE_UPDATE_FILTER_CHARACTERS, "", $match[0]);
+            $output = strip_tags(str_replace(PRICE_UPDATE_FILTER_CHARACTERS, "", $match[0]));
             return $output;
+        }
+        return false;
+    }
+
+    function GetDomain($url) {
+        $pieces = parse_url($url);
+        $domain = isset($pieces['host']) ? $pieces['host'] : $pieces['path'];
+
+        if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) {
+            return $regs['domain'];
         }
         return false;
     }

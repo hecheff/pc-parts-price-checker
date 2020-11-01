@@ -21,6 +21,7 @@
     // Call library depending on type
     if ($type == 'product' || $action == 'copy_product') {
         include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/products.php');
+        include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/price_update.php');
     } elseif ($type == 'brand') {
         include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/brands.php');
     } elseif ($type == 'type') {
@@ -33,7 +34,27 @@
     if ($action == 'add') {
         // Write new entries to database
         if ($type == 'product') {
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail']);
+            $product_id = WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail']);
+            
+            // Set price source or value based on entry type set previously
+            $price_url_jp   = null;
+            $price_url_hk   = null;
+            $price_price_jp = null;
+            $price_price_hk = null;
+            if ($_POST['select_price_jp_add'] == 0) {
+                $price_url = $_POST['price_url_jp'];
+            } else {
+                $price_price_hk = $_POST['price_price_jp'];
+            }
+            if ($_POST['select_price_hk_add'] == 0) {
+                $price_url = $_POST['price_url_hk'];
+            } else {
+                $price_price_hk = $_POST['price_price_hk'];
+            }
+            // Add JP and HK prices
+            AddProductPriceRecord($product_id, $_POST['price_url_jp'], $_POST['price_price_jp'], "JPY", "JP", $_POST['price_notes_jp']);
+            AddProductPriceRecord($product_id, $_POST['price_url_hk'], $_POST['price_price_hk'], "HKD", "HK", $_POST['price_notes_hk']);
+            
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name']);
         } elseif ($type == 'type') {
@@ -43,7 +64,27 @@
     } elseif ($action == 'edit') {
         // Update existing entries on database
         if ($type == 'product') {
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['price_hk'], $_POST['price_jp'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
+            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
+            
+            // Set price source or value based on entry type set previously
+            $price_url_jp   = null;
+            $price_url_hk   = null;
+            $price_price_jp = null;
+            $price_price_hk = null;
+            if ($_POST['select_price_jp_'.$_POST['id']] == 0) {
+                $price_url = $_POST['price_url_jp'];
+            } else {
+                $price_price_hk = $_POST['price_price_jp'];
+            }
+            if ($_POST['select_price_hk_'.$_POST['id']] == 0) {
+                $price_url = $_POST['price_url_hk'];
+            } else {
+                $price_price_hk = $_POST['price_price_hk'];
+            }
+            // Add JP and HK prices
+            AddProductPriceRecord($_POST['id'], $_POST['price_url_jp'], $_POST['price_price_jp'], "JPY", "JP", $_POST['price_notes_jp']);
+            AddProductPriceRecord($_POST['id'], $_POST['price_url_hk'], $_POST['price_price_hk'], "HKD", "HK", $_POST['price_notes_hk']);
+
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name'], $_POST['id']);
         } elseif ($type == 'type') {
