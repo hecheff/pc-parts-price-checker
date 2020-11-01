@@ -228,8 +228,8 @@
                                 }
 
                                 // Price values from records table
-                                $price_jp = GetLatestPriceByID($product['id'], 'JP');
-                                $price_hk = GetLatestPriceByID($product['id'], 'HK');
+                                $price_jp = GetLatestProductPriceByID($product['id'], 'JP')['price'];
+                                $price_hk = GetLatestProductPriceByID($product['id'], 'HK')['price'];
                                 
                                 // Calculate raw and converted values to show in current product row
                                 // JP Price values

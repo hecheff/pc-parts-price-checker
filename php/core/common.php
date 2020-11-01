@@ -127,13 +127,13 @@
     }
 
     // Get product's most recent price from price records by ID and region (HK or JP)
-    function GetLatestPriceByID($product_id, $region_code) {
-        $query = "SELECT price FROM products_price_records WHERE product_id=$product_id AND region_code='$region_code' ORDER BY date_created DESC LIMIT 1;";
+    function GetLatestProductPriceByID($product_id, $region_code) {
+        $query = "SELECT * FROM products_price_records WHERE product_id=$product_id AND region_code='$region_code' ORDER BY date_created DESC LIMIT 1;";
         $result = $GLOBALS['conn']->query($query);
         while ($row = mysqli_fetch_array($result)) {
             $rows[] = $row;
         }
-        return $rows[0]['price'];
+        return $rows[0];
     }
 
     // Login functions
@@ -189,4 +189,19 @@
     // Output language
     function OutputLang($tag) {
         return $GLOBALS['lang_data'][$tag];
+    }
+
+    
+    // ONE-OFF: Migrate all old prices to new system. Need to add URL to each one manually
+    function MigrateOldPricesToNewSystem() {
+        include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/price_update.php');
+
+        // Get all products in list
+        $products = GetDB_Products('release_date', true, true);
+
+        // Create JP and HK price records of each product entry
+        foreach ($products as $product) {
+            AddProductPriceRecord($product['id'], NULL, $product['price_jp'], "JPY", "JP");
+            AddProductPriceRecord($product['id'], NULL, $product['price_hk'], "HKD", "HK");
+        }
     }

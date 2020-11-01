@@ -26,12 +26,17 @@
 
         $radio_select_price = "add";
 
+        $priceInfo_jp       = null;
+        $priceInfo_hk       = null;
+
         if ($product) {
             $product_name   = $product['name'];
             $brand_id       = $product['brand'];
             $type_id        = $product['type'];
-            $price_jp       = GetLatestPriceByID($product['id'], 'JP');
-            $price_hk       = GetLatestPriceByID($product['id'], 'HK');
+
+            $priceInfo_jp   = GetLatestProductPriceByID($product['id'], 'JP');
+            $priceInfo_hk   = GetLatestProductPriceByID($product['id'], 'HK');
+
             $notes          = $product['notes'];
             $release_date   = $product['release_date'];
 
@@ -119,18 +124,18 @@
                 <tr class='fields_price_url_jp_$radio_select_price'>
                     <th>Product URL</th>
                     <td>
-                        <input type='text' id='price_url_jp' name='price_url_jp' placeholder='URL of product found on web page.' value='' required>
+                        <input type='text' id='price_url_jp' name='price_url_jp' placeholder='URL of product found on web page.' value='".($priceInfo_jp['product_url'] ?? '')."' required>
                         IMPORTANT: Only supports Amazon.jp links.
                     </td>
                 </tr>
                 <tr class='fields_price_manual_jp_$radio_select_price' style='display: none;'>
                     <th>Price (JPY)</th>
-                    <td><input type='number' id='price_price_jp' name='price_price_jp' placeholder='￥JPY' value=''></td>
+                    <td><input type='number' id='price_price_jp' name='price_price_jp' placeholder='￥JPY' value=".($priceInfo_jp['price'] ?? '')."></td>
                 </tr>
                 <tr>
                     <th>Notes</th>
                     <td>
-                        <input type='text' id='price_notes_jp' name='price_notes_jp' placeholder='Add any extra information here.' value=''>
+                        <input type='text' id='price_notes_jp' name='price_notes_jp' placeholder='Add any extra information here.' value='".($priceInfo_jp['notes'] ?? '')."'>
                     </td>
                 </tr>
                 <tr><td colspan='2'>&nbsp;</td></tr>
@@ -148,18 +153,18 @@
                 <tr class='fields_price_url_hk_$radio_select_price'>
                     <th>Product URL</th>
                     <td>
-                        <input type='text' id='price_url_hk' name='price_url_hk' placeholder='URL of product found on web page.' value='' required>
+                        <input type='text' id='price_url_hk' name='price_url_hk' placeholder='URL of product found on web page.' value='".($priceInfo_hk['product_url'] ?? '')."' required>
                         IMPORTANT: Only supports Price.com.hk links.
                     </td>
                 </tr>
                 <tr class='fields_price_manual_hk_$radio_select_price' style='display: none;'>
                     <th>Price (HKD)</th>
-                    <td><input type='number' id='price_price_hk' name='price_price_hk' placeholder='\$HKD' value=''></td>
+                    <td><input type='number' id='price_price_hk' name='price_price_hk' placeholder='\$HKD' value='".($priceInfo_hk['price'] ?? '')."'></td>
                 </tr>
                 <tr>
                     <th>Notes</th>
                     <td>
-                        <input type='text' id='price_notes_hk' name='price_notes_hk' placeholder='Add any extra information here.' value=''>
+                        <input type='text' id='price_notes_hk' name='price_notes_hk' placeholder='Add any extra information here.' value='".($priceInfo_hk['notes'] ?? '')."'>
                     </td>
                 </tr>
                 <tr><td colspan='2'>&nbsp;</td></tr>

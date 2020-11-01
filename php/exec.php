@@ -12,7 +12,7 @@
     // Exception given if action is currency (refresh DB-stored values)
     $action = $_GET['action'] ?? "";
     $type   = $_GET['type'] ?? "";
-    if (empty($action) || $action != 'currency') {
+    if (empty($action) || ($action != 'currency' && $action != 'price_migration')) {
         if ((empty($action) || empty($type) || !in_array($action, EXEC_ACTION_ALLOWED) || !in_array($type, EXEC_TYPE_ALLOWED))) {
             header('location: /');
         }
