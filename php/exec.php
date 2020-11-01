@@ -41,19 +41,19 @@
             $price_url_hk   = null;
             $price_price_jp = null;
             $price_price_hk = null;
-            if ($_POST['select_price_jp_add'] == 0) {
-                $price_url = $_POST['price_url_jp'];
+            if ($_POST['select_price_jp_add'] == '0') {
+                $price_url_jp = $_POST['price_url_jp'];
             } else {
                 $price_price_jp = $_POST['price_price_jp'];
             }
-            if ($_POST['select_price_hk_add'] == 0) {
-                $price_url = $_POST['price_url_hk'];
+            if ($_POST['select_price_hk_add'] == '0') {
+                $price_url_hk = $_POST['price_url_hk'];
             } else {
                 $price_price_hk = $_POST['price_price_hk'];
             }
             // Add JP and HK prices
-            AddProductPriceRecord($product_id, $_POST['price_url_jp'], $_POST['price_price_jp'], "JPY", "JP", $_POST['price_notes_jp']);
-            AddProductPriceRecord($product_id, $_POST['price_url_hk'], $_POST['price_price_hk'], "HKD", "HK", $_POST['price_notes_hk']);
+            AddProductPriceRecord($product_id, $price_url_jp, $price_price_jp, "JPY", "JP", $_POST['price_notes_jp']);
+            AddProductPriceRecord($product_id, $price_url_hk, $price_price_hk, "HKD", "HK", $_POST['price_notes_hk']);
             
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name']);
@@ -72,20 +72,20 @@
             $price_price_jp = null;
             $price_price_hk = null;
 
-            if ($_POST['select_price_jp_'.$_POST['id']] == 0) {
-                $price_url = $_POST['price_url_jp'];
+            if ($_POST['select_price_jp_'.$_POST['id']] == '0') {
+                $price_url_jp = $_POST['price_url_jp'];
             } else {
                 $price_price_jp = $_POST['price_price_jp'];
             }
-            if ($_POST['select_price_hk_'.$_POST['id']] == 0) {
-                $price_url = $_POST['price_url_hk'];
+            if ($_POST['select_price_hk_'.$_POST['id']] == '0') {
+                $price_url_hk = $_POST['price_url_hk'];
             } else {
                 $price_price_hk = $_POST['price_price_hk'];
             }
 
             // Add JP and HK prices
-            AddProductPriceRecord($_POST['id'], $_POST['price_url_jp'], $_POST['price_price_jp'], "JPY", "JP", $_POST['price_notes_jp']);
-            AddProductPriceRecord($_POST['id'], $_POST['price_url_hk'], $_POST['price_price_hk'], "HKD", "HK", $_POST['price_notes_hk']);
+            AddProductPriceRecord($_POST['id'], $price_url_jp, $price_price_jp, "JPY", "JP", $_POST['price_notes_jp']);
+            AddProductPriceRecord($_POST['id'], $price_url_hk, $price_price_hk, "HKD", "HK", $_POST['price_notes_hk']);
 
         } elseif ($type == 'brand') {
             WriteDB_Brands($_POST['name'], $_POST['id']);
