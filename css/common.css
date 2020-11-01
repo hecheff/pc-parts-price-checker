@@ -273,7 +273,7 @@ table.product_table_desktop tr td.title {
 table.product_table_desktop tr td.brand,
 table.product_table_desktop tr td.type,
 table.product_table_desktop tr td.release_date {
-  width: auto;
+  width: 12%;
   vertical-align: top;
 }
 
@@ -283,6 +283,11 @@ table.product_table_desktop tr td.brand {
 
 table.product_table_desktop tr td.type {
   width: 15%;
+}
+
+table.product_table_desktop tr td.price_jp,
+table.product_table_desktop tr td.price_hk {
+  width: 13%;
 }
 
 table.product_table_desktop tr td.price_jp,
