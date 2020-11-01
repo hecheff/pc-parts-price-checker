@@ -16,9 +16,6 @@
     // Exchange Rate API
     define('EXCHANGE_RATE_API_URL', 'https://api.exchangeratesapi.io/latest');
 
-    // Characters to remove when retrieving price string from site
-    define('PRICE_UPDATE_FILTER_CHARACTERS', ['$', '￥', '¥', ',']);
-
     // Shipping Rates
     define('SHIPPINGRATE_HK_JP_SPEEDPOST', [
         ['label' => '5KG',  'price' => 436], 

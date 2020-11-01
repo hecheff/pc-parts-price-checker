@@ -34,6 +34,7 @@
     if ($action == 'add') {
         // Write new entries to database
         if ($type == 'product') {
+            // Write product details to database
             $product_id = WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail']);
             
             // Set price source or value based on entry type set previously
@@ -64,6 +65,7 @@
     } elseif ($action == 'edit') {
         // Update existing entries on database
         if ($type == 'product') {
+            // Write product details to database
             WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
             
             // Set price source or value based on entry type set previously
@@ -71,7 +73,6 @@
             $price_url_hk   = null;
             $price_price_jp = null;
             $price_price_hk = null;
-
             if ($_POST['select_price_jp_'.$_POST['id']] == '0') {
                 $price_url_jp = $_POST['price_url_jp'];
             } else {

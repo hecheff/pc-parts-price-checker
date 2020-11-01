@@ -33,6 +33,7 @@
         $match          = null;
         $store_domain   = GetDomain($url);
         if ($store_domain == 'amazon.co.jp') {
+            // Amazon Japan
             preg_match("'<span id=\"priceblock_ourprice\" class=\"(.*?)\">(.*?)</span>'si", $url_source, $match);
 
             // If default fetch fails, try alternate patterns
@@ -44,14 +45,18 @@
                 // Seller list
                 preg_match("'<span class=\"a-size-base a-color-price\">(.*?)</span>'si", $url_source, $match);
             }
+        } elseif ($store_domain == 'tsukumo.co.jp') {
+            // Tsukuko (JP) Online Store
+            preg_match("'<td class=\"product-price-select__price text-red__common text-right__common\">(.*?)</td>'si", $url_source, $match);
         } elseif ($store_domain == 'price.com.hk') {
+            // Price.com.hk Hong Kong Price Aggregate Site
             preg_match("'<span class=\"text-price-number\" data-price=\"(.*?)\">(.*?)</span>'si", $url_source, $match);
         }
 
         // Return match value if found
         if ($match) {
-            // Convert string to numbers only before returning
-            $output = strip_tags(str_replace(PRICE_UPDATE_FILTER_CHARACTERS, "", $match[0]));
+            // Reduce output to only numbers before returning
+            $output = preg_replace("/[^0-9]/", "", strip_tags($match[0]));
             return $output;
         }
         return false;

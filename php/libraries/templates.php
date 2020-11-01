@@ -125,7 +125,7 @@
                     <th>Product URL</th>
                     <td>
                         <input type='text' id='price_url_jp' name='price_url_jp' placeholder='URL of product found on web page.' value='".($priceInfo_jp['product_url'] ?? '')."' required>
-                        IMPORTANT: Only supports Amazon.jp links.
+                        IMPORTANT: Currently only supports Amazon.jp and Tsukumo shop links.
                     </td>
                 </tr>
                 <tr class='fields_price_manual_jp_$radio_select_price' style='display: none;'>
@@ -154,7 +154,7 @@
                     <th>Product URL</th>
                     <td>
                         <input type='text' id='price_url_hk' name='price_url_hk' placeholder='URL of product found on web page.' value='".($priceInfo_hk['product_url'] ?? '')."' required>
-                        IMPORTANT: Only supports Price.com.hk links.
+                        IMPORTANT: Currently only supports Price.com.hk links.
                     </td>
                 </tr>
                 <tr class='fields_price_manual_hk_$radio_select_price' style='display: none;'>
