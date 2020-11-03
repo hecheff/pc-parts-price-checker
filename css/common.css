@@ -418,6 +418,19 @@ div.product_list table.product_inner_table tr td div.price_history_wrapper div.p
   border-radius: 5px;
 }
 
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.price_graph div.chart_wrapper {
+  max-width: 520px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 800px) {
+  div.product_list table.product_inner_table tr td div.price_history_wrapper div.price_graph div.chart_wrapper {
+    max-width: 300px;
+    height: 200px;
+  }
+}
+
 span.hidden_val {
   display: none;
 }

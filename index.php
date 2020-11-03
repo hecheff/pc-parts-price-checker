@@ -411,7 +411,9 @@
                                                     <div class="arrow">▼</div>
                                                 </div>
                                                 <div id="price_graph_<?php echo $product['id']; ?>" class="price_graph">
-                                                    <canvas id="pricechart_<?php echo $product['id']; ?>" height="100"></canvas>
+                                                    <div class="chart_wrapper">
+                                                        <canvas id="pricechart_<?php echo $product['id']; ?>"></canvas>
+                                                    </div>
                                                     <?php 
                                                         // Get average price and data from price records
                                                         $price_records_jp = GetProductPriceAverageRecordsByID($product['id'], "JP");
@@ -496,7 +498,9 @@
                                                                             beginAtZero: true, 
                                                                         }
                                                                     }]
-                                                                }
+                                                                }, 
+                                                                responsive: true,
+                                                                maintainAspectRatio: false,
                                                             }
                                                         };
                                                         var product_price_chart_<?php echo $product['id']; ?> = new Chart(ctx, chartData_<?php echo $product['id']; ?>);
