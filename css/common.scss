@@ -193,7 +193,7 @@ div.product_list {
 }
 
 
-div.product_list div.entry_item         { border-radius: $border_radius_default; }
+div.product_list div.entry_item         { border-radius: $border_radius_default; margin-bottom: $margin_default; }
 div.product_list div.entry_item:hover   { background-color: $color_bg_product_highlight; } 
 
 div.product_list div.entry_item_private         { background-color: $color_bg_product_private_default; border-radius: $border_radius_default; }
@@ -204,7 +204,6 @@ div.value_container { display: none; }
 div.product_list table.product_inner_table { 
     width: 100%;
     border-collapse: separate;
-    margin-bottom: $margin_default;
 }
 div.product_list table.product_inner_table tr th { text-align: left; }
 div.product_list table.product_inner_table tr td { 
@@ -258,6 +257,34 @@ div.product_list table.product_inner_table tr td div.inner_title {
     font-size: $fontsize_small;
     text-decoration: underline;
     color: $color_table_title_small;
+}
+div.product_list table.product_inner_table tr td div.price_history_wrapper {
+    width: auto;
+    height: auto;
+
+    border-radius: $border_radius_default;
+    padding: $margin_small;
+    background-color: $color_bg_product_bannerButton_default;
+
+    cursor: pointer;
+
+    @include noselect();
+}
+div.product_list table.product_inner_table tr td div.price_history_wrapper:hover { background-color: $color_bg_product_bannerButton_highlight; }
+div.product_list table.product_inner_table tr td div.price_history_wrapper:active { background-color: $color_bg_product_bannerButton_down; }
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button {
+    font-size: $fontsize_default;
+    font-weight: bold;
+    height: 20px;
+    color: $color_text;
+}
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button div.titleContent   { width: auto; float: left; }
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button div.arrow          { width: auto; float: right; }
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.price_graph {
+    margin: $margin_small 0;
+    background-color: #FFFFFF;
+    border-radius: $border_radius_default;
 }
 
 

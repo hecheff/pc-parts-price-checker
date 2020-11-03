@@ -205,6 +205,7 @@ div.product_list {
 
 div.product_list div.entry_item {
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 div.product_list div.entry_item:hover {
@@ -227,7 +228,6 @@ div.value_container {
 div.product_list table.product_inner_table {
   width: 100%;
   border-collapse: separate;
-  margin-bottom: 20px;
 }
 
 div.product_list table.product_inner_table tr th {
@@ -365,6 +365,57 @@ div.product_list table.product_inner_table tr td div.inner_title {
   font-size: 8pt;
   text-decoration: underline;
   color: #CCCCCC;
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper {
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #4a68c4;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper:hover {
+  background-color: #5b7de4;
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper:active {
+  background-color: #86a3fc;
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button {
+  font-size: 10pt;
+  font-weight: bold;
+  height: 20px;
+  color: #FFFFFF;
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button div.titleContent {
+  width: auto;
+  float: left;
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button div.arrow {
+  width: auto;
+  float: right;
+}
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.price_graph {
+  margin: 10px 0;
+  background-color: #FFFFFF;
+  border-radius: 5px;
 }
 
 span.hidden_val {

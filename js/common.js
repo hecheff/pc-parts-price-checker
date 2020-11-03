@@ -189,3 +189,19 @@ function TogglePriceInputView(product_id, is_jp=true) {
         field_price_manual.attr('required', true);
     }
 }
+
+function ToggleProductPriceHistoryDisplay(product_id) {
+    var wrapper_main    = $("#price_history_section_"+product_id);
+    var graph_element   = $("#price_graph_"+product_id)[0];
+
+    if (graph_element.style.display === "none") {
+        wrapper_main.find('.arrow')[0].innerHTML = "▲";
+        graph_element.style.display = "block";
+        
+        // Reanimate chart when opening
+        this['updateChart_'+product_id]();
+    } else {
+        wrapper_main.find('.arrow')[0].innerHTML = "▼";
+        graph_element.style.display = "none";
+    }
+}

@@ -190,7 +190,6 @@
     function OutputLang($tag) {
         return $GLOBALS['lang_data'][$tag];
     }
-
     
     // ONE-OFF: Migrate all old prices to new system. Need to add URL to each one manually
     function MigrateOldPricesToNewSystem() {
@@ -204,4 +203,26 @@
             AddProductPriceRecord($product['id'], NULL, $product['price_jp'], "JPY", "JP");
             AddProductPriceRecord($product['id'], NULL, $product['price_hk'], "HKD", "HK");
         }
+    }
+
+    // Get product's price (average by month) records using product ID and region code (if not defined, get all product's entries)
+    function GetProductPriceAverageRecordsByID($id, $region_code = NULL) {
+        $region_code_query = "";
+        if ($region_code) {
+            $region_code_query = "AND region_code='$region_code'";
+        }
+        $query = "SELECT AVG(price) AS price_average, currency, region_code, notes, date_created FROM products_price_records WHERE product_id=$id $region_code_query GROUP BY MONTH(date_created), YEAR(date_created) ORDER BY date_created ASC;";
+        $result = $GLOBALS['conn']->query($query);
+
+
+        if(!$GLOBALS['conn']->query($query)) {
+            echo("Error description: " . $GLOBALS['conn'] -> error);
+            exit();
+        }
+
+        $rows = [];
+        while($row = mysqli_fetch_array($result)) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
