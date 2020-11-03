@@ -17,6 +17,11 @@ $color_kde_header_footer_bg: $color_kde_bg_product_highlight/2;
 $color_outline_item_list:   #FFFFFFEE;
 $color_bg_item_list:        #000000EE;
 
+// Button banners inside product
+$color_bg_product_bannerButton_default:     #4a68c4;
+$color_bg_product_bannerButton_highlight:   #5b7de4;
+$color_bg_product_bannerButton_down:        #86a3fc;
+
 /*
 $color_background:          #001100;
 $color_bg_product_list:     #003300;
@@ -83,4 +88,14 @@ $transitionProperties:all $animationTransition ease-in;
 	-ms-transition:       $transitionProperties;
 	-o-transition:        $transitionProperties;
 	transition:           $transitionProperties;
+}
+
+// Prevent selection of text
+@mixin noselect() {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }

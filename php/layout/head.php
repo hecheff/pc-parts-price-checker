@@ -10,7 +10,10 @@
     <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/k_command.js"></script>
-    <?php include("fancybox.php"); ?>
+    
+    <script type="text/javascript" src="/js/Chart.min.js"></script>
+
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/fancybox.php'); ?>
 
     <script>
         // Set display filters

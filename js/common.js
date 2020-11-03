@@ -146,3 +146,62 @@ function ExecuteTableSort() {
         case 13:    sortTable_v2(6, true, false);   break;
     }
 }
+
+// Toggles display of URL and Manual price input fields based on radio button
+function TogglePriceInputView(product_id, is_jp=true) {
+    var radioButton_value   = null;
+    var fields_class_url    = null;
+    var fields_class_manual = null;
+
+    var field_price_url     = null;
+    var field_price_manual  = null;
+
+    if (is_jp) {
+        radioButton_value   = $('input[name="select_price_jp_'+product_id+'"]:checked').val();
+        
+        fields_class_url    = $('.fields_price_url_jp_'+product_id)[0];
+        field_price_url     = $('.fields_price_url_jp_'+product_id).find('#price_url_jp');
+
+        fields_class_manual = $('.fields_price_manual_jp_'+product_id)[0];
+        field_price_manual  = $('.fields_price_manual_jp_'+product_id).find('#price_price_jp');
+
+    } else {
+        radioButton_value   = $('input[name="select_price_hk_'+product_id+'"]:checked').val();
+        
+        fields_class_url    = $('.fields_price_url_hk_'+product_id)[0];
+        field_price_url     = $('.fields_price_url_hk_'+product_id).find("#price_url_hk");
+
+        fields_class_manual = $('.fields_price_manual_hk_'+product_id)[0];
+        field_price_manual  = $('.fields_price_manual_hk_'+product_id).find("#price_price_hk");
+    }
+    
+    if (radioButton_value == 0) {
+        fields_class_url.style.display = "table-row";
+        field_price_url.attr('required', true);
+
+        fields_class_manual.style.display = "none";
+        field_price_manual.removeAttr('required');
+    } else {
+        fields_class_url.style.display = "none";
+        field_price_url.removeAttr('required');
+
+        fields_class_manual.style.display = "table-row";
+        field_price_manual.attr('required', true);
+    }
+}
+
+function ToggleProductPriceHistoryDisplay(product_id) {
+    var wrapper_main    = $("#price_history_section_"+product_id);
+    var graph_element   = $("#price_graph_"+product_id)[0];
+
+    if (graph_element.style.display === "none") {
+        wrapper_main.find('.arrow')[0].innerHTML = "▲";
+        graph_element.style.display = "block";
+        
+        // Reanimate chart when opening
+        this['updateChart_'+product_id]();
+    } else {
+        wrapper_main.find('.arrow')[0].innerHTML = "▼";
+        graph_element.style.display = "none";
+    }
+}

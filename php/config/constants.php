@@ -1,10 +1,10 @@
 <?php
     // Common
-    define('CSS_VERSION', '0.045-20201027'); 
+    define('CSS_VERSION', '0.052-20201103'); 
     define('TIMESTAMP_NOW', date("Y-m-d H:i:s"));
 
     // Database & Domain details
-    include('_db_credentials.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/config/_db_credentials.php');
 
     // Active language codes
     define('LANGUAGE_CODES_ACTIVE', ['en', 'jp']);
@@ -15,7 +15,6 @@
 
     // Exchange Rate API
     define('EXCHANGE_RATE_API_URL', 'https://api.exchangeratesapi.io/latest');
-
 
     // Shipping Rates
     define('SHIPPINGRATE_HK_JP_SPEEDPOST', [

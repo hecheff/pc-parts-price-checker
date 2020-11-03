@@ -1,5 +1,6 @@
 <?php 
-    include($_SERVER['DOCUMENT_ROOT'].'/php/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/exchange_rate.php'); 
 
     // Get listed products
     $product_list_ids = [];
@@ -21,7 +22,6 @@
     $time_updated = AutoUpdateConversionRate(3600);
     $conversion_rates   = GetDB_CurrencyList();
 
-    
     // Sorted Lists (DO NOT FILTER)
     $conversion_rates_sort  = GetDB_CurrencyList('name', true);
     
@@ -36,10 +36,10 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/head.php'); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/head.php'); ?>
 
     <body onLoad="">
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/header.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/header.php'); ?>
         <div class="wrapper_main">
             <!-- Select Currency:
             <form action='/php/setCurrency.php' method='post'>
@@ -229,6 +229,6 @@
                 </div>
             </div>
         </div>
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/footer.php'); ?>
     </body>
 </html>

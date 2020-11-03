@@ -171,7 +171,8 @@ div.filter_panel {
 }
 div.filter_panel table.filter_sort_table {
     width: auto;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 5px;
 }
 div.filter_panel table.filter_sort_table tr th {
     text-align: left;
@@ -192,7 +193,7 @@ div.product_list {
 }
 
 
-div.product_list div.entry_item         { border-radius: $border_radius_default; }
+div.product_list div.entry_item         { border-radius: $border_radius_default; margin-bottom: $margin_default; }
 div.product_list div.entry_item:hover   { background-color: $color_bg_product_highlight; } 
 
 div.product_list div.entry_item_private         { background-color: $color_bg_product_private_default; border-radius: $border_radius_default; }
@@ -202,8 +203,7 @@ div.product_list div.entry_item_private:hover   { background-color: $color_bg_pr
 div.value_container { display: none; }
 div.product_list table.product_inner_table { 
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: $margin_default;
+    border-collapse: separate;
 }
 div.product_list table.product_inner_table tr th { text-align: left; }
 div.product_list table.product_inner_table tr td { 
@@ -222,9 +222,11 @@ table.product_table_desktop { display: table; }
 table.product_table_desktop tr td.title         { font-size: $fontsize_product_title; font-weight: bold; }
 table.product_table_desktop tr td.brand, 
 table.product_table_desktop tr td.type,  
-table.product_table_desktop tr td.release_date  { width: auto; vertical-align: top; }
+table.product_table_desktop tr td.release_date  { width: 12%; vertical-align: top; }
 table.product_table_desktop tr td.brand         { width: 10%; }
 table.product_table_desktop tr td.type          { width: 15%; }
+table.product_table_desktop tr td.price_jp, 
+table.product_table_desktop tr td.price_hk      { width: 13%; }
 table.product_table_desktop tr td.price_jp, 
 table.product_table_desktop tr td.price_hk, 
 table.product_table_desktop tr td.price_diff    { text-align: left; vertical-align: top; white-space: normal; }
@@ -256,6 +258,34 @@ div.product_list table.product_inner_table tr td div.inner_title {
     text-decoration: underline;
     color: $color_table_title_small;
 }
+div.product_list table.product_inner_table tr td div.price_history_wrapper {
+    width: auto;
+    height: auto;
+
+    border-radius: $border_radius_default;
+    padding: $margin_small;
+    background-color: $color_bg_product_bannerButton_default;
+
+    cursor: pointer;
+
+    @include noselect();
+}
+div.product_list table.product_inner_table tr td div.price_history_wrapper:hover { background-color: $color_bg_product_bannerButton_highlight; }
+div.product_list table.product_inner_table tr td div.price_history_wrapper:active { background-color: $color_bg_product_bannerButton_down; }
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button {
+    font-size: $fontsize_default;
+    font-weight: bold;
+    height: 20px;
+    color: $color_text;
+}
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button div.titleContent   { width: auto; float: left; }
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.banner_button div.arrow          { width: auto; float: right; }
+
+div.product_list table.product_inner_table tr td div.price_history_wrapper div.price_graph {
+    margin: $margin_small 0;
+    background-color: #FFFFFF;
+    border-radius: $border_radius_default;
+}
 
 
 
@@ -269,18 +299,23 @@ p.price_minus   { color:$color_text_price_minus;    }
 // Admin panel
 table.admin_entry {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 5px;
 }
 table.admin_entry tr th {
     text-align: left;
     padding-right: $margin_default;
-    padding-bottom: $margin_small;
 
     white-space: nowrap;
 }
+table.admin_entry tr th.sub_title {
+    font-size: $fontsize_default;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: left;
+}
 table.admin_entry tr td {
     text-align: left;
-    padding-bottom: $margin_small;
     box-sizing: border-box;
 
     overflow: hidden;
@@ -292,7 +327,7 @@ table.admin_entry tr td select {
 
 table.admin_stats {
     margin-top: $margin_default;
-    border-collapse: collapse;
+    border-collapse: separate;
 }
 table.admin_stats tr th {
     text-align: left;

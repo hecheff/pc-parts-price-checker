@@ -1,5 +1,6 @@
 <?php 
-    include($_SERVER['DOCUMENT_ROOT'].'/php/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/core/common.php'); 
+    include($_SERVER['DOCUMENT_ROOT'].'/php/libraries/exchange_rate.php'); 
 
     // Update conversion rates after 1 hour passed
     $time_updated = AutoUpdateConversionRate(3600);
@@ -37,14 +38,13 @@
             }
         }
     }
-    
 ?>
 <!DOCTYPE html>
 <html>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/head.php'); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/head.php'); ?>
 
     <body onLoad="">
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/header.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/header.php'); ?>
         <div class="wrapper_main">
             Select Currency:
             <form action='/php/setCurrency.php' method='post'>
@@ -95,18 +95,20 @@
                                 <td><input type="submit" class="input_button" value="Rename"></td>
                             </form>
                         </tr>
-                        <tr>
-                            <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this brand?');">
-                                <th>Delete</th>
-                                <td>
-                                    <select id='id' name='id' required>
-                                        <option value="">- Select a Brand -</option>
-                                        <?php echo OutputBrandOptions($brands_sort); ?>
-                                    </select>
-                                </td>
-                                <td><input type="submit" class="input_button delete" value="Delete"></td>
-                            </form>
-                        </tr>
+                        <?php if ($admin_mode && $_SESSION['user_details']['id'] == 1) : ?>
+                            <tr>
+                                <form action="./php/exec.php?action=delete&type=brand" method="post" onsubmit="return confirm('Delete this brand?');">
+                                    <th>Delete</th>
+                                    <td>
+                                        <select id='id' name='id' required>
+                                            <option value="">- Select a Brand -</option>
+                                            <?php echo OutputBrandOptions($brands_sort); ?>
+                                        </select>
+                                    </td>
+                                    <td><input type="submit" class="input_button delete" value="Delete"></td>
+                                </form>
+                            </tr>
+                        <?php endif; ?>
                     </table>
                     <br><br>
 
@@ -132,18 +134,20 @@
                                 <td><input type="submit" class="input_button" value="Rename"></td>
                             </form>
                         </tr>
-                        <tr>
-                            <form action="./php/exec.php?action=delete&type=type" method="post" onsubmit="return confirm('Delete this product type?');">
-                                <th>Delete</th>
-                                <td>
-                                    <select id='id' name='id' required>
-                                        <option value="">- Select Product Type -</option>
-                                        <?php echo OutputBrandOptions($types_sort); ?>
-                                    </select>
-                                </td>
-                                <td><input type="submit" class="input_button delete" value="Delete"></td>
-                            </form>
-                        </tr>
+                        <?php if ($admin_mode && $_SESSION['user_details']['id'] == 1) : ?>
+                            <tr>
+                                <form action="./php/exec.php?action=delete&type=type" method="post" onsubmit="return confirm('Delete this product type?');">
+                                    <th>Delete</th>
+                                    <td>
+                                        <select id='id' name='id' required>
+                                            <option value="">- Select Product Type -</option>
+                                            <?php echo OutputBrandOptions($types_sort); ?>
+                                        </select>
+                                    </td>
+                                    <td><input type="submit" class="input_button delete" value="Delete"></td>
+                                </form>
+                            </tr>
+                        <?php endif; ?>
                     </table>
                     <br><br>
 
@@ -222,26 +226,30 @@
                                     $img_url = "";
                                     $img_style = "style='background-image:url(\"".$thumbnail_url."\");'";
                                 }
+
+                                // Price values from records table
+                                $price_jp = GetLatestProductPriceByID($product['id'], 'JP')['price'];
+                                $price_hk = GetLatestProductPriceByID($product['id'], 'HK')['price'];
                                 
                                 // Calculate raw and converted values to show in current product row
                                 // JP Price values
-                                $raw_value_jp = ConvertCurrency($product['price_jp'], "JPY", $_SESSION['currency']);
+                                $raw_value_jp = ConvertCurrency($price_jp, "JPY", $_SESSION['currency']);
                                 $session_currency_val_jp = number_format($raw_value_jp, 0, '.', ',')." ".$_SESSION['currency'];
                                 $original_price_jp = "";
                                 if ($_SESSION['currency'] != 'JPY') {
-                                    $original_price_jp = "<br>(".number_format($product['price_jp'], 0, '.', ',')." JPY)";
+                                    $original_price_jp = "<br>(".number_format($price_jp, 0, '.', ',')." JPY)";
                                 }
                                 // HK Price values
-                                $raw_value_hk = ConvertCurrency($product['price_hk'], "HKD", $_SESSION['currency']);
+                                $raw_value_hk = ConvertCurrency($price_hk, "HKD", $_SESSION['currency']);
                                 $session_currency_val_hk = number_format($raw_value_hk, 0, '.', ',')." ".$_SESSION['currency'];
                                 $original_price_hk = "";
                                 if ($_SESSION['currency'] != 'HKD') {
-                                    $original_price_hk = "<br>(".number_format($product['price_hk'], 0, '.', ',')." HKD)";
+                                    $original_price_hk = "<br>(".number_format($price_hk, 0, '.', ',')." HKD)";
                                 }
                                 // Price Difference values
-                                $price_difference = ConvertCurrency($product['price_jp'] - ConvertCurrency($product['price_hk'], "HKD", "JPY"), "JPY", $_SESSION['currency']);
+                                $price_difference = ConvertCurrency($price_jp - ConvertCurrency($price_hk, "HKD", "JPY"), "JPY", $_SESSION['currency']);
                                 $price_difference_text = number_format($price_difference, 0, '.', ',')." ".$_SESSION['currency'];
-                                $price_percentage = 100 - ((ConvertCurrency($product['price_hk'], "HKD", "JPY")/$product['price_jp']) * 100);
+                                $price_percentage = 100 - ((ConvertCurrency($price_hk, "HKD", "JPY")/$price_jp) * 100);
                                 $price_class = "price_".($price_percentage > 0 ? "plus" : "minus");
                                 
                                 $release_date = ($product['release_date'] != '0000-00-00') ? $product['release_date'] : "";
@@ -291,7 +299,7 @@
                                         <?php echo $session_currency_val_hk.$original_price_hk; ?>
                                     </td>
                                     <td class="price_diff" colspan="2">
-                                        <div class="inner_title">Difference (JP - HK)</div>
+                                        <div class="inner_title">Difference (JP Price - HK Price)</div>
                                         <?php echo "<p class='$price_class'>".$price_difference_text."<br>(".number_format($price_percentage, 0, '.', ',')."%".")</p>"; ?>
                                     </td>
                                 </tr>
@@ -382,14 +390,145 @@
                                     </tr>
                                 <?php } ?>
                             </table>
+
+                            <?php if ($admin_mode) : ?>
+                                <table class="product_inner_table">
+                                    <tr>
+                                        <td colspan="6" class="edit_panel" style="display:none;" id="editPanel_<?php echo $product['id']; ?>">
+                                            <?php RenderTemplate_Admin_Product($brands_sort, $types_sort, $product); ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                            <?php endif; ?>
+
                             <table class="product_inner_table">
                                 <tr>
-                                    <td colspan="6" class="edit_panel" style="display:none;" id="editPanel_<?php echo $product['id']; ?>">
-                                        <?php 
-                                            if ($admin_mode) {
-                                                RenderTemplate_Admin_Product($brands_sort, $types_sort, $product);
-                                            } 
-                                        ?>
+                                    <td colspan="9">
+                                        <a onclick="ToggleProductPriceHistoryDisplay(<?php echo $product['id']; ?>);">
+                                            <div id="price_history_section_<?php echo $product['id']; ?>" class="price_history_wrapper">
+                                                <div class="banner_button">
+                                                    <div class="titleContent">Price History (click to toggle)</div>
+                                                    <div class="arrow">▼</div>
+                                                </div>
+                                                <div id="price_graph_<?php echo $product['id']; ?>" class="price_graph">
+                                                    <canvas id="pricechart_<?php echo $product['id']; ?>" height="100"></canvas>
+                                                    <?php 
+                                                        // Get average price and data from price records
+                                                        $price_records_jp = GetProductPriceAverageRecordsByID($product['id'], "JP");
+                                                        $price_records_hk = GetProductPriceAverageRecordsByID($product['id'], "HK");
+
+                                                        // set month labels
+                                                        $timerange_jp = [];
+                                                        $timerange_hk = [];
+                                                        foreach ($price_records_jp as $record) {
+                                                            array_push($timerange_jp, date("Y-m", strtotime($record['date_created'])));
+                                                        }
+                                                        foreach ($price_records_hk as $record) {
+                                                            array_push($timerange_hk, date("Y-m", strtotime($record['date_created'])));
+                                                        }
+
+                                                        // Get month range based on largest entry
+                                                        $timerange = (count($timerange_jp) >= count($timerange_hk)) ? $timerange_jp : $timerange_hk;
+
+                                                        // Check if month present in each JP/HK record (Initial, for products without price record prior)
+                                                        // If not present, set to null
+                                                        $first_entry_jp = false;
+                                                        $first_entry_hk = false;
+                                                        $price_index_jp = 0;
+                                                        $price_index_hk = 0;
+                                                        $price_values_jp = [];
+                                                        $price_values_hk = [];
+                                                        for ($i = 0; $i < count($timerange); $i++) {
+                                                            // Check JP
+                                                            if (!in_array($timerange[$i], $timerange_jp)) {
+                                                                if ($first_entry_jp) {
+                                                                    // Create duplicate entry of previous month if first entry exists
+                                                                    array_push($price_values_jp, $price_values_jp[$i-1]);
+                                                                } else {
+                                                                    // Otherwise set to null
+                                                                    array_push($price_values_jp, null);
+                                                                }
+                                                            } else {
+                                                                $price_value = ConvertCurrency($price_records_jp[$price_index_jp]['price_average'], $price_records_jp[$price_index_jp]['currency'], $_SESSION['currency']);
+                                                                array_push($price_values_jp, $price_value);
+                                                                $price_index_jp++;
+                                                                $first_entry_jp = true;
+                                                            }
+
+                                                            // Check HK
+                                                            if (!in_array($timerange[$i], $timerange_hk)) {
+                                                                if ($first_entry_hk) {
+                                                                    // Create duplicate entry of previous month if first entry exists
+                                                                    array_push($price_values_hk, $price_values_hk[$i-1]);
+                                                                } else {
+                                                                    // Otherwise set to null
+                                                                    array_push($price_values_hk, null);
+                                                                }
+                                                            } else {
+                                                                $price_value = ConvertCurrency($price_records_hk[$price_index_hk]['price_average'], $price_records_hk[$price_index_hk]['currency'], $_SESSION['currency']);
+                                                                array_push($price_values_hk, $price_value);
+                                                                $price_index_hk++;
+                                                                $first_entry_hk = true;
+                                                            }
+                                                        }
+                                                        // Duplicate an entry for price records & month labels if only one month entry found
+                                                        if (count($timerange) == 1) {
+                                                            array_push($price_values_jp, $price_values_jp[0]);
+                                                            array_push($price_values_hk, $price_values_hk[0]);
+                                                            array_push($timerange, $timerange[0]);
+                                                        }
+                                                    ?>
+                                                    <script>
+                                                        var ctx = $('#pricechart_<?php echo $product['id']; ?>')[0];
+                                                        var chartData_<?php echo $product['id']; ?> = {
+                                                            type: 'line',
+                                                            data: {
+                                                                labels: <?php echo json_encode($timerange); ?>,
+                                                            },
+                                                            options: {
+                                                                title: {
+                                                                    display: true,
+                                                                    text: 'Average Price History By Region (<?php echo $_SESSION['currency']; ?>)'
+                                                                }, 
+                                                                scales: {
+                                                                    yAxes: [{
+                                                                        ticks: {
+                                                                            beginAtZero: true, 
+                                                                        }
+                                                                    }]
+                                                                }
+                                                            }
+                                                        };
+                                                        var product_price_chart_<?php echo $product['id']; ?> = new Chart(ctx, chartData_<?php echo $product['id']; ?>);
+                                                        function updateChart_<?php echo $product['id']; ?>() {
+                                                            chartData_<?php echo $product['id']; ?>.data.datasets = createDataSet_<?php echo $product['id']; ?>();
+                                                            product_price_chart_<?php echo $product['id']; ?>.update();
+                                                        }
+                                                        function createDataSet_<?php echo $product['id']; ?>() {
+                                                            return [
+                                                                {
+                                                                    label: ['Japan'],
+                                                                    data: <?php echo json_encode($price_values_jp); ?>,
+                                                                    //data: [1300, 1200, 1300, 1400],
+                                                                    backgroundColor: ['rgba(255, 50, 50, 0.5)'],
+                                                                    borderColor: ['rgba(255, 50, 50, 1)'],
+                                                                    borderWidth: 1
+                                                                }, {
+                                                                    label: ['Hong Kong'],
+                                                                    data: <?php echo json_encode($price_values_hk); ?>,
+                                                                    //data: [1130, 1150, 1200, 1310],
+                                                                    backgroundColor: ['rgba(50, 50, 255, 0.5)'],
+                                                                    borderColor: ['rgba(50, 50, 255, 1)'],
+                                                                    borderWidth: 1
+                                                                }
+                                                            ];
+                                                        }
+                                                        // Reset view of graph to hide (allow animation upon reopening)
+                                                        price_graph_<?php echo $product['id']; ?>.style.display = "none";
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
@@ -398,6 +537,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="item_list_wrapper" style="display: none;">
             <div class="item_list_header">
@@ -410,6 +550,6 @@
             <div class="item_list_content"></div>
         </div>
 
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/footer.php'); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/php/layout/footer.php'); ?>
     </body>
 </html>

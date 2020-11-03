@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include('constants.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/php/config/constants.php');
 
     if (isset($_GET['lang'])) {
         $lang_input = htmlspecialchars($_GET['lang']);
