@@ -10,11 +10,11 @@
         $query          = "";
         if (isset($product_url) && !empty($product_url)) {
             $final_price = GetPriceFromURL($product_url);
-            $query = "INSERT INTO products_price_records (product_id, product_url, price, currency, region_code, notes, date_created) 
+            $query = "INSERT INTO product_price_records (product_id, product_url, price, currency, region_code, notes, created_at) 
                         VALUES ($product_id, '$product_url', $final_price, '$currency', '$region_code', '$notes', '$time_now');";
         } elseif (isset($input_price) && !empty($input_price)) {
             $final_price = $input_price;
-            $query = "INSERT INTO products_price_records (product_id, product_url, price, currency, region_code, notes, date_created) 
+            $query = "INSERT INTO product_price_records (product_id, product_url, price, currency, region_code, notes, created_at) 
                         VALUES ($product_id, NULL, $final_price, '$currency', '$region_code', '$notes', '$time_now');";
         }
 

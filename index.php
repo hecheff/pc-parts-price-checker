@@ -30,11 +30,11 @@
         $brands_useArray    = [];
         $types_useArray     = [];
         foreach ($products as $product) {
-            if(!in_array($product['brand'], $brands_useArray)) {
-                array_push($brands_useArray, $product['brand']);
+            if(!in_array($product['brand_id'], $brands_useArray)) {
+                array_push($brands_useArray, $product['brand_id']);
             }
-            if(!in_array($product['type'], $types_useArray)) {
-                array_push($types_useArray, $product['type']);
+            if(!in_array($product['type_id'], $types_useArray)) {
+                array_push($types_useArray, $product['type_id']);
             }
         }
     }
@@ -217,7 +217,7 @@
                 </div>
                 <div id='products' class="product_list">
                     <?php foreach ($products as $product) { ?>
-                        <div class="entry_item<?php echo !$product['is_public'] ? "_private" : ""; ?>" name="<?php echo $product['brand']."_".$product['type']; ?>">
+                        <div class="entry_item<?php echo !$product['is_public'] ? "_private" : ""; ?>" name="<?php echo $product['brand_id']."_".$product['type_id']; ?>">
                             <?php 
                                 // Set image thumbnail
                                 $thumbnail_url = "/images/products/".$product['id'].".jpg";
@@ -228,8 +228,8 @@
                                 }
 
                                 // Price values from records table
-                                $price_jp = GetLatestProductPriceByID($product['id'], 'JP')['price'];
-                                $price_hk = GetLatestProductPriceByID($product['id'], 'HK')['price'];
+                                $price_jp = GetLatestProductPriceByID($product['id'], 'JP')['price'] ?? 0;
+                                $price_hk = GetLatestProductPriceByID($product['id'], 'HK')['price'] ?? 0;
                                 
                                 // Calculate raw and converted values to show in current product row
                                 // JP Price values
@@ -256,8 +256,8 @@
                             ?>
                             <div class="value_container">
                                 <span class='product_title hidden_val'><?php echo $product['name']; ?></span>
-                                <span class='product_brand hidden_val'><?php echo OutputNameById($brands, $product['brand']); ?></span>
-                                <span class='product_type hidden_val'><?php echo OutputNameById($types, $product['type']); ?></span>
+                                <span class='product_brand hidden_val'><?php echo OutputNameById($brands, $product['brand_id']); ?></span>
+                                <span class='product_type hidden_val'><?php echo OutputNameById($types, $product['type_id']); ?></span>
                                 <span class='release_date hidden_val'><?php echo $release_date; ?></span>
                                 <span class='price_jp hidden_val'><?php echo $raw_value_jp; ?></span>
                                 <span class='price_hk hidden_val'><?php echo $raw_value_hk; ?></span>
@@ -280,11 +280,11 @@
                                     </td>
                                     <td class="brand">
                                         <div class="inner_title">Brand</div>
-                                        <?php echo OutputNameById($brands, $product['brand']); ?>
+                                        <?php echo OutputNameById($brands, $product['brand_id']); ?>
                                     </td>
                                     <td class="type">
                                         <div class="inner_title">Type</div>
-                                        <?php echo OutputNameById($types, $product['type']); ?>
+                                        <?php echo OutputNameById($types, $product['type_id']); ?>
                                     </td>
                                     <td class="release_date">
                                         <div class="inner_title">Release Date</div>
@@ -340,7 +340,7 @@
                                     </td>
                                     <td class="brand cell_upper">
                                         <div class="inner_title">Brand</div>
-                                        <?php echo OutputNameById($brands, $product['brand']); ?>
+                                        <?php echo OutputNameById($brands, $product['brand_id']); ?>
                                     </td>
                                     <td class="price_jp" style="width: 40%" colspan="3">
                                         <div class="inner_title">Price (JP)</div>
@@ -350,7 +350,7 @@
                                 <tr>
                                     <td class="type cell_upper">
                                         <div class="inner_title">Type</div>
-                                        <?php echo OutputNameById($types, $product['type']); ?>
+                                        <?php echo OutputNameById($types, $product['type_id']); ?>
                                     </td>
                                     <td class="price_hk" colspan="3">
                                         <div class="inner_title">Price (HK)</div>
@@ -423,10 +423,10 @@
                                                         $timerange_jp = [];
                                                         $timerange_hk = [];
                                                         foreach ($price_records_jp as $record) {
-                                                            array_push($timerange_jp, date("Y-m", strtotime($record['date_created'])));
+                                                            array_push($timerange_jp, date("Y-m", strtotime($record['created_at'])));
                                                         }
                                                         foreach ($price_records_hk as $record) {
-                                                            array_push($timerange_hk, date("Y-m", strtotime($record['date_created'])));
+                                                            array_push($timerange_hk, date("Y-m", strtotime($record['created_at'])));
                                                         }
 
                                                         // Get month range based on largest entry

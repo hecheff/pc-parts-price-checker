@@ -35,7 +35,7 @@
         // Write new entries to database
         if ($type == 'product') {
             // Write product details to database
-            $product_id = WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail']);
+            $product_id = WriteDB_Products($_POST['name'], $_POST['brand_id'], $_POST['type_id'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail']);
             
             // Set price source or value based on entry type set previously
             $price_url_jp   = null;
@@ -66,7 +66,7 @@
         // Update existing entries on database
         if ($type == 'product') {
             // Write product details to database
-            WriteDB_Products($_POST['name'], $_POST['brand'], $_POST['type'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
+            WriteDB_Products($_POST['name'], $_POST['brand_id'], $_POST['type_id'], $_POST['notes'], $_POST['is_public'] ?? FALSE, $_POST['release_date'], $_FILES['image_thumbnail'], $_POST['id']);
             
             // Set price source or value based on entry type set previously
             $price_url_jp   = null;

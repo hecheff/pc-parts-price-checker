@@ -128,11 +128,14 @@
 
     // Get product's most recent price from price records by ID and region (HK or JP)
     function GetLatestProductPriceByID($product_id, $region_code) {
-        $query = "SELECT * FROM products_price_records WHERE product_id=$product_id AND region_code='$region_code' ORDER BY date_created DESC LIMIT 1;";
+        $query = "SELECT * FROM product_price_records WHERE product_id=$product_id AND region_code='$region_code' ORDER BY created_at DESC LIMIT 1;";
         $result = $GLOBALS['conn']->query($query);
         while ($row = mysqli_fetch_array($result)) {
             $rows[] = $row;
         }
+        if (empty($rows)) {
+            $rows[0] = 0;
+        } 
         return $rows[0];
     }
 
@@ -211,7 +214,7 @@
         if ($region_code) {
             $region_code_query = "AND region_code='$region_code'";
         }
-        $query = "SELECT AVG(price) AS price_average, currency, region_code, notes, date_created FROM products_price_records WHERE product_id=$id $region_code_query GROUP BY MONTH(date_created), YEAR(date_created) ORDER BY date_created ASC;";
+        $query = "SELECT AVG(price) AS price_average, currency, region_code, notes, created_at FROM product_price_records WHERE product_id=$id $region_code_query GROUP BY MONTH(created_at), YEAR(created_at) ORDER BY created_at ASC;";
         $result = $GLOBALS['conn']->query($query);
 
 

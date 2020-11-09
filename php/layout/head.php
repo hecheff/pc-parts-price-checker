@@ -24,7 +24,7 @@
             var products = [
                 <?php 
                     foreach ($products as $product) {
-                        echo '"'.$product['brand']."_".$product['type'].'", ';
+                        echo '"'.$product['brand_id']."_".$product['type_id'].'", ';
                     }
                 ?>
             ];

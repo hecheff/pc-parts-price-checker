@@ -31,8 +31,8 @@
 
         if ($product) {
             $product_name   = $product['name'];
-            $brand_id       = $product['brand'];
-            $type_id        = $product['type'];
+            $brand_id       = $product['brand_id'];
+            $type_id        = $product['type_id'];
 
             $priceInfo_jp   = GetLatestProductPriceByID($product['id'], 'JP');
             $priceInfo_hk   = GetLatestProductPriceByID($product['id'], 'HK');
@@ -79,14 +79,14 @@
                 </tr>
                 <tr>
                     <th>Brand</th>
-                    <td><select id='brand' name='brand' required>".
+                    <td><select id='brand_id' name='brand_id' required>".
                         $select_a_brand.
                         OutputBrandOptions($brands_sort, $brand_id).
                     "</select></td>
                 </tr>
                 <tr>
                     <th>Type</th>
-                    <td><select id='type' name='type' required>".
+                    <td><select id='type_id' name='type_id' required>".
                         $select_a_type.
                         OutputTypeOptions($types_sort, $type_id).
                     "</select></td>

@@ -15,7 +15,7 @@
      * @return boolean  Returns database write success/failure as boolean
      * 
     */
-    function WriteDB_Products($name, $brand, $type, $notes, $is_public, $release_date, $image_thumbnail = null, $id = null) {
+    function WriteDB_Products($name, $brand_id, $type_id, $notes, $is_public, $release_date, $image_thumbnail = null, $id = null) {
         $time_now = TIMESTAMP_NOW;
         $name = addslashes(strip_tags($name));
         $notes = addslashes(strip_tags($notes));
@@ -26,11 +26,11 @@
 
         // Create new entry if ID is null. Otherwise update existing product with given ID
         if ($id == null) {
-            $query = "INSERT INTO products (name, brand, type, notes, is_public, release_date, created_by_user_id, updated_by_user_id, created_at, updated_at) 
-                        VALUES ('$name', $brand, $type, '$notes', $is_public, '$release_date', ".$_SESSION['user_details']['id'].", ".$_SESSION['user_details']['id'].", '$time_now', '$time_now');";
+            $query = "INSERT INTO products (name, brand_id, type_id, notes, is_public, release_date, created_by_user_id, updated_by_user_id, created_at, updated_at) 
+                        VALUES ('$name', $brand_id, $type_id, '$notes', $is_public, '$release_date', ".$_SESSION['user_details']['id'].", ".$_SESSION['user_details']['id'].", '$time_now', '$time_now');";
         } else {
             $old_product_details = GetProductByID($id);
-            $query = "UPDATE products SET name='$name', brand=$brand, type=$type, notes='$notes', is_public=$is_public, release_date='$release_date', 
+            $query = "UPDATE products SET name='$name', brand_id=$brand_id, type_id=$type_id, notes='$notes', is_public=$is_public, release_date='$release_date', 
                         updated_by_user_id=".$_SESSION['user_details']['id'].", updated_at='$time_now' 
                                     WHERE id=$id;";
         }
@@ -66,7 +66,7 @@
                     if ($is_new_entry == true) {
                         DeleteFromDB_Products($id);
                     } else {
-                        WriteDB_Products($old_product_details['name'], $old_product_details['brand'], $old_product_details['type'], $old_product_details['notes'], $old_product_details['release_date'], null, $id);
+                        WriteDB_Products($old_product_details['name'], $old_product_details['brand_id'], $old_product_details['type_id'], $old_product_details['notes'], $old_product_details['release_date'], null, $id);
                     }
                 }
             }
@@ -78,7 +78,7 @@
     // Create copy of product entry (all settings except ID and image is copied)
     function DuplicateProduct($product_id) {
         $product = GetProductByID($product_id);
-        WriteDB_Products("(COPY) ".$product['name'], $product['brand'], $product['type'], $product['notes'], FALSE, $product['release_date']);
+        WriteDB_Products("(COPY) ".$product['name'], $product['brand_id'], $product['type_id'], $product['notes'], FALSE, $product['release_date']);
     }
 
     // Delete product from database
